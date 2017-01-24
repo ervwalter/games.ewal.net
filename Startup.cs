@@ -30,6 +30,16 @@ namespace GamesWebApp
             {
                 options.MaximumBodySize = 4194304L;
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddSingleton<IConfiguration>(Configuration);
         }
 
@@ -39,6 +49,7 @@ namespace GamesWebApp
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseCors("CorsPolicy");
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseResponseCaching();
