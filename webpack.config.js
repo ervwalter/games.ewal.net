@@ -29,7 +29,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({names: ['vendor', 'manifest']}),
     new ExtractTextPlugin('site.css'),
-    new HtmlWebpackPlugin({ template: './src/index.ejs', hash: true }),
+    new HtmlWebpackPlugin({ template: './src/index.hbs', hash: true }),
     new CopyWebpackPlugin([{from: '**/*', to: 'images', context: './src/images'}])
   ],
   module: {
@@ -45,6 +45,10 @@ module.exports = {
           fallbackLoader: "style-loader",
           loader: ["css-loader?sourceMap", "sass-loader?sourceMap"]
         })
+      },
+      {
+        test: /\.hbs$/,
+        use: ['handlebars-loader']
       }
     ]
   }

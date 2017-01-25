@@ -6,3 +6,4 @@ PublishProfiles
 node_modules
 *.vshost.*
 .publish
+wwwroot

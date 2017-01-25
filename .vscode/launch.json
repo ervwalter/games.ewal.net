@@ -5,6 +5,7 @@
             "name": "Launch Chrome against localhost",
             "type": "chrome",
             "request": "launch",
+            "preLaunchTask": "start",
             "url": "http://localhost:5000",
             "webRoot": "${workspaceRoot}"
         },
