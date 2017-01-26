@@ -26,6 +26,13 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.tsx']
   },
+  devServer: {
+    compress: true,
+    contentBase: path.join(__dirname, "wwwroot"),
+    proxy: {
+      "/api": "http://localhost:5000"
+    }
+  },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({names: ['vendor', 'manifest']}),
     new ExtractTextPlugin('site.css'),
