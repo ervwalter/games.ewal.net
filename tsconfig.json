@@ -4,13 +4,17 @@
     "module": "commonjs",
     "declaration": false,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "experimentalDecorators": true,
     "noLib": false,
     "jsx": "react",
-    "sourceMap": true
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "lib": ["dom", "es2015.promise", "es5"]
   },
   "exclude": [
-    "node_modules",
-    "static"
+    "node_modules"
   ]
 }

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Board games page on games.ewal.net",
   "scripts": {
-    "start": "run-p dotnet-run webpack-dev-server",
-    "build": "run-p webpack-dev dotnet-build",
+    "start": "concurrently -p name -n \"dotnet,webpack\" -c \"blue,green\" \"npm run dotnet-run\" \"npm run webpack-dev-server\"",
+    "build": "concurrently -p name -n \"dotnet,webpack\" -c \"blue,green\" \"npm run dotnet-build\" \"npm run webpack-dev\"",
     "publish": "run-s webpack-prod dotnet-publish",
     "webpack-dev": "webpack",
     "webpack-prod": "webpack -p",
@@ -17,8 +17,10 @@
   "license": "MIT",
   "homepage": "https://games.ewal.net",
   "devDependencies": {
+    "@types/core-js": "^0.9.35",
     "@types/react": "^15.0.1",
     "@types/react-dom": "latest",
+    "@types/whatwg-fetch": "0.0.33",
     "concurrently": "^3.1.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
@@ -38,10 +40,14 @@
   },
   "dependencies": {
     "bulma": "^0.3.1",
+    "core-js": "^2.4.1",
+    "json-fetch": "^3.1.0",
     "mobx": "^3.0.2",
     "mobx-react": "^4.1.0",
     "mobx-react-devtools": "latest",
+    "mobx-utils": "^2.0.1",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "whatwg-fetch": "^2.0.2"
   }
 }

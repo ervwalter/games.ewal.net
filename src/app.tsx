@@ -1,51 +1,29 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { observable } from 'mobx';
-import { observer } from 'mobx-react';
-import DevTools from 'mobx-react-devtools';
+import {useStrict} from 'mobx';
+import {observer, Provider} from 'mobx-react';
+import playStore  from './stores/plays-store';
+import collectionStore from './stores/collection-store';
+import statsStore from './stores/stats-store';
+import StatsBlock from './components/stats-block';
 
-class AppState {
-	@observable timer = 0;
+useStrict(true);
 
-	constructor() {
-		setInterval(() => {
-			this.timer += 1;
-		}, 1000);
-	}
-
-	resetTimer() {
-		this.timer = 0;
-	}
-}
+const stores = {
+	playStore: playStore,
+	collectionStore: collectionStore,
+	statsStore: statsStore
+};
 
 @observer
-class TimerView extends React.Component<{ appState: AppState }, {}> {
+class App extends React.Component<typeof stores, {}> {
 	render() {
 		return (
-			<div>
-				<nav className="nav" id="masthead">
-					<div className="container">
-						<div className="nav-left">
-							<div className="nav-item">
-								<span className="slashes">//&nbsp;</span>
-								<a href="https://blog.ewal.net" className="is-large">Ewal.net</a>
-							</div>
-						</div>
-					</div>
-				</nav>
-				<section className="section">
-					<div className="container">
-						Hello, Games!
-					</div>
-				</section>
-			</div>
+			<Provider {...stores}>
+				<StatsBlock />
+			</Provider>
 		);
-	}
-
-	onReset = () => {
-		this.props.appState.resetTimer();
 	}
 };
 
-const appState = new AppState();
-ReactDOM.render(<TimerView appState={appState} />, document.getElementById('app'));
+ReactDOM.render(<App {...stores} />, document.getElementById('app'));

@@ -13,10 +13,12 @@ a:hover {
 
 #masthead {
     background-color: #fcfcfc;
+    border-top: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
     position: fixed;
     top:0;
     width: 100%;
+    color: #999;
 
     a {
         color: $blue;
@@ -26,15 +28,23 @@ a:hover {
     }
 
     .nav-item {
+        align-items: baseline;
+    }
+
+    .logo {
         font-size: 1.6rem;
     }
 
     .slashes {
         color: #777;
     }
+
+    .description {
+        margin-left: 1em;
+    }
 }
 
-nav+section {
-    margin-top: 56px;
+#intro {
+    margin-top: 40px;
 }
 

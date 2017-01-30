@@ -15,7 +15,10 @@ module.exports = {
       'react',
       'react-dom',
       'mobx',
-      'mobx-react'
+      'mobx-react',
+      'whatwg-fetch',
+      'json-fetch',
+      'core-js'
     ],
   },
   output: {
