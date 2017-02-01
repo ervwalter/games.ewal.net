@@ -18,7 +18,9 @@ module.exports = {
       'mobx-react',
       'whatwg-fetch',
       'json-fetch',
-      'core-js'
+      'core-js',
+      'lodash',
+      'moment'
     ],
   },
   output: {

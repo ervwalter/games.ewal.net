@@ -12,8 +12,8 @@ const options = {
 }
 
 export default class DataProvider {
-  public async fetch(url: string) {
+  public async fetch<T>(url: string) {
     let response = await jsonFetch(url, options);
-    return response.body;
+    return response.body as T;
   }
 }

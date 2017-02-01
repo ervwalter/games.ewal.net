@@ -6,6 +6,8 @@ import playStore  from './stores/plays-store';
 import collectionStore from './stores/collection-store';
 import statsStore from './stores/stats-store';
 import StatsBlock from './components/stats-block';
+import RecentPlays from './components/recent-plays';
+import Collection from './components/collection';
 
 useStrict(true);
 
@@ -20,10 +22,22 @@ class App extends React.Component<typeof stores, {}> {
 	render() {
 		return (
 			<Provider {...stores}>
-				<StatsBlock />
+				<div>
+					<StatsBlock />
+					{stores.playStore.isLoading ? <Loading /> : [
+						<RecentPlays />,
+						<Collection />
+					]}
+				</div>
 			</Provider>
 		);
 	}
 };
+
+class Loading extends React.Component<undefined, undefined> {
+	render() {
+		return <div className="button is-loading"></div>
+	}
+}
 
 ReactDOM.render(<App {...stores} />, document.getElementById('app'));

@@ -1,11 +1,11 @@
 {
     "typescript.tsdk": "./node_modules/typescript/lib",
     "task-master.enablePowershell": false,
-    "editor.tabSize": 2,
+    "editor.tabSize": 4,
     "files.exclude": {
         "**/.git": true,
         "**/.DS_Store": true,
-        ".publish":true,
+        ".publish":false,
         "bin":true,
         "obj":true
     }

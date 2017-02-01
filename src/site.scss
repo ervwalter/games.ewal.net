@@ -1,7 +1,9 @@
+$tablet: 768px;
 $blue: #268bd2;
 $primary: $blue;
 
 @import "~bulma/bulma.sass";
+@import "mixins.scss";
 
 html {
     font-size: 16px;
@@ -9,6 +11,20 @@ html {
 
 a:hover {
     text-decoration: underline;
+}
+
+.section {
+    padding: 2rem 1rem;
+    @include tablet {
+        padding: 3rem 1.5rem;
+    }
+}
+
+.title:not(:last-child) {
+    margin-bottom: 1rem;
+    @include tablet {
+        margin-bottom: 1.5rem;
+    }
 }
 
 #masthead {
@@ -46,5 +62,138 @@ a:hover {
 
 #intro {
     margin-top: 40px;
+}
+
+.hindex-help {
+    font-style: italic;
+}
+
+div.button {
+    border: none;
+}
+
+.subsection {
+    margin-bottom: 1.5rem;
+}
+
+.thumbnail-list {
+    position: relative;
+    overflow: hidden;
+    height: 120px;
+    margin-bottom: 1.5rem;
+
+    img {
+        display: inline-block;
+        height: 120px;
+        width: auto;
+    }
+
+    a + a {
+        margin-left: 3px;
+    }
+}
+
+.title {
+    .fa {
+        vertical-align: bottom;
+        font-size: 16px;
+    }
+
+    .title-link {
+        display: inline-block;
+        margin-left: 0.3em;
+    }
+}
+
+.fa {
+    font-size: 1em;
+}
+
+.recent-plays {
+    margin: 0 -1rem 1.5rem -1rem;
+    @include tablet {
+        margin: 0 0 1.5rem 0;
+    }
+
+    table {
+        @include tablet{
+            width: auto;
+            min-width: 90%;
+        }
+    }
+
+    td {
+        white-space: nowrap;
+
+        @include tablet {
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        &.name {
+            white-space: inherit;
+        }
+    }
+
+    a {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -ms-text-overflow: ellipsis;
+    }
+
+    .players {
+        display: inline-block;
+
+        img {
+            vertical-align: bottom;
+            margin-bottom: 3px;
+            display: inline-block;
+            height: 18px;
+        }
+    }
+
+    .plays-list {
+        border-top: 1px solid $table-border;
+        line-height: normal;
+    }
+
+    .play {
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid $table-border;
+
+        &:hover {
+            background-color: $table-row-hover-background;
+        }
+        
+        &:nth-child(even) {
+          background-color: $table-row-even-background;
+
+          &:hover {
+            background-color: $table-row-even-hover-background;
+          }
+        }
+
+        .columns {
+            margin-bottom: 0;
+        }
+
+        .column + .column {
+            padding-left: 0.75rem;
+        }
+        
+        .location {
+            color: #888;
+        }
+
+        .players {
+            color: $text;
+        }
+    }
+
+    .winner {
+        font-weight: 500;
+        color: #0a0;
+    }
 }
 

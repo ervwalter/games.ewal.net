@@ -38,12 +38,11 @@
 
   "publishOptions": {
     "include": [
-      "wwwroot",
+      "wwwroot/**/*",
       "app_data",
       "**/*.cshtml",
       "appsettings.json",
-      "web.config",
-      ".gitignore"
+      "web.config"
     ]
   },
 
