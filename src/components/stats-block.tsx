@@ -6,10 +6,9 @@ import { StatsStore } from '../stores/stats-store';
 @observer
 export default class StatsBlock extends React.Component<{ statsStore?: StatsStore }, {}> {
 	render() {
-		console.log('StatBlock rendering');
 		let store = this.props.statsStore;
 		return (
-			<div className="subsection">
+			<div className="subsection stats">
 				<div className="title is-4">Statistics</div>
 				<div className="columns">
 					<div className="column">
@@ -33,9 +32,9 @@ export default class StatsBlock extends React.Component<{ statsStore?: StatsStor
 						<small>COLLECTION</small><br />
 						<b>{store.collectionStats.numberOfGames}</b> games owned<br />
 						<b>{store.collectionStats.numberOfExpansions}</b> expansions owned<br />
-						<b>{store.collectionStats.averageRating}</b> average rating<br />
-						<b>{store.collectionStats.averageWeight}</b> average weight<br />
 						<b>{store.collectionStats.yetToBePlayed}</b> games yet to be played<br />
+						<b>{store.collectionStats.dimes}</b> dimes (10+ plays)<br />
+						<b>{store.collectionStats.nickles}</b> nickels (5+ plays)<br />
 						<b>{store.collectionStats.hIndex}</b> H-index<br />
 					</div>
 				</div>

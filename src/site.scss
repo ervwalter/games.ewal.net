@@ -27,9 +27,17 @@ a:hover {
     }
 }
 
+.table {
+    thead {
+        th {
+            font-weight: 600;
+            color: $text;
+        }
+    }
+}
+
 #masthead {
     background-color: #fcfcfc;
-    border-top: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
     position: fixed;
     top:0;
@@ -64,16 +72,20 @@ a:hover {
     margin-top: 40px;
 }
 
-.hindex-help {
-    font-style: italic;
-}
-
 div.button {
     border: none;
 }
 
 .subsection {
     margin-bottom: 1.5rem;
+}
+
+.stats {
+    .column {
+        @include tablet{
+            padding-top: 0;
+        }
+    }
 }
 
 .thumbnail-list {
@@ -143,13 +155,13 @@ div.button {
     }
 
     .players {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
 
         img {
-            vertical-align: bottom;
-            margin-bottom: 3px;
             display: inline-block;
-            height: 18px;
+//            height: 18px;
+            margin-left: 2px;
         }
     }
 
@@ -197,3 +209,94 @@ div.button {
     }
 }
 
+.collection {
+    margin: 0 -1rem 1.5rem -1rem;
+     @include tablet {
+        margin: 0 0 1.5rem 0;
+    }
+
+    table {
+        @include tablet{
+            width: auto;
+            min-width: 90%;
+        }
+    }
+
+    td {
+        white-space: nowrap;
+
+        &.name {
+            white-space: inherit;
+        }
+
+        &.rating {
+            text-align: center;
+            @include tablet {
+                text-align: left;
+            }
+        }
+    }
+
+    th {
+        a {
+            color: $text;
+        }
+    }
+
+    .expansions {
+        display: none;
+        position: relative;
+        @include desktop {
+            display: inline-block;
+        }
+    }
+
+    .expansions-tip {
+        position: absolute;
+        z-index: 3;
+        white-space: nowrap;
+        bottom: 0;
+        left: 100%;
+        margin-bottom: 0;
+        margin-left: 10px;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .expansion-count:hover + .expansions-tip {
+        -webkit-transition: opacity 0.3s;
+        transition: opacity 0.3s;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .expansion-count {
+        display: inline-block;
+        cursor: default;
+        color: #999;
+        margin-left: 15px;
+        font-size: 0.9em;
+        border-bottom: 1px dotted #ddd;
+    }
+
+    .stars-container {
+        display: inline-block;
+        position: relative;
+    }
+
+    .stars-background {
+        color: #ccc;
+    }
+
+    .stars-foreground {
+        color: rgba(255,190,0,0.4);
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        overflow: hidden;
+    }
+
+}

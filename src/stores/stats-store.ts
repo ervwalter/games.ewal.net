@@ -72,66 +72,49 @@ class CollectionStats {
 	readonly numberOfGames: tbd = "...";
 	readonly numberOfExpansions: tbd = "...";
 	readonly yetToBePlayed: tbd = "...";
-	readonly averageWeight: tbd = "...";
-	readonly averageRating: tbd = "...";
+	readonly dimes: tbd = "...";
+	readonly nickles: tbd = "...";
 	readonly hIndex: tbd = "...";
 
 	public constructor(games?: Game[]) {
 		if (games) {
 			// exclude games that are not currently owned
 			// sort by numPlays so that h-index can be calculated
-			let owned = _(games).filter((game) => game.owned).orderBy('numPlays', 'desc').value();
+			let sorted = _.orderBy(games, 'numPlays', 'desc');
 
-			this.numberOfGames = owned.length;
+			this.numberOfGames = sorted.length;
 			this.numberOfExpansions = 0;
 			this.yetToBePlayed = 0;
+			this.dimes = 0;
+			this.nickles = 0;
 			this.hIndex = 0;
-			let weight = 0;
-			let weightCount = 0;
-			let rating = 0;
-			let ratingCount = 0;
 			let index = 0;
 
+
 			// process each owned game
-			for (let game of owned) {
+			for (let game of sorted) {
 				// calculate h-index
 				if (++index <= game.numPlays) {
 					this.hIndex++;
 				}
 
-				// count expansions only if they are listed as 'owned'
-				let ownedExpansionsCount = 0;
-				if (game.expansions) {
-					for (let expansion of game.expansions) {
-						if (expansion.owned) {
-							this.numberOfExpansions++;
-							ownedExpansionsCount++;
-						}
-					}
+				if (game.numPlays >= 10) {
+					this.dimes++;
 				}
-				game.ownedExpansionCount = ownedExpansionsCount;
+				else if (game.numPlays >= 5) {
+					this.nickles++;
+				}
+
+				// count expansions only if they are listed as 'owned'
+				if (game.expansions) {
+					this.numberOfExpansions += game.ownedExpansionCount;
+				}
 
 				// how many games have never been played
 				if (game.numPlays == 0) {
 					this.yetToBePlayed++;
 				}
-
-				// average the weights of the owned games
-				if (game.averageWeight > 0) {
-					weight += game.averageWeight;
-					weightCount++;
-				}
-
-				// average the ratings for games that have them
-				if (game.rating > 0) {
-					rating += game.rating;
-					ratingCount++;
-				}
 			}
-
-			// round the averages to 1 decimal place
-			this.averageWeight = Math.round(10 * weight / weightCount) / 10;
-			this.averageRating = Math.round(10 * rating / ratingCount) / 10;
 		}
 	}
 }
