@@ -3,7 +3,6 @@ $blue: #268bd2;
 $primary: $blue;
 
 @import "~bulma/bulma.sass";
-@import "mixins.scss";
 
 html {
     font-size: 16px;
@@ -39,8 +38,6 @@ a:hover {
 #masthead {
     background-color: #fcfcfc;
     border-bottom: 1px solid #ececec;
-    position: fixed;
-    top:0;
     width: 100%;
     color: #999;
 
@@ -69,7 +66,7 @@ a:hover {
 }
 
 #intro {
-    margin-top: 40px;
+    padding-top: 1.5rem;
 }
 
 div.button {
@@ -89,31 +86,54 @@ div.button {
 }
 
 .thumbnail-list {
+    display: flex;
+    flex-wrap: wrap;
     position: relative;
-    overflow: hidden;
-    height: 120px;
     margin-bottom: 1.5rem;
+    overflow: hidden;
+    height: 110px;
+
+    &.full-height {
+        height: auto;
+    }
 
     img {
         display: inline-block;
-        height: 120px;
+        height: 110px;
         width: auto;
     }
 
-    a + a {
-        margin-left: 3px;
+    img:hover {
+        opacity: 0.85;
+    }
+
+    a {
+        line-height: 0;
+        margin: 2px;
     }
 }
 
 .title {
+    @include tablet {
+        margin-top: 2rem;
+    }
+
     .fa {
         vertical-align: bottom;
-        font-size: 16px;
+        font-size: 14px;
+        margin-bottom: 2px;
     }
 
     .title-link {
         display: inline-block;
         margin-left: 0.3em;
+    }
+
+    a {
+        color: #ccc;
+        &:hover {
+            color: $link;
+        }
     }
 }
 
@@ -142,7 +162,7 @@ div.button {
             padding-right: 1em;
         }
 
-        &.name {
+        &.name, &.players-column {
             white-space: inherit;
         }
     }
@@ -155,14 +175,21 @@ div.button {
     }
 
     .players {
-        display: inline-flex;
+        display: inline-block;
         align-items: center;
 
         img {
             display: inline-block;
 //            height: 18px;
+            height: 20px;
+            width: 20px;
             margin-left: 2px;
         }
+    }
+
+    .player {
+        display: inline-flex;
+        align-items: center;
     }
 
     .plays-list {

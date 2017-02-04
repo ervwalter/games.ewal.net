@@ -16,10 +16,16 @@ export default class RecentPlays extends React.Component<{ collectionStore?: Col
     render() {
         return (
             <div className="subsection">
-                <div className="title is-4">
-                    Game Collection
-                    <a className="title-link" target="_blank" href="https://boardgamegeek.com/collection/user/ervwalter?own=1"><i className="fa fa-external-link" aria-hidden="true"></i></a>
+                <div className="title is-4 is-hidden-mobile">
+                    Unplayed and Waiting for Love
                 </div>
+                { this.props.collectionStore.unplayedGames.length > 0 && [
+                    <UnplayedThumbnails games={this.props.collectionStore.unplayedGames} />,
+                    <div className="title is-4">
+                        <span className="is-hidden-mobile">Current </span>Game Collection
+                        <a className="title-link" target="_blank" href="https://boardgamegeek.com/collection/user/ervwalter?own=1"><i className="fa fa-external-link" aria-hidden="true"></i></a>
+                    </div>
+                ]}
                 <div className="collection">
                     <table className="table is-striped">
                         <thead><tr>
@@ -36,6 +42,16 @@ export default class RecentPlays extends React.Component<{ collectionStore?: Col
         )
     }
 };
+
+class UnplayedThumbnails extends React.Component<{ games: Game[] }, undefined> {
+    render() {
+        return (
+            <div className="thumbnail-list full-height is-hidden-mobile">
+                {this.props.games.map((game) => <a href={`https://boardgamegeek.com/boardgame/${game.gameId}/`} target="_blank" key={game.gameId}><img src={game.thumbnail} /></a>)}
+            </div>
+        )
+    }
+}
 
 class CollectionRow extends React.Component<{ game: Game }, undefined> {
     render() {

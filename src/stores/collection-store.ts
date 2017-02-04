@@ -61,6 +61,10 @@ export class CollectionStore {
 		return result;
 	}
 
+	@computed public get unplayedGames() {
+		return _(this.games).filter(game => game.numPlays == 0).sortBy('sortableName').value();
+	}
+
 	@action public changeSort(sortBy: SortColumns) {
 		if (this.sortBy === sortBy) {
 			if (this.sortDirection === 'asc') {

@@ -62,7 +62,7 @@ class PlaysTable extends React.Component<{ plays: Play[] }, undefined> {
                             <tr key={play.playId}>
                                 <td><span className="is-hidden-touch">{play.playDate.format("ddd")}, </span>{play.playDate.format("MMM D")}</td>
                                 <td className="name"><a target="_blank" href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}>{play.name}</a></td>
-                                <td><Players players={play.players} /></td>
+                                <td className="players-column"><Players players={play.players} /></td>
                                 <td>{play.location}</td>
                             </tr>
                         )
@@ -103,16 +103,25 @@ class Players extends React.Component<{ players: Player[] }, undefined> {
         let players = _.sortBy(this.props.players, "name");
         let anonymousCount = _.remove(players, p => p.name.toLowerCase() == "anonymous player").length;
         let components: Array<React.ReactNode> = [];
+        let maxIndex = players.length - 1;
+        if (anonymousCount > 0) {
+            maxIndex++;
+        }
         players.forEach((player, index) => {
             let className = player.win ? "winner " : "";
-            let comma = (index > 0 ? ", " : "");
-            components.push(<span key={player.name}>{comma}<span className={className}>{player.name}</span></span>);
-            if (player.new) {
-                components.push(<img key={`${player.name}-newicon`} src="/images/new-player.png" alt="New Player" title="New Player" />);
-            }
+            let comma = (index < maxIndex ? "," : "");
+            components.push(
+                <span className="player" key={player.name}>
+                    <span className={className}>{player.name}</span>
+                    {player.new && 
+                        <img src="/images/new-player.png" alt="New Player" title="New Player" />
+                    }
+                    <span>{comma}&nbsp;</span>
+                </span>
+                );
         });
         if (anonymousCount > 0) {
-            components.push(<span key="anonymous player">, and {anonymousCount} other{anonymousCount > 1 ? 's' : ''}</span>);
+            components.push(<span className="player" key="anonymous player">and {anonymousCount} other{anonymousCount > 1 ? 's' : ''}</span>);
         }
         return (
             <div className="players">
