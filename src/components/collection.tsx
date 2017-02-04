@@ -16,16 +16,16 @@ export default class RecentPlays extends React.Component<{ collectionStore?: Col
     render() {
         return (
             <div className="subsection">
-                <div className="title is-4 is-hidden-mobile">
-                    Unplayed and Waiting for Love
-                </div>
-                { this.props.collectionStore.unplayedGames.length > 0 && [
-                    <UnplayedThumbnails games={this.props.collectionStore.unplayedGames} />,
-                    <div className="title is-4">
-                        <span className="is-hidden-mobile">Current </span>Game Collection
-                        <a className="title-link" target="_blank" href="https://boardgamegeek.com/collection/user/ervwalter?own=1"><i className="fa fa-external-link" aria-hidden="true"></i></a>
-                    </div>
+                {this.props.collectionStore.unplayedGames.length > 0 && [
+                    <div className="title is-4 is-hidden-mobile" key="title">
+                        Unplayed and Waiting for Love
+                    </div>,
+                    <UnplayedThumbnails games={this.props.collectionStore.unplayedGames} key="unplayed" />
                 ]}
+                <div className="title is-4">
+                    <span className="is-hidden-mobile">Current </span>Game Collection
+                        <a className="title-link" target="_blank" href="https://boardgamegeek.com/collection/user/ervwalter?own=1"><i className="fa fa-external-link" aria-hidden="true"></i></a>
+                </div>
                 <div className="collection">
                     <table className="table is-striped">
                         <thead><tr>
