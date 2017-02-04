@@ -41,6 +41,7 @@ var config = {
 		}
 	},
 	plugins: [
+		new webpack.NamedModulesPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({ names: ['vendor', 'manifest'] }),
 		new HtmlWebpackPlugin({ template: './src/index.hbs', hash: true }),
 		new CopyWebpackPlugin([{ from: '**/*', to: 'images', context: './src/images' }]),

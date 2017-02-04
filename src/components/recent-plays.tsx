@@ -28,7 +28,7 @@ class GameThumbnails extends React.Component<{ games: PlayedGame[] }, {}> {
     render() {
         return (
             <div className="thumbnail-list is-hidden-mobile">
-                {this.props.games.map((game) => <a href={`https://boardgamegeek.com/boardgame/${game.gameId}/`} target="_blank" key={game.gameId} className="fade-in" ><img src={game.thumbnail} /></a>)}
+                {this.props.games.map((game) => <a href={`https://boardgamegeek.com/boardgame/${game.gameId}/`} target="_blank" key={game.gameId} className="fade-in" ><img src={game.thumbnail} alt={game.name} title={game.name}/></a>)}
             </div>
         )
     }
