@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 export default class RecentPlays extends React.Component<{ playStore?: PlayStore }, {}> {
     render() {
         if (this.props.playStore.isLoading) {
-            return <div></div>;
+            return null;
         }
         return (
             <div className="subsection">
@@ -24,7 +24,7 @@ export default class RecentPlays extends React.Component<{ playStore?: PlayStore
     }
 };
 
-class GameThumbnails extends React.Component<{ games: PlayedGame[] }, undefined> {
+class GameThumbnails extends React.Component<{ games: PlayedGame[] }, {}> {
     render() {
         return (
             <div className="thumbnail-list is-hidden-mobile">
@@ -36,7 +36,7 @@ class GameThumbnails extends React.Component<{ games: PlayedGame[] }, undefined>
 
 @inject("uiStateStore")
 @observer
-class PlaysTableOrList extends React.Component<{ plays: Play[], uiStateStore?: UIStateStore }, undefined> {
+class PlaysTableOrList extends React.Component<{ plays: Play[], uiStateStore?: UIStateStore }, {}> {
     render() {
         return (
             <div className="recent-plays">
@@ -46,7 +46,7 @@ class PlaysTableOrList extends React.Component<{ plays: Play[], uiStateStore?: U
     }
 }
 
-class PlaysTable extends React.Component<{ plays: Play[] }, undefined> {
+class PlaysTable extends React.Component<{ plays: Play[] }, {}> {
     render() {
         return (
             <table className="table is-striped is-hidden-mobile">
@@ -73,7 +73,7 @@ class PlaysTable extends React.Component<{ plays: Play[] }, undefined> {
     }
 }
 
-class PlaysList extends React.Component<{ plays: Play[] }, undefined> {
+class PlaysList extends React.Component<{ plays: Play[] }, {}> {
     render() {
         return (
             <div className="is-hidden-tablet plays-list">
@@ -98,7 +98,7 @@ class PlaysList extends React.Component<{ plays: Play[] }, undefined> {
 }
 
 
-class Players extends React.Component<{ players: Player[] }, undefined> {
+class Players extends React.Component<{ players: Player[] }, {}> {
     render() {
         let players = _.sortBy(this.props.players, "name");
         let anonymousCount = _.remove(players, p => p.name.toLowerCase() == "anonymous player").length;

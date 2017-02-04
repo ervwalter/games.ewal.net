@@ -9,6 +9,7 @@ import uiStateStore from './stores/ui-state-store';
 import StatsBlock from './components/stats-block';
 import RecentPlays from './components/recent-plays';
 import Collection from './components/collection';
+import UnplayedGames from './components/unplayed-games';
 
 useStrict(true);
 
@@ -28,6 +29,7 @@ class App extends React.Component<typeof stores, {}> {
 					<StatsBlock />
 					{stores.playStore.isLoading ? <Loading /> : [
 						<RecentPlays key="plays"/>,
+						<UnplayedGames key="unplayed"/>,
 						<Collection key="collection"/>
 					]}
 				</div>
@@ -36,7 +38,7 @@ class App extends React.Component<typeof stores, {}> {
 	}
 };
 
-class Loading extends React.Component<undefined, undefined> {
+class Loading extends React.Component<{}, {}> {
 	render() {
 		return <div className="button is-loading"></div>
 	}
