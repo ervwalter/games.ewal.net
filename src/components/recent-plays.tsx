@@ -40,7 +40,7 @@ class PlaysTableOrList extends React.Component<{ plays: Play[], uiStateStore?: U
     render() {
         return (
             <div className="recent-plays">
-                { this.props.uiStateStore.isMobile ? <PlaysList plays={this.props.plays} /> : <PlaysTable plays={this.props.plays} />}
+                {this.props.uiStateStore.isMobile ? <PlaysList plays={this.props.plays} /> : <PlaysTable plays={this.props.plays} />}
             </div>
         )
     }
@@ -113,12 +113,12 @@ class Players extends React.Component<{ players: Player[] }, undefined> {
             components.push(
                 <span className="player" key={player.name}>
                     <span className={className}>{player.name}</span>
-                    {player.new && 
+                    {player.new &&
                         <img src="/images/new-player.png" alt="New Player" title="New Player" />
                     }
                     <span>{comma}&nbsp;</span>
                 </span>
-                );
+            );
         });
         if (anonymousCount > 0) {
             components.push(<span className="player" key="anonymous player">and {anonymousCount} other{anonymousCount > 1 ? 's' : ''}</span>);
