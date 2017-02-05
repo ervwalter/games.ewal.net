@@ -6,6 +6,8 @@ export interface Game {
 	gameId: string;
 	name: string;
 	sortableName: string;
+	shortName?: string;
+	sortableShortName?: string;
 	description?: string;
 	image: string;
 	thumbnail: string;
@@ -96,19 +98,8 @@ export class CollectionStore {
 				}
 				game.ownedExpansionCount = 0;
 				if (game.expansions) {
-					let parentName = game.name.toLowerCase();
 					game.expansions = _.filter(game.expansions, (expansion) => expansion.owned);
 					game.ownedExpansionCount = game.expansions.length;
-					for (let expansion of game.expansions) {
-						if (expansion.name.toLowerCase().substr(0, parentName.length) === parentName) {
-							let shortName = expansion.name.substr(parentName.length).trim();
-							expansion.name = shortName;
-							if (!shortName.toLowerCase().match(/^[a-z]/)) {
-								expansion.name = trimStart(shortName, '–', '-', ':', ' ');
-								expansion.sortableName = expansion.name.toLowerCase().trim().replace(/^the\ |a\ |an\ /, '');
-							}
-						}
-					}
 				}
 			}
 			this.isLoading = false;
@@ -116,21 +107,6 @@ export class CollectionStore {
 	}
 
 }
-
-function trimStart(source: string, ...characters: string[]) {
-	var i, _ref;
-	if (source.length === 0) {
-		return source;
-	}
-	if (characters == null) {
-		characters = [' '];
-	}
-	i = 0;
-	while ((_ref = source.charAt(i), characters.indexOf(_ref) >= 0) && i < source.length) {
-		i++;
-	}
-	return source.substring(i);
-};
 
 const singleton = new CollectionStore();
 export default singleton;

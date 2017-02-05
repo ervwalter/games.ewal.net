@@ -70,8 +70,8 @@ class Expansions extends React.Component<{ game: Game }, {}> {
             <div className="expansions">
                 <span className="expansion-count">{game.ownedExpansionCount} expansions</span>
                 <div className="box expansions-tip">
-                    {_.sortBy(game.expansions, 'sortableName').map((expansion, index) => {
-                        return <div key={expansion.gameId}>{expansion.name}{index < maxIndex ? ',' : ''}</div>;
+                    {_.sortBy(game.expansions, 'sortableShortName').map((expansion, index) => {
+                        return <div key={expansion.gameId}>{expansion.shortName}{index < maxIndex ? ',' : ''}</div>;
                     })}
                 </div>
             </div>

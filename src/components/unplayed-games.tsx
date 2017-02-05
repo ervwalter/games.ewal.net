@@ -12,8 +12,8 @@ export default class UnplayedGames extends React.Component<{ collectionStore?: C
         }
         return (
             <div className="subsection">
-                <div className="title is-4 is-hidden-mobile">
-                    Unplayed and Waiting for Love
+                <div className="title is-4">
+                    Unplayed Games Waiting for a Chance to Shine
                     </div>
                 <UnplayedThumbnails games={this.props.collectionStore.unplayedGames} />
             </div>
