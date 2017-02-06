@@ -137,6 +137,15 @@ export class StatsStore {
 		return new PlayStats();
 	}
 
+	@computed public get thisYearStats() {
+		if (!this.playStore.isLoading) {
+			let cutoff = moment().startOf('year').subtract(1, 'day');
+			let plays = _.takeWhile(this.playStore.plays, (play) => play.playDate.isAfter(cutoff));
+			return new PlayStats(plays)
+		}
+		return new PlayStats();
+	}
+
 	@computed public get allTimeStats() {
 		if (!this.playStore.isLoading) {
 			return new PlayStats(this.playStore.plays)
