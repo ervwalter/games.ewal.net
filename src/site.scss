@@ -1,6 +1,7 @@
 $tablet: 768px;
 $blue: #268bd2;
 $primary: $blue;
+$table-border: #eee;
 
 @import "~bulma/bulma.sass";
 
@@ -31,6 +32,7 @@ a:hover {
         th {
             font-weight: 600;
             color: $text;
+            border-width: 0 0 1px;
         }
     }
 }
@@ -245,6 +247,16 @@ div.button {
         @include tablet{
             width: auto;
             min-width: 90%;
+        }
+    }
+
+    td, th {
+        &:first-child {
+            padding-left: 1em;
+        }
+
+        &:last-child {
+            padding-right: 1em;
         }
     }
 

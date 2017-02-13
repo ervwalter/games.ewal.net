@@ -38,6 +38,7 @@ export interface Game {
 	wishList: boolean;
 	userComment: string;
 	expansions?: Game[];
+	allExpansions?: Game[];
 	ownedExpansionCount?: number;
 }
 
@@ -49,10 +50,12 @@ export class CollectionStore {
 	@observable private sortDirection: SortDirection = "asc";
 
 	@observable public games: Game[];
+	@observable public allGames: Game[];
 	@observable public isLoading: boolean;
 
 	public constructor() {
 		this.games = [];
+		this.allGames = [];
 		this.isLoading = true;
 
 		this.loadGames();
@@ -65,6 +68,23 @@ export class CollectionStore {
 
 	@computed public get unplayedGames() {
 		return _(this.games).filter(game => game.numPlays == 0).sortBy('sortableName').value();
+	}
+
+	@computed public get preorderedGames() {
+		let preordered: Game[] = [];
+		for (let game of this.allGames) {
+			if (game.preOrdered) {
+				preordered.push(game);
+			}
+			if (game.expansions) {
+				for (let expansion of game.allExpansions) {
+					if (expansion.preOrdered) {
+						preordered.push(expansion);
+					}
+				}
+			}
+		}
+		return _.sortBy(preordered, 'sortableName');
 	}
 
 	@action public changeSort(sortBy: SortColumns) {
@@ -91,17 +111,19 @@ export class CollectionStore {
 		let data = new DataProvider();
 		const games = await data.fetch<Game[]>('/api/collection');
 		runInAction(() => {
-			this.games = _.filter(games, (game) => game.owned);
-			for (let game of this.games) {
+			for (let game of games) {
 				if (!(game.rating > 0)) {
 					game.rating = 0;
 				}
 				game.ownedExpansionCount = 0;
 				if (game.expansions) {
+					game.allExpansions = game.expansions;
 					game.expansions = _.filter(game.expansions, (expansion) => expansion.owned);
 					game.ownedExpansionCount = game.expansions.length;
 				}
 			}
+			this.allGames = games;
+			this.games = _.filter(games, (game) => game.owned);
 			this.isLoading = false;
 		});
 	}

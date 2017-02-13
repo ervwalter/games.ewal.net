@@ -1,4 +1,4 @@
-import {observable, computed, action, runInAction} from 'mobx';
+import { observable, computed, action, runInAction } from 'mobx';
 import DataProvider from './data-provider';
 import * as moment from 'moment';
 import * as _ from 'lodash';
@@ -48,7 +48,7 @@ export class PlayStore {
 	public constructor() {
 		this.plays = [];
 		this.isLoading = true;
-		this.loadPlays();    
+		this.loadPlays();
 	}
 
 	@action private async loadPlays() {
@@ -57,13 +57,13 @@ export class PlayStore {
 		const plays = await data.fetch<any[]>('/api/plays');
 		runInAction(() => {
 			// process each play
-			for (let play of plays) {
+			this.plays = _.orderBy(plays, ['playDate', 'playId'], ['desc', 'desc']);
+			for (let play of this.plays) {
 				play.playDate = moment(play.playDate);
 				if (play.location == "") {
 					play.location = "Home";
 				}
 			}
-			this.plays = plays;
 			this.isLoading = false;
 		});
 	}
@@ -71,7 +71,7 @@ export class PlayStore {
 	@computed get recentGames() {
 		return _(this.plays)
 			.uniqBy(p => p.gameId)
-			.map<PlayedGame>(p =>{
+			.map<PlayedGame>(p => {
 				return {
 					gameId: p.gameId,
 					name: p.name,

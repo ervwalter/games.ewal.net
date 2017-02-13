@@ -4,39 +4,42 @@ import { CollectionStore, SortColumns, Game } from '../stores/collection-store';
 import { UIStateStore } from '../stores/ui-state-store';
 import * as _ from 'lodash';
 
-export default class Collection extends React.Component<{}, {}> {
+@inject("collectionStore")
+@observer
+export default class Collection extends React.Component<{ collectionStore?: CollectionStore }, {}> {
+    handleSort = (column: SortColumns, e: any) => {
+        e.preventDefault();
+        this.props.collectionStore.changeSort(column);
+    };
+
     render() {
+        if (this.props.collectionStore.games.length == 0) {
+            return null;
+        }
         return (
             <div className="subsection">
                 <div className="title is-4">
                     <span className="is-hidden-mobile">Current </span>Game Collection
                         <a className="title-link" target="_blank" href="https://boardgamegeek.com/collection/user/ervwalter?own=1"><i className="fa fa-external-link" aria-hidden="true"></i></a>
                 </div>
-                <CollectionTable />
+                <CollectionTable games={this.props.collectionStore.sortedGames} handleSort={this.handleSort}/>
             </div>
         )
     }
 };
 
-@inject("collectionStore")
-@observer
-class CollectionTable extends React.Component<{ collectionStore?: CollectionStore }, {}> {
-    handleSort = (column: SortColumns, e: any) => {
-        console.log(column);
-        e.preventDefault();
-        this.props.collectionStore.changeSort(column);
-    }
+class CollectionTable extends React.Component<{ games: Game[], handleSort: (column: SortColumns, e: any) => void}, {}> {
     render() {
         return (
             <div className="collection">
                 <table className="table is-striped">
                     <thead><tr>
-                        <th><a onClick={(e) => this.handleSort('sortableName', e)}>Name</a></th>
-                        <th><a onClick={(e) => this.handleSort('numPlays', e)}><span className="is-hidden-mobile">Times </span>Played</a></th>
-                        <th className="rating"><a onClick={(e) => this.handleSort('rating', e)}><span className="is-hidden-mobile">My </span>Rating</a></th>
+                        <th><a onClick={(e) => this.props.handleSort('sortableName', e)}>Name</a></th>
+                        <th><a onClick={(e) => this.props.handleSort('numPlays', e)}><span className="is-hidden-mobile">Times </span>Played</a></th>
+                        <th className="rating"><a onClick={(e) => this.props.handleSort('rating', e)}><span className="is-hidden-mobile">My </span>Rating</a></th>
                     </tr></thead>
                     <tbody>
-                        {this.props.collectionStore.sortedGames.map(game => <CollectionRow game={game} key={game.gameId} />)}
+                        {this.props.games.map(game => <CollectionRow game={game} key={game.gameId} />)}
                     </tbody>
                 </table>
             </div>

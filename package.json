@@ -7,8 +7,8 @@
     "url": "https://github.com/ervwalter/games.ewal.net.git"
   },
   "scripts": {
-    "start": "concurrently --raw \"npm run dotnet-run\" \"npm run webpack-dev-server\"",
-    "build": "concurrently -p name -n \"dotnet,webpack\" -c \"blue,green\" \"npm run dotnet-build\" \"npm run webpack-dev\"",
+    "start": "run-p dotnet-run webpack-dev-server",
+    "build": "run-p dotnet-build webpack-dev",
     "publish": "run-s webpack-prod dotnet-publish git-add git-commit git-push",
     "webpack-dev": "webpack",
     "webpack-prod": "webpack -p --env prod",
