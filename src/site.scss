@@ -231,10 +231,31 @@ div.button {
         }
     }
 
-    .winner {
-        font-weight: 500;
-        color: #0a0;
+    .new {
+        font-style: italic;
+        // color: #26a69a;
     }
+
+    .winner {
+        font-weight: 600;
+        // color: #0a0;
+    }
+
+    .winner:after {
+        content: "🏅";
+        opacity: 0.6;
+        font-style: normal;
+        font-size: 0.85rem;
+    }
+
+    // .new:after {
+    //     content: "⭐";
+    //     vertical-align: super;
+    //     font-size: 60%;
+    //     opacity: 0.6;
+    //     font-style: normal;
+    //     // color: #888;
+    // }
 }
 
 .collection {

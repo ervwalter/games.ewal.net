@@ -109,13 +109,14 @@ class Players extends React.Component<{ players: Player[] }, {}> {
         }
         players.forEach((player, index) => {
             let className = player.win ? "winner " : "";
+            let titles = []
+            if (player.win)  titles.push("Winner");
+            if (player.new) titles.push("New Player");
+            className += player.new ? "new " : "";
             let comma = (index < maxIndex ? "," : "");
             components.push(
                 <span className="player" key={player.name}>
-                    <span className={className}>{player.name}</span>
-                    {player.new &&
-                        <img src="/images/new-player.png" alt="New Player" title="New Player" />
-                    }
+                    <span className={className} title={titles.join(" & ")}>{player.name}</span>
                     <span>{comma}&nbsp;</span>
                 </span>
             );

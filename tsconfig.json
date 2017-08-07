@@ -12,7 +12,7 @@
     "jsx": "react",
     "sourceMap": true,
     "skipLibCheck": true,
-    "lib": ["dom", "es2015.promise", "es5"]
+    "lib": ["dom", "es2015", "es5"]
   },
   "exclude": [
     "node_modules"
