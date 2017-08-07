@@ -83,7 +83,7 @@ module.exports = function (env) {
 			test: /\.scss$/,
 			loader: ExtractTextPlugin.extract({
 				fallbackLoader: "style-loader",
-				loader: ["css-loader?sourceMap", "sass-loader?sourceMap"]
+				loader: ["css-loader", "sass-loader"]
 			})
 		});
 	}

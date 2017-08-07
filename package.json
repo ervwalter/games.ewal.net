@@ -9,7 +9,7 @@
   "scripts": {
     "start": "run-p dotnet-run webpack-dev-server",
     "build": "run-p dotnet-build webpack-dev",
-    "publish": "run-s webpack-prod dotnet-publish git-add git-commit git-push",
+    "deploy": "run-s webpack-prod dotnet-publish git-add git-commit git-push",
     "webpack-dev": "webpack",
     "webpack-prod": "webpack -p --env prod",
     "webpack-dev-server": "webpack-dev-server --open --hot",
@@ -50,7 +50,7 @@
     "webpack-livereload-plugin": "^0.10.0"
   },
   "dependencies": {
-    "bulma": "^0.3.1",
+    "bulma": "^0.5.0",
     "core-js": "^2.4.1",
     "json-fetch": "^3.1.0",
     "lodash": "^4.17.4",

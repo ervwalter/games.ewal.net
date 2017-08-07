@@ -9,9 +9,10 @@ namespace GamesWebApp.Controllers
 {
   public class GamesController : Controller
   {
-    private const string PlaysFileName = "plays-ervwalter.json";
+    private const string PlaysFilename = "plays-ervwalter.json";
     private const string RecentPlaysFilename = "recent-plays-ervwalter.json";
-    private const string CollectionFileName = "collection-ervwalter.json";
+    private const string CollectionFilename = "collection-ervwalter.json";
+    private const string TopTenFilename = "top10-ervwalter.json";
 
     private string _connectionString;
 
@@ -26,7 +27,7 @@ namespace GamesWebApp.Controllers
     public ActionResult Plays()
     {
       CloudBlobContainer container = GetContainer();
-      CloudBlockBlob plays = container.GetBlockBlobReference(PlaysFileName);
+      CloudBlockBlob plays = container.GetBlockBlobReference(PlaysFilename);
       string json = plays.DownloadText();
       return JsonString(json);
     }
@@ -48,7 +49,18 @@ namespace GamesWebApp.Controllers
     public ActionResult Collection()
     {
       CloudBlobContainer container = GetContainer();
-      CloudBlockBlob collection = container.GetBlockBlobReference(CollectionFileName);
+      CloudBlockBlob collection = container.GetBlockBlobReference(CollectionFilename);
+      string json = collection.DownloadText();
+      return JsonString(json);
+    }
+
+    [HttpGet]
+    [Route("api/topten")]
+    [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 30)]
+    public ActionResult TopTen()
+    {
+      CloudBlobContainer container = GetContainer();
+      CloudBlockBlob collection = container.GetBlockBlobReference(TopTenFilename);
       string json = collection.DownloadText();
       return JsonString(json);
     }

@@ -203,14 +203,14 @@ div.button {
         border-bottom: 1px solid $table-border;
 
         &:hover {
-            background-color: $table-row-hover-background;
+            background-color: $table-row-hover-background-color;
         }
         
         &:nth-child(even) {
-          background-color: $table-row-even-background;
+          background-color: $table-striped-row-even-background-color;
 
           &:hover {
-            background-color: $table-row-even-hover-background;
+            background-color: $table-striped-row-even-hover-background-color;
           }
         }
 
@@ -258,7 +258,7 @@ div.button {
     // }
 }
 
-.collection {
+.collection, .topten {
     margin: 0 -1rem 1.5rem -1rem;
      @include tablet {
         margin: 0 0 1.5rem 0;
@@ -293,6 +293,10 @@ div.button {
             @include tablet {
                 text-align: left;
             }
+        }
+
+        &.rank {
+            text-align: center;
         }
     }
 
