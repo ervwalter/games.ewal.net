@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 
 @inject("collectionStore")
 @observer
-export default class Collection extends React.Component<{ collectionStore?: CollectionStore }, {}> {
+export default class Collection extends React.Component<{ collectionStore?: CollectionStore, visible: boolean  }, {}> {
     handleSort = (column: SortColumns, e: any) => {
         e.preventDefault();
         this.props.collectionStore.changeSort(column);
@@ -16,8 +16,12 @@ export default class Collection extends React.Component<{ collectionStore?: Coll
         if (this.props.collectionStore.games.length == 0) {
             return null;
         }
+        let className = "subsection";
+        if (!this.props.visible) {
+            className += " hidden";
+        }
         return (
-            <div className="subsection">
+            <div className={className}>
                 <div className="title is-4">
                     <span className="is-hidden-mobile">Current </span>Game Collection
                         <a className="title-link" target="_blank" href="https://boardgamegeek.com/collection/user/ervwalter?own=1"><i className="fa fa-external-link" aria-hidden="true"></i></a>

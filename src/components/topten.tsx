@@ -8,28 +8,71 @@ import { UIStateStore } from '../stores/ui-state-store';
 // @observer
 // class Rating extends React.Component<{ rating: number, uiStateStore?: UIStateStore }, {}> {
 
-@inject("topTenStore")
+@inject((stores) => ({
+    topTenStore: stores.topTenStore as TopTenStore,
+    uiStateStore: stores.uiStateStore as UIStateStore
+}))
 @observer
-export default class ToPTen extends React.Component<{ topTenStore?: TopTenStore }, {}> {
-    render() {
+export default class TopTen extends React.Component<{ topTenStore?: TopTenStore, uiStateStore?: UIStateStore, visible: boolean }, {}> {
+    render(): any {
         if (this.props.topTenStore.games.length == 0) {
             return null;
         }
+        let className = "subsection";
+        if (!this.props.visible) {
+            className += " hidden";
+        }
         return (
-            <div className="subsection">
+            <div className={className}>
                 <div className="title is-4">
-                    Top 10 Games
+                    Top 10 Favorite Games
                 </div>
-                <TopTenTable games={this.props.topTenStore.games} />
+                {this.props.uiStateStore.isMobile ? <TopTenMobileTable games={this.props.topTenStore.games} /> : <TopTenList games={this.props.topTenStore.games} />}
             </div>
         )
     }
 };
 
-class TopTenTable extends React.Component<{ games: TopTenItem[] }, {}> {
+class TopTenList extends React.Component<{ games: TopTenItem[] }, {}> {
     render() {
         return (
             <div className="topten">
+                {this.props.games.map(game => <TopTenEntry game={game} key={game.gameId} />)}
+            </div>
+        );
+    }
+}
+
+class TopTenEntry extends React.Component<{ game: TopTenItem }, {}> {
+    render() {
+        const game = this.props.game;
+        return (
+            <div className="columns">
+                <div className="column is-narrow rank">
+                    <span className="">#<b>{game.rank}</b></span>
+                </div>
+                <div className="column is-narrow thumbnail">
+                    <img src={game.thumbnail.replace("_t.", "_t.")} />
+                </div>
+                <div className="column">
+                    <div className="content">
+                        <p>
+                            <div className="topten-title"><a className="name" target="_blank" href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}>{game.name}</a> ({game.yearPublished})</div>
+                            <div className="topten-subtitle"><PlayCount plays={game.numPlays} /> • Rating: <RatingStars rating={game.rating} /> • Designed By: <span className="designers">{game.designers.join(", ")}</span> </div>
+                            <div className="mechanics">{game.mechanics.join(" • ")}</div>
+                        </p>
+                        <p className="description" dangerouslySetInnerHTML={{ __html: game.description }}></p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+class TopTenMobileTable extends React.Component<{ games: TopTenItem[] }, {}> {
+    render() {
+        return (
+            <div className="topten-mobile">
                 <table className="table is-striped">
                     <thead><tr>
                         <th>Rank</th>
@@ -37,7 +80,7 @@ class TopTenTable extends React.Component<{ games: TopTenItem[] }, {}> {
                         <th className="rating">Rating</th>
                     </tr></thead>
                     <tbody>
-                        {this.props.games.map(game => <TopTenRow game={game} key={game.gameId} />)}
+                        {this.props.games.map(game => <TopTenMobileRow game={game} key={game.gameId} />)}
                     </tbody>
                 </table>
             </div>
@@ -45,7 +88,7 @@ class TopTenTable extends React.Component<{ games: TopTenItem[] }, {}> {
     }
 }
 
-class TopTenRow extends React.Component<{ game: TopTenItem }, {}> {
+class TopTenMobileRow extends React.Component<{ game: TopTenItem }, {}> {
     render() {
         let game = this.props.game;
         return (
@@ -60,20 +103,18 @@ class TopTenRow extends React.Component<{ game: TopTenItem }, {}> {
     }
 }
 
-// class PlayCount extends React.Component<{ plays: number }, {}> {
-//     render() {
-//         if (this.props.plays > 0) {
-//             return (
-//                 <span>
-//                     <span className="is-hidden-mobile">Played </span><b>{this.props.plays}</b> time{this.props.plays > 1 ? 's' : ''}
-//                 </span>
-//             );
-//         }
-//         else {
-//             return <span>—</span>;
-//         }
-//     }
-// }
+class PlayCount extends React.Component<{ plays: number }, {}> {
+    render() {
+        if (this.props.plays > 0) {
+            return (
+                <span>Played <b>{this.props.plays}</b> time{this.props.plays > 1 ? 's' : ''}</span>
+            );
+        }
+        else {
+            return <span>—</span>;
+        }
+    }
+}
 
 @inject("uiStateStore")
 @observer
@@ -95,35 +136,35 @@ class RatingNumber extends React.Component<{ rating: number }, {}> {
 }
 
 
-// class RatingStars extends React.Component<{ rating: number }, {}> {
-//     render() {
-//         return (
-//             <span className="stars-container">
-//                 <span className="stars-background is-flex">
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                     <i className="fa fa-star-o" aria-hidden="true"></i>
-//                 </span>
-//                 <span className="stars-foreground is-flex" style={{ width: `${this.props.rating * 10}%` }}>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                     <i className="fa fa-star" aria-hidden="true"></i>
-//                 </span>
-//             </span>
-//         )
-//     }
-// }
+class RatingStars extends React.Component<{ rating: number }, {}> {
+    render() {
+        return (
+            <span className="stars-container">
+                <span className="stars-background is-flex">
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                </span>
+                <span className="stars-foreground is-flex" style={{ width: `${this.props.rating * 10}%` }}>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                    <i className="fa fa-star" aria-hidden="true"></i>
+                </span>
+            </span>
+        )
+    }
+}

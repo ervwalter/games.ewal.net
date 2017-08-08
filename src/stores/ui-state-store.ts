@@ -1,11 +1,15 @@
 import { observable, computed, action } from 'mobx';
 
+export type Tabs = "stats" | "recent" | "top10" | "pending" | "collection";
+
 export class UIStateStore {
     @observable public width: number;
     @observable public height: number;
+    @observable public activeTab: Tabs;
 
     public constructor() {
         let running = false;
+        this.activeTab = "recent";
         window.addEventListener('resize', () => {
             if (!running) {
                 running = true;
@@ -17,6 +21,10 @@ export class UIStateStore {
         });
 
         this.resize(window.innerWidth, window.innerHeight);
+    }
+
+    @action public changeTab(newTab: Tabs) {
+        this.activeTab = newTab;
     }
 
     @action private resize(width: number, height: number) {

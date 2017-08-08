@@ -6,13 +6,17 @@ import * as _ from 'lodash';
 
 @inject("playStore")
 @observer
-export default class RecentPlays extends React.Component<{ playStore?: PlayStore }, {}> {
+export default class RecentPlays extends React.Component<{ playStore?: PlayStore, visible: boolean }, {}> {
     render() {
         if (this.props.playStore.isLoading) {
             return null;
         }
+        let className = "subsection";
+        if (!this.props.visible) {
+            className += " hidden";
+        }
         return (
-            <div className="subsection">
+            <div className={className}>
                 <div className="title is-4">
                     Recent Plays
                     <a className="title-link" target="_blank" href="https://boardgamegeek.com/plays/bydate/user/ervwalter/subtype/boardgame"><i className="fa fa-external-link" aria-hidden="true"></i></a>
