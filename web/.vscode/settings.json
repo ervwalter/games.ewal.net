@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/*.css": {
+      "when": "$(basename).scss"
+    }
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveTimeout": 2000,
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "sort-imports.default-sort-style": "module-compact"
+}

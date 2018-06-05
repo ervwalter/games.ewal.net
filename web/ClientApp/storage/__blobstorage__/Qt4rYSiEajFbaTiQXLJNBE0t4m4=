@@ -1,0 +1,208 @@
+[
+  {
+    "rank": 1,
+    "gameId": "161936",
+    "name": "Pandemic Legacy: Season 1",
+    "image": "https://cf.geekdo-images.com/original/img/P_SwsOtPLqgk2ScCgI2YrI9Rg6I=/0x0/pic2452831.png",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/WI5NmPd9C3PpRvHKoP4a0Ettlao=/fit-in/200x150/pic2452831.png",
+    "rating": 10.0,
+    "numPlays": 23,
+    "yearPublished": 2015,
+    "mechanics": [
+      "Action Point Allowance System",
+      "Co-operative Play",
+      "Hand Management",
+      "Point to Point Movement",
+      "Set Collection",
+      "Trading",
+      "Variable Player Powers"
+    ],
+    "designers": [
+      "Rob Daviau",
+      "Matt Leacock"
+    ],
+    "description": "Pandemic Legacy is a co-operative campaign game, with an overarching story-arc played through 12-24 sessions, depending on how well your group does at the game. At the beginning, the game starts very similar to basic Pandemic, in which your team of disease-fighting specialists races against the clock to travel around the world, treating disease hotspots while researching cures for each of four plagues before they get out of hand."
+  },
+  {
+    "rank": 2,
+    "gameId": "174430",
+    "name": "Gloomhaven",
+    "image": "https://cf.geekdo-images.com/original/img/lDN358RgcYvQfYYN6Oy2TXpifyM=/0x0/pic2437871.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/e7GyV4PaNtwmalU-EQAGecwoBSI=/fit-in/200x150/pic2437871.jpg",
+    "rating": 9.5,
+    "numPlays": 5,
+    "yearPublished": 2017,
+    "mechanics": [
+      "Action / Movement Programming",
+      "Co-operative Play",
+      "Grid Movement",
+      "Hand Management",
+      "Modular Board",
+      "Role Playing",
+      "Simultaneous Action Selection",
+      "Storytelling",
+      "Variable Player Powers"
+    ],
+    "designers": [
+      "Isaac Childres"
+    ],
+    "description": "Gloomhaven  is a game of Euro-inspired tactical combat in a persistent world of shifting motives. Players will take on the role of a wandering adventurer with their own special set of skills and their own reasons for traveling to this dark corner of the world. Players must work together out of necessity to clear out menacing dungeons and forgotten ruins. In the process, they will enhance their abilities with experience and loot, discover new locations to explore and plunder, and expand an ever-branching story fueled by the decisions they make."
+  },
+  {
+    "rank": 3,
+    "gameId": "68448",
+    "name": "7 Wonders",
+    "image": "https://cf.geekdo-images.com/original/img/3DP_RW5lTX0WrV67s8qi8CsiXoQ=/0x0/pic860217.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/Grz-qM9xwxlvQGK7B-MiljtO9pQ=/fit-in/200x150/pic860217.jpg",
+    "rating": 9.0,
+    "numPlays": 26,
+    "yearPublished": 2010,
+    "mechanics": [
+      "Card Drafting",
+      "Hand Management",
+      "Set Collection",
+      "Simultaneous Action Selection",
+      "Variable Player Powers"
+    ],
+    "designers": [
+      "Antoine Bauza"
+    ],
+    "description": "You are the leader of one of the 7 great cities of the Ancient World. Gather resources, develop commercial routes, and affirm your military supremacy. Build your city and erect an architectural wonder which will transcend future times."
+  },
+  {
+    "rank": 4,
+    "gameId": "215341",
+    "name": "Thunderstone Quest",
+    "image": "https://cf.geekdo-images.com/original/img/ku-b5b1HoJv2ttbcKn-RqYo9o7o=/0x0/pic3941484.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/CfXzrRgHORGV-chBDNDPhuXsQkM=/fit-in/200x150/pic3941484.jpg",
+    "rating": 9.0,
+    "numPlays": 2,
+    "yearPublished": 2018,
+    "mechanics": [
+      "Deck / Pool Building"
+    ],
+    "designers": [
+      "Mike Elliott",
+      "Bryan Reese",
+      "Mark Wootton"
+    ],
+    "description": "Thunderstone returns with Thunderstone Quest. Recruit your heroes, arm your party, then visit the dungeon — and the dungeon has new perils not seen in prior Thunderstone releases. All-new dungeon tiles create new challenges and rewards as you explore deeper and deeper in the dungeon. Each quest brings new dungeons as well as new side adventures!"
+  },
+  {
+    "rank": 5,
+    "gameId": "128621",
+    "name": "Viticulture",
+    "image": "https://cf.geekdo-images.com/original/img/ATjch6ZLh4gQEF6CjZPDKl1ZroM=/0x0/pic2619743.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/ziPU9-pzvClJE8HwidpjisHBKw0=/fit-in/200x150/pic2619743.jpg",
+    "rating": 9.0,
+    "numPlays": 9,
+    "yearPublished": 2013,
+    "mechanics": [
+      "Hand Management",
+      "Worker Placement"
+    ],
+    "designers": [
+      "Jamey Stegmaier",
+      "Alan Stone"
+    ],
+    "description": "In Viticulture, the players find themselves in the roles of people in rustic, pre-modern Tuscany who have inherited meager vineyards. They have a few plots of land, an old crushpad, a tiny cellar, and three workers. They each have a dream of being the first to call their winery a true success."
+  },
+  {
+    "rank": 6,
+    "gameId": "192458",
+    "name": "51st State: Master Set",
+    "image": "https://cf.geekdo-images.com/original/img/FikdHVDtGfaFsStTcuw0LwiFTqo=/0x0/pic2945432.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/bxYLwIIAg9qhq9BSCcODWN94SR4=/fit-in/200x150/pic2945432.jpg",
+    "rating": 9.0,
+    "numPlays": 6,
+    "yearPublished": 2016,
+    "mechanics": [
+      "Card Drafting",
+      "Hand Management",
+      "Variable Phase Order",
+      "Worker Placement"
+    ],
+    "designers": [
+      "Ignacy Trzewiczek"
+    ],
+    "description": "The world you know no longer exists. There is no government. No army. No civilization. The United States has collapsed, and now thirty years after the war started, new powers finally try to take control over the ruined country, try to establish a new order, try to control others and create a new country, a new state: the 51st State."
+  },
+  {
+    "rank": 7,
+    "gameId": "28143",
+    "name": "Race for the Galaxy",
+    "image": "https://cf.geekdo-images.com/original/img/-2F-mPR0ssTm2IAsMAvnZzR0dn4=/0x0/pic236327.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/rORrfB3lPWLRN_tfdDl_oSbzwyo=/fit-in/200x150/pic236327.jpg",
+    "rating": 9.0,
+    "numPlays": 25,
+    "yearPublished": 2007,
+    "mechanics": [
+      "Hand Management",
+      "Simultaneous Action Selection",
+      "Variable Phase Order",
+      "Variable Player Powers"
+    ],
+    "designers": [
+      "Thomas Lehmann"
+    ],
+    "description": "In the card game Race for the Galaxy, players build galactic civilizations by playing game cards in front of them that represent worlds or technical and social developments. Some worlds allow players to produce goods, which can be consumed later to gain either card draws or victory points when the appropriate technologies are available to them. These are mainly provided by the developments and worlds that are not able to produce, but the fancier production worlds also give these bonuses."
+  },
+  {
+    "rank": 8,
+    "gameId": "124361",
+    "name": "Concordia",
+    "image": "https://cf.geekdo-images.com/original/img/abKLQBfHHaouqsLx7GGiIzqXBu8=/0x0/pic3453267.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/Ap4Vj-Gb0Z64bxDUf7ulr52rFMw=/fit-in/200x150/pic3453267.jpg",
+    "rating": 9.0,
+    "numPlays": 5,
+    "yearPublished": 2013,
+    "mechanics": [
+      "Card Drafting",
+      "Deck / Pool Building",
+      "Hand Management",
+      "Point to Point Movement"
+    ],
+    "designers": [
+      "Mac Gerdts"
+    ],
+    "description": "Two thousand years ago, the Roman Empire ruled the lands around the Mediterranean Sea. With peace at the borders, harmony inside the provinces, uniform law, and a common currency, the economy thrived and gave rise to mighty Roman dynasties as they expanded throughout the numerous cities. Guide one of these dynasties and send colonists to the remote realms of the Empire; develop your trade network; and appease the ancient gods for their favor — all to gain the chance to emerge victorious!"
+  },
+  {
+    "rank": 9,
+    "gameId": "102794",
+    "name": "Caverna: The Cave Farmers",
+    "image": "https://cf.geekdo-images.com/original/img/xLuIh5VNsD57GXfcBox_ZF1jH4o=/0x0/pic1790789.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/00FpWk6IN889ypSvLAo6ILUGZXw=/fit-in/200x150/pic1790789.jpg",
+    "rating": 9.0,
+    "numPlays": 6,
+    "yearPublished": 2013,
+    "mechanics": [
+      "Tile Placement",
+      "Worker Placement"
+    ],
+    "designers": [
+      "Uwe Rosenberg"
+    ],
+    "description": "Following along the same lines as its predecessor (Agricola), Caverna: The Cave Farmers is a worker-placement game at heart, with a focus on farming. In the game, you are the bearded leader of a small dwarf family that lives in a little cave in the mountains. You begin the game with a farmer and his spouse, and each member of the farming family represents an action that the player can take each turn. Together, you cultivate the forest in front of your cave and dig deeper into the mountain. You furnish the caves as dwellings for your offspring as well as working spaces for small enterprises."
+  },
+  {
+    "rank": 10,
+    "gameId": "169786",
+    "name": "Scythe",
+    "image": "https://cf.geekdo-images.com/original/img/enxCZt0Cn78-rlvmPvGtOej1ios=/0x0/pic3163924.jpg",
+    "thumbnail": "https://cf.geekdo-images.com/thumb/img/ZpuWhZuKrFry__SY8CTRuQp35rk=/fit-in/200x150/pic3163924.jpg",
+    "rating": 8.0,
+    "numPlays": 6,
+    "yearPublished": 2016,
+    "mechanics": [
+      "Area Control / Area Influence",
+      "Grid Movement",
+      "Simultaneous Action Selection",
+      "Variable Player Powers"
+    ],
+    "designers": [
+      "Jamey Stegmaier"
+    ],
+    "description": "It is a time of unrest in 1920s Europa. The ashes from the first great war still darken the snow. The capitalistic city-state known simply as “The Factory”, which fueled the war with heavily armored mechs, has closed its doors, drawing the attention of several nearby countries."
+  }
+]

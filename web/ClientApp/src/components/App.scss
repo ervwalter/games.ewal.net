@@ -1,0 +1,67 @@
+@import "variables";
+
+html {
+  font-size: 16px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.section {
+  padding: 2rem 1rem;
+  @include tablet {
+    padding: 3rem 1.5rem;
+  }
+}
+
+.title:not(:last-child) {
+  margin-bottom: 1rem;
+  @include tablet {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.table {
+  thead {
+    th {
+      font-weight: 600;
+      color: $text;
+      border-width: 0 0 1px;
+    }
+  }
+}
+
+#masthead {
+  background-color: #fcfcfc;
+  border-bottom: 1px solid #ececec;
+  width: 100%;
+
+  a {
+    color: $blue;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .navbar-item {
+    color: #999;
+    align-items: baseline;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .slashes {
+    color: #777;
+  }
+
+  .description {
+    margin-left: 1em;
+  }
+}
+
+div.button.is-loading {
+  border: none;
+}
