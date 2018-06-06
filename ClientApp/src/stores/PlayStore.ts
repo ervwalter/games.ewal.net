@@ -105,7 +105,7 @@ export class PlayStore {
               return play.duration;
             } else if (play.estimatedDuration && play.estimatedDuration > 0) {
               // use the estimated duration of an explicit one was not specified
-              return play.estimatedDuration;
+              return play.estimatedDuration * (play.numPlays || 1);
             } else {
               return 0;
             }
