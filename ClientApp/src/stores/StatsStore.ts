@@ -52,7 +52,7 @@ export class PlayStats {
           duration += play.duration;
         } else if (play.estimatedDuration && play.estimatedDuration > 0) {
           // use the estimated duration of an explicit one was not specified
-          duration += play.estimatedDuration;
+          duration += play.estimatedDuration * (play.numPlays || 1);
         }
 
         // find all the unique locations
