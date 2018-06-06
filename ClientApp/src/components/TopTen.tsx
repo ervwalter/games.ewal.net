@@ -57,9 +57,9 @@ class TopTenEntry extends React.Component<{ game: TopTenItem }, {}> {
           <img src={game.thumbnail.replace("_t.", "_t.")} />
         </div>
         <div className="column">
-          <div className="content">
+          <div className="content topten-content">
             <p>
-              <div className="topten-title">
+              <span className="topten-title">
                 <a
                   className="name"
                   target="_blank"
@@ -68,13 +68,13 @@ class TopTenEntry extends React.Component<{ game: TopTenItem }, {}> {
                   {game.name}
                 </a>{" "}
                 ({game.yearPublished})
-              </div>
-              <div className="topten-subtitle">
+              </span>
+              <span className="topten-subtitle">
                 <PlayCount plays={game.numPlays} /> • Rating:{" "}
                 <RatingStars rating={game.rating} /> • Designed By:{" "}
                 <span className="designers">{game.designers.join(", ")}</span>{" "}
-              </div>
-              <div className="mechanics">{game.mechanics.join(" • ")}</div>
+              </span>
+              <span className="mechanics">{game.mechanics.join(" • ")}</span>
             </p>
             <p className="description">{game.description}</p>
           </div>

@@ -160,6 +160,11 @@
 .topten .topten-subtitle {
   font-size: 0.8rem; }
 
+.topten .topten-title,
+.topten .topten-subtitle,
+.topten .mechanics {
+  display: block; }
+
 .collection,
 .most-plays,
 .topten-mobile {
