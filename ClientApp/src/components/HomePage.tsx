@@ -4,6 +4,7 @@ import { inject, observer } from "mobx-react";
 import React from "react";
 import Collection from "~/components/Collection";
 import Loading from "~/components/Loading";
+import MostPlayed from "~/components/MostPlayed";
 import PreorderedGames from "~/components/PreorderedGames";
 import RecentPlays from "~/components/RecentPlays";
 import StatsBlock from "~/components/StatsBlock";
@@ -50,6 +51,7 @@ class SectionTabs extends React.Component<{ viewStateStore?: ViewStateStore }> {
         <div>
           <StatsBlock />
           <RecentPlays visible={true} />
+          <MostPlayed visible={true} />
           <TopTen visible={true} />
           <UnplayedGames visible={true} />
           <PreorderedGames visible={true} />
@@ -64,14 +66,14 @@ class SectionTabs extends React.Component<{ viewStateStore?: ViewStateStore }> {
             <ul>
               <li className={activeTab === "recentPlays" ? "is-active" : ""}>
                 <a onClick={e => this.handleTabChange("recentPlays", e)}>
-                  Recent Plays
+                  Recent <span className="is-hidden-touch">&nbsp;Plays</span>
                 </a>
               </li>
-              {/* <li className={activeTab === "mostPlays" ? "is-active" : ""}>
+              <li className={activeTab === "mostPlays" ? "is-active" : ""}>
                 <a onClick={e => this.handleTabChange("mostPlays", e)}>
                   Most Played
                 </a>
-              </li> */}
+              </li>
               <li className={activeTab === "collection" ? "is-active" : ""}>
                 <a onClick={e => this.handleTabChange("collection", e)}>
                   Collection
@@ -79,7 +81,9 @@ class SectionTabs extends React.Component<{ viewStateStore?: ViewStateStore }> {
               </li>
               <li className={activeTab === "pending" ? "is-active" : ""}>
                 <a onClick={e => this.handleTabChange("pending", e)}>
-                  Unplayed / Preordered
+                  Unplayed<span className="is-hidden-touch">
+                    &nbsp;/ Preordered
+                  </span>
                 </a>
               </li>
               <li className={activeTab === "top10" ? "is-active" : ""}>
@@ -88,6 +92,7 @@ class SectionTabs extends React.Component<{ viewStateStore?: ViewStateStore }> {
             </ul>
           </div>
           <RecentPlays visible={activeTab === "recentPlays"} />
+          <MostPlayed visible={activeTab === "mostPlays"} />
           <TopTen visible={activeTab === "top10"} />
           <UnplayedGames visible={activeTab === "pending"} />
           <PreorderedGames visible={activeTab === "pending"} />

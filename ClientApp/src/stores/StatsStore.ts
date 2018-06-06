@@ -6,7 +6,7 @@ import { Play, PlayStore, PlayedGame } from "~/stores/PlayStore";
 
 type tbd = number | "...";
 
-class PlayStats {
+export class PlayStats {
   readonly numberOfPlays: tbd = "...";
   readonly uniqueGames: tbd = "...";
   readonly namedPlayers: tbd = "...";
@@ -94,7 +94,7 @@ class PlayStats {
   }
 }
 
-class CollectionStats {
+export class CollectionStats {
   readonly numberOfGames: tbd = "...";
   readonly numberOfExpansions: tbd = "...";
   readonly numberOfPreviouslyOwned: tbd = "...";

@@ -82,13 +82,6 @@
     margin: 0 0 1.5rem 0;
   }
 
-  table {
-    @include tablet {
-      width: auto;
-      min-width: 90%;
-    }
-  }
-
   td {
     white-space: nowrap;
 
@@ -243,6 +236,7 @@
 }
 
 .collection,
+.most-plays,
 .topten-mobile {
   margin: 0 -1rem 1.5rem -1rem;
   @include tablet {
@@ -251,10 +245,10 @@
 
   table {
     width: 100%;
-    @include tablet {
-      width: auto;
-      min-width: 90%;
-    }
+  }
+
+  thead tr th {
+    vertical-align: bottom;
   }
 
   td,
@@ -265,6 +259,9 @@
 
     &:last-child {
       padding-right: 1em;
+    }
+    &.duration {
+      text-align: right;
     }
   }
 
@@ -334,6 +331,117 @@
     margin-left: 15px;
     font-size: 0.9em;
     border-bottom: 1px dotted #ddd;
+  }
+}
+
+.recent-plays,
+.collection,
+.most-plays,
+.topten-mobile {
+  @include tablet {
+    table {
+      width: auto;
+    }
+
+    td + td,
+    th + th {
+      padding-left: 3em;
+    }
+  }
+}
+
+$nickel: #fefff5;
+$dime: #f5fff8;
+$quarter: #f5fcff;
+
+.most-plays-legend {
+  font-weight: normal;
+  font-size: 1rem;
+  @include mobile {
+    margin-top: 20px;
+  }
+  @include tablet {
+    display: inline-block;
+  }
+
+  div {
+    display: inline-block;
+  }
+
+  @include mobile {
+    .stat:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .stat {
+    margin-left: 1em;
+
+    div {
+      padding: 5px 8px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+    }
+
+    .nickels {
+      background-color: $nickel;
+    }
+
+    .dimes {
+      background-color: $dime;
+    }
+
+    .quarters {
+      background-color: $quarter;
+    }
+  }
+}
+
+.most-plays {
+  table {
+    width: 100%;
+    @include tablet {
+      width: auto;
+      min-width: auto;
+    }
+
+    .nickel {
+      background-color: $nickel;
+    }
+
+    .dime {
+      background-color: $dime;
+    }
+
+    .quarter {
+      background-color: $quarter;
+    }
+
+    td.name {
+      @include tablet {
+        padding-right: 2em;
+      }
+    }
+
+    tr:last-child td {
+      border-bottom-width: 1px;
+    }
+  }
+
+  .rank {
+    width: 0%;
+    text-align: center;
+    @include mobile {
+      display: none;
+    }
+  }
+
+  .rank + td,
+  .rank + th {
+    padding-left: 1em;
+    @include tablet {
+      padding-left: 5px;
+    }
   }
 }
 

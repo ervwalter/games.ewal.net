@@ -6,10 +6,9 @@ import { StatsStore } from "~/stores/StatsStore";
 
 @inject("statsStore")
 @observer
-export default class StatsBlock extends React.Component<
-  { statsStore?: StatsStore },
-  {}
-> {
+export default class StatsBlock extends React.Component<{
+  statsStore?: StatsStore;
+}> {
   render() {
     const {
       collectionStats,
@@ -70,16 +69,16 @@ export default class StatsBlock extends React.Component<
             </b> hours<span className="is-hidden-mobile"> played</span>
             <br />
             <b>
-              {allTimeStats.quarters}
-            </b> quarters<span className="is-hidden-mobile"> (25+ plays)</span>
+              {allTimeStats.nickles}
+            </b> nickels<span className="is-hidden-mobile"> (5+ plays)</span>
             <br />
             <b>
               {allTimeStats.dimes}
             </b> dimes<span className="is-hidden-mobile"> (10+ plays)</span>
             <br />
             <b>
-              {allTimeStats.nickles}
-            </b> nickels<span className="is-hidden-mobile"> (5+ plays)</span>
+              {allTimeStats.quarters}
+            </b> quarters<span className="is-hidden-mobile"> (25+ plays)</span>
             <br />
             <b>{allTimeStats.hIndex}</b> H-index<br />
           </div>

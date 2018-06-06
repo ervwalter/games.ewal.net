@@ -62,10 +62,6 @@
   @media screen and (min-width: 768px), print {
     .recent-plays {
       margin: 0 0 1.5rem 0; } }
-  @media screen and (min-width: 768px), print {
-    .recent-plays table {
-      width: auto;
-      min-width: 90%; } }
   .recent-plays td {
     white-space: nowrap; }
     @media screen and (min-width: 768px), print {
@@ -165,65 +161,89 @@
   font-size: 0.8rem; }
 
 .collection,
+.most-plays,
 .topten-mobile {
   margin: 0 -1rem 1.5rem -1rem; }
   @media screen and (min-width: 768px), print {
     .collection,
+    .most-plays,
     .topten-mobile {
       margin: 0 0 1.5rem 0; } }
   .collection table,
+  .most-plays table,
   .topten-mobile table {
     width: 100%; }
-    @media screen and (min-width: 768px), print {
-      .collection table,
-      .topten-mobile table {
-        width: auto;
-        min-width: 90%; } }
+  .collection thead tr th,
+  .most-plays thead tr th,
+  .topten-mobile thead tr th {
+    vertical-align: bottom; }
   .collection td:first-child,
   .collection th:first-child,
+  .most-plays td:first-child,
+  .most-plays th:first-child,
   .topten-mobile td:first-child,
   .topten-mobile th:first-child {
     padding-left: 1em; }
   .collection td:last-child,
   .collection th:last-child,
+  .most-plays td:last-child,
+  .most-plays th:last-child,
   .topten-mobile td:last-child,
   .topten-mobile th:last-child {
     padding-right: 1em; }
+  .collection td.duration,
+  .collection th.duration,
+  .most-plays td.duration,
+  .most-plays th.duration,
+  .topten-mobile td.duration,
+  .topten-mobile th.duration {
+    text-align: right; }
   .collection td,
+  .most-plays td,
   .topten-mobile td {
     white-space: nowrap; }
     .collection td.name,
+    .most-plays td.name,
     .topten-mobile td.name {
       white-space: inherit; }
     .collection td.rating,
+    .most-plays td.rating,
     .topten-mobile td.rating {
       text-align: center; }
       @media screen and (min-width: 768px), print {
         .collection td.rating,
+        .most-plays td.rating,
         .topten-mobile td.rating {
           text-align: left; } }
     .collection td.rank,
+    .most-plays td.rank,
     .topten-mobile td.rank {
       text-align: center; }
   .collection th a,
+  .most-plays th a,
   .topten-mobile th a {
     color: #4a4a4a; }
   .collection th.rating,
+  .most-plays th.rating,
   .topten-mobile th.rating {
     text-align: center; }
     @media screen and (min-width: 768px), print {
       .collection th.rating,
+      .most-plays th.rating,
       .topten-mobile th.rating {
         text-align: left; } }
   .collection .expansions,
+  .most-plays .expansions,
   .topten-mobile .expansions {
     display: none;
     position: relative; }
     @media screen and (min-width: 1088px) {
       .collection .expansions,
+      .most-plays .expansions,
       .topten-mobile .expansions {
         display: inline-block; } }
   .collection .expansions-tip,
+  .most-plays .expansions-tip,
   .topten-mobile .expansions-tip {
     position: absolute;
     z-index: 3;
@@ -235,12 +255,14 @@
     opacity: 0;
     visibility: hidden; }
   .collection .expansion-count:hover + .expansions-tip,
+  .most-plays .expansion-count:hover + .expansions-tip,
   .topten-mobile .expansion-count:hover + .expansions-tip {
     -webkit-transition: opacity 0.3s;
     transition: opacity 0.3s;
     opacity: 1;
     visibility: visible; }
   .collection .expansion-count,
+  .most-plays .expansion-count,
   .topten-mobile .expansion-count {
     display: inline-block;
     cursor: default;
@@ -248,6 +270,82 @@
     margin-left: 15px;
     font-size: 0.9em;
     border-bottom: 1px dotted #ddd; }
+
+@media screen and (min-width: 768px), print {
+  .recent-plays table,
+  .collection table,
+  .most-plays table,
+  .topten-mobile table {
+    width: auto; }
+  .recent-plays td + td,
+  .recent-plays th + th,
+  .collection td + td,
+  .collection th + th,
+  .most-plays td + td,
+  .most-plays th + th,
+  .topten-mobile td + td,
+  .topten-mobile th + th {
+    padding-left: 3em; } }
+
+.most-plays-legend {
+  font-weight: normal;
+  font-size: 1rem; }
+  @media screen and (max-width: 767px) {
+    .most-plays-legend {
+      margin-top: 20px; } }
+  @media screen and (min-width: 768px), print {
+    .most-plays-legend {
+      display: inline-block; } }
+  .most-plays-legend div {
+    display: inline-block; }
+  @media screen and (max-width: 767px) {
+    .most-plays-legend .stat:first-child {
+      margin-left: 0; } }
+  .most-plays-legend .stat {
+    margin-left: 1em; }
+    .most-plays-legend .stat div {
+      padding: 5px 8px;
+      border: 1px solid #eee;
+      border-radius: 5px; }
+    .most-plays-legend .stat .nickels {
+      background-color: #fefff5; }
+    .most-plays-legend .stat .dimes {
+      background-color: #f5fff8; }
+    .most-plays-legend .stat .quarters {
+      background-color: #f5fcff; }
+
+.most-plays table {
+  width: 100%; }
+  @media screen and (min-width: 768px), print {
+    .most-plays table {
+      width: auto;
+      min-width: auto; } }
+  .most-plays table .nickel {
+    background-color: #fefff5; }
+  .most-plays table .dime {
+    background-color: #f5fff8; }
+  .most-plays table .quarter {
+    background-color: #f5fcff; }
+  @media screen and (min-width: 768px), print {
+    .most-plays table td.name {
+      padding-right: 2em; } }
+  .most-plays table tr:last-child td {
+    border-bottom-width: 1px; }
+
+.most-plays .rank {
+  width: 0%;
+  text-align: center; }
+  @media screen and (max-width: 767px) {
+    .most-plays .rank {
+      display: none; } }
+
+.most-plays .rank + td,
+.most-plays .rank + th {
+  padding-left: 1em; }
+  @media screen and (min-width: 768px), print {
+    .most-plays .rank + td,
+    .most-plays .rank + th {
+      padding-left: 5px; } }
 
 .stars-container {
   display: inline-block;

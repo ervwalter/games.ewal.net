@@ -21,7 +21,9 @@
     "eject": "react-scripts-ts eject"
   },
   "dependencies": {
+    "@types/classnames": "^2.2.4",
     "bulma": "^0.7.1",
+    "classnames": "^2.2.5",
     "json-fetch": "^7.5.0",
     "lodash": "^4.17.10",
     "mobx": "^4.3.0",

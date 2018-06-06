@@ -154,7 +154,7 @@ class PlayCount extends React.Component<{ plays: number }, {}> {
 
 @inject("viewStateStore")
 @observer
-class Rating extends React.Component<
+export class Rating extends React.Component<
   { rating?: number; viewStateStore?: ViewStateStore },
   {}
 > {
