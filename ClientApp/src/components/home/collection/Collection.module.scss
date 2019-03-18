@@ -1,0 +1,7 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.collection {
+	@include section-styles;
+	@include title-styles;
+}

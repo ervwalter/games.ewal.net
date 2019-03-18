@@ -1,8 +1,19 @@
-import "./index.css";
+import "react-app-polyfill/ie11";
+
+import "./index.scss";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "~/components/App";
+import { BrowserRouter } from "react-router-dom";
 
-ReactDOM.render(<App />, document.getElementById("root") as HTMLElement);
-// registerServiceWorker();
+import App from "./components/App";
+
+const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href") || undefined;
+const rootElement = document.getElementById("root");
+
+ReactDOM.render(
+	<BrowserRouter basename={baseUrl}>
+		<App />
+	</BrowserRouter>,
+	rootElement
+);

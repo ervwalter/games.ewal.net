@@ -1,0 +1,7 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.recent {
+	@include section-styles;
+	@include title-styles;
+}

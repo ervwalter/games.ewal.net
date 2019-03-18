@@ -1,0 +1,26 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.games {
+	@include game-table-styles;
+	@include table-styles;
+
+	.rank {
+		width: 0%;
+		text-align: center;
+		@include mobile {
+			display: none;
+		}
+	}
+
+	.rank + th {
+		padding-left: 1em;
+		@include tablet {
+			padding-left: 5px;
+		}
+	}
+
+	.duration {
+		text-align: right;
+	}
+}

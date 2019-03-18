@@ -1,54 +1,39 @@
-import "./App.css";
+import "./App.scss";
 
-import { configure } from "mobx";
-import { Provider } from "mobx-react";
-import React from "react";
-import HomePage from "~/components/HomePage";
-import { CollectionStore } from "~/stores/CollectionStore";
-import { PlayStore } from "~/stores/PlayStore";
-import { StatsStore } from "~/stores/StatsStore";
-import { TopTenStore } from "~/stores/TopTenStore";
-import { ViewStateStore } from "~/stores/ViewStateStore";
+import React, { Component, SFC } from "react";
+import { Route, Switch } from "react-router";
 
-configure({ enforceActions: true });
+import { IStores, createStores } from "../stores/Stores";
+import StoresContext from "../stores/StoresContext";
+import Home from "./home/Home";
+import Layout from "./Layout";
+import UnsupportedBrowser from "./UnsupportedBrowser";
 
-const playStore = new PlayStore();
-const collectionStore = new CollectionStore();
-const statsStore = new StatsStore(playStore, collectionStore);
-const topTenStore = new TopTenStore();
-const viewStateStore = new ViewStateStore();
+let stores: IStores;
+const isSupported = typeof Proxy !== "undefined" && typeof Symbol !== "undefined" && true;
+if (isSupported) {
+	// only create mobx stores if on a supported browser version
+	stores = createStores();
+}
 
-const stores = {
-  playStore,
-  collectionStore,
-  statsStore,
-  topTenStore,
-  viewStateStore
+const App: SFC = () => {
+	if (isSupported) {
+		return (
+			<StoresContext.Provider value={stores}>
+				<Layout>
+					<Switch>
+						<Route path="/" component={Home} />
+					</Switch>
+				</Layout>
+			</StoresContext.Provider>
+		);
+	} else {
+		return (
+			<Layout>
+				<UnsupportedBrowser />
+			</Layout>
+		);
+	}
 };
 
-export default class App extends React.Component {
-  public render() {
-    return (
-      <Provider {...stores}>
-        <>
-          <nav className="navbar" id="masthead">
-            <div className="container">
-              <div className="navbar-brand">
-                <div className="navbar-item">
-                  <div className="logo">
-                    <span className="slashes">{"// "}</span>
-                    <a href="https://blog.ewal.net">Ewal.net</a>
-                  </div>
-                  <div className="description is-hidden-mobile">
-                    Chronicles of a board game addict...
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-          <HomePage />
-        </>
-      </Provider>
-    );
-  }
-}
+export default App;

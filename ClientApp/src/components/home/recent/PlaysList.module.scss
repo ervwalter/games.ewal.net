@@ -1,0 +1,37 @@
+@import "../../../variables";
+
+.plays-list {
+	border-top: 1px solid $table-border;
+	line-height: normal;
+
+	.play {
+		padding: 0.5rem 1rem;
+		border-bottom: 1px solid $table-border;
+
+		&:hover {
+			background-color: $white-bis;
+		}
+
+		&:nth-child(even) {
+			background-color: $white-bis;
+
+			&:hover {
+				background-color: $white-ter;
+			}
+		}
+
+		:global {
+			.columns {
+				margin-bottom: 0;
+			}
+
+			.column + .column {
+				padding-left: 0.75rem;
+			}
+		}
+	}
+
+	.location {
+		color: #888;
+	}
+}

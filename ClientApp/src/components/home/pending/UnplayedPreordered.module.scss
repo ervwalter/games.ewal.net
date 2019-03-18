@@ -1,0 +1,7 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.pending {
+	@include section-styles;
+	@include title-styles;
+}

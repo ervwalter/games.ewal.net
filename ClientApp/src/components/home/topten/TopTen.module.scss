@@ -1,0 +1,7 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.topten {
+	@include section-styles;
+	@include title-styles;
+}

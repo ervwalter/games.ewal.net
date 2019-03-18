@@ -1,0 +1,21 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.list {
+	@include game-table-styles;
+	@include table-styles;
+
+	.rank {
+		text-align: right;
+		width: 1px;
+		white-space: nowrap;
+	}
+
+	.rating {
+		text-align: center;
+	}
+
+	.name {
+		white-space: nowrap;
+	}
+}

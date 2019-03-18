@@ -1,0 +1,7 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.collection-table {
+	@include game-table-styles;
+	@include table-styles;
+}

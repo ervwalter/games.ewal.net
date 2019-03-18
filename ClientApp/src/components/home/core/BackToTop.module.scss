@@ -1,0 +1,19 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.top-link {
+	display: block;
+	margin-left: 0.3em;
+	float: right;
+
+	:global {
+		svg,
+		i.fas,
+		i.far,
+		i.fal {
+			vertical-align: middle;
+			font-size: 14px;
+			margin-bottom: 4px;
+		}
+	}
+}

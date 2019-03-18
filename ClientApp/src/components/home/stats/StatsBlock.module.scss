@@ -1,0 +1,14 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.stats {
+	@include section-styles;
+
+	:global {
+		.column {
+			@include tablet {
+				padding-top: 0;
+			}
+		}
+	}
+}

@@ -1,0 +1,49 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.row {
+	&.nickel {
+		background-color: #fefff5;
+	}
+
+	&.dime {
+		background-color: #f5fff8;
+	}
+
+	&.quarter {
+		background-color: #f5fcff;
+	}
+
+	td.name {
+		@include tablet {
+			padding-right: 2em;
+		}
+	}
+
+	.rank {
+		width: 0%;
+		text-align: center;
+		@include mobile {
+			display: none;
+		}
+	}
+
+	.rank + td {
+		padding-left: 1em;
+		@include tablet {
+			padding-left: 5px;
+		}
+	}
+
+	.duration {
+		text-align: right;
+	}
+
+	td {
+		white-space: nowrap;
+
+		&.name {
+			white-space: inherit;
+		}
+	}
+}
