@@ -18,11 +18,13 @@ const Layout: SFC<{ children: ReactNode }> = observer(({ children }) => {
 	};
 
 	const scrollToSection = (section: string) => {
+		closeMenu();
 		const el = document.getElementById(section);
 		if (el) {
-			el.scrollIntoView();
+			setImmediate(() => {
+				el.scrollIntoView();
+			});
 		}
-		closeMenu();
 	};
 
 	return (
