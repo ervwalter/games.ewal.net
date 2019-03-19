@@ -3,11 +3,10 @@ import "@babel/polyfill";
 
 import "./index.scss";
 
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
-import App from "./components/App";
 import Layout from "./components/Layout";
 import UnsupportedBrowser from "./components/UnsupportedBrowser";
 
@@ -15,11 +14,14 @@ const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href") ||
 const rootElement = document.getElementById("root");
 
 const isSupported = typeof Proxy !== "undefined" && typeof Symbol !== "undefined" && true;
+const App = React.lazy(() => import(/* webpackChunkName: "app" */ "./components/App"));
 
 if (isSupported) {
 	ReactDOM.render(
 		<BrowserRouter basename={baseUrl}>
-			<App />
+			<Suspense fallback={null}>
+				<App />
+			</Suspense>
 		</BrowserRouter>,
 		rootElement
 	);
