@@ -6,7 +6,6 @@ export class ViewStateStore {
 	@observable public width: number = 0;
 	@observable public height: number = 0;
 	@observable public activeTab: Tabs;
-	@observable public menuOpen: boolean = false;
 
 	public constructor() {
 		let running = false;
@@ -42,13 +41,5 @@ export class ViewStateStore {
 			return true;
 		}
 		return false;
-	}
-
-	@action toggleMenu() {
-		this.menuOpen = !this.menuOpen;
-	}
-
-	@action closeMenu() {
-		this.menuOpen = false;
 	}
 }

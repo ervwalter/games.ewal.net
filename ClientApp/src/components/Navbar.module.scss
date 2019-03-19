@@ -1,0 +1,39 @@
+@import "../variables";
+
+.masthead {
+	background-color: #fcfcfc;
+	border-bottom: 1px solid #ececec;
+	width: 100%;
+
+	a {
+		color: $blue;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.logo {
+		font-size: 1.6rem;
+	}
+
+	.slashes {
+		color: #777;
+	}
+
+	.description {
+		margin-left: 1em;
+	}
+
+	:global {
+		.navbar-item {
+			color: #999;
+			align-items: baseline;
+		}
+
+		.navbar-menu {
+			.navbar-item {
+				color: $text;
+			}
+		}
+	}
+}
