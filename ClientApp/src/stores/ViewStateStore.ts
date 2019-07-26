@@ -30,7 +30,6 @@ export class ViewStateStore {
 				const wrapper = document.getElementById("wrapper");
 				if (event.target === wrapper) {
 					clickCount++;
-					console.log(clickCount);
 					if (clickCount === 1) {
 						setTimeout(() => { clickCount = 0; }, 2000);
 					}
