@@ -5,7 +5,6 @@ import React, { SFC, useContext } from "react";
 import StoresContext from "../../../stores/StoresContext";
 import BackToTop from "../core/BackToTop";
 import Thumbnails from "../core/Thumbnails";
-import Players from "./Players";
 import RecentPlayDetails from "./RecentPlayDetails";
 import styles from "./RecentPlays.module.scss";
 
@@ -25,7 +24,7 @@ const RecentPlays: SFC<{ visible: boolean; count: number }> = observer(({ visibl
 				Recent Plays
 				<a
 					className={styles["link"]}
-					target="_blank"
+					target="_blank" rel="noopener noreferrer"
 					href="https://boardgamegeek.com/plays/bydate/user/ervwalter/subtype/boardgame">
 					<i className="fas fa-external-link-alt" />
 				</a>

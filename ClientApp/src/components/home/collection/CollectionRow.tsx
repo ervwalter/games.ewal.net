@@ -1,5 +1,3 @@
-import cx from "classnames";
-import { observer } from "mobx-react-lite";
 import React, { SFC } from "react";
 
 import { Game } from "../../../stores/Models";
@@ -12,7 +10,7 @@ const CollectionRow: SFC<{ game: Game }> = React.memo(({ game }) => {
 	return (
 		<tr className={styles["row"]}>
 			<td className={styles["name"]}>
-				<a target="_blank" href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}>
+				<a target="_blank" rel="noopener noreferrer" href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}>
 					{game.name}
 				</a>
 				{game.ownedExpansionCount! > 0 && <Expansions game={game} />}

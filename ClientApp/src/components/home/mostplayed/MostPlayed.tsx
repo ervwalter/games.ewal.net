@@ -8,10 +8,11 @@ import styles from "./MostPlayed.module.scss";
 import PlayedGamesTable from "./PlayedGamesTable";
 
 const MostPlayed: SFC<{ visible: boolean }> = observer(({ visible }) => {
+	const { playStore, statsStore } = useContext(StoresContext);
+
 	if (!visible) {
 		return null;
 	}
-	const { playStore, statsStore } = useContext(StoresContext);
 
 	return (
 		<div className={styles["most-played"]} id="mostPlays">

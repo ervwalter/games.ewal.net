@@ -1,5 +1,3 @@
-import cx from "classnames";
-import { observer } from "mobx-react-lite";
 import React, { SFC } from "react";
 
 import { TopTenItem } from "../../../stores/Models";
@@ -22,7 +20,7 @@ const TopTenMobile: SFC<{ games: TopTenItem[] }> = React.memo(({ games }) => {
 						<tr key={game.gameId}>
 							<td className={styles["rank"]}>#{game.rank}</td>
 							<td className={styles["name"]}>
-								<a target="_blank" href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}>
+								<a target="_blank" rel="noopener noreferrer" href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}>
 									{game.name}
 								</a>
 							</td>

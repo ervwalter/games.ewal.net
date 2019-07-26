@@ -1,5 +1,4 @@
 import cx from "classnames";
-import { observer } from "mobx-react-lite";
 import React, { SFC } from "react";
 
 import { TopTenItem } from "../../../stores/Models";
@@ -18,7 +17,7 @@ const TopTenDesktop: SFC<{ games: TopTenItem[] }> = React.memo(({ games }) => {
 						</span>
 					</div>
 					<div className={cx("column", "is-narrow", styles["thumbnail"])}>
-						<img src={game.thumbnail.replace("_t.", "_t.")} />
+						<img src={game.thumbnail.replace("_t.", "_t.")} alt=""/>
 					</div>
 					<div className="column">
 						<div className="content">
@@ -26,7 +25,7 @@ const TopTenDesktop: SFC<{ games: TopTenItem[] }> = React.memo(({ games }) => {
 								<span className={styles["title"]}>
 									<a
 										className={styles["name"]}
-										target="_blank"
+										target="_blank" rel="noopener noreferrer"
 										href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}>
 										{game.name}
 									</a>{" "}

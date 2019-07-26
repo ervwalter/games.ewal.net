@@ -1,18 +1,18 @@
-import cx from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
 
 import StoresContext from "../../../stores/StoresContext";
 import BackToTop from "../core/BackToTop";
 import Thumbnails from "../core/Thumbnails";
-import GameList from "./GameList";
+import GameList from "../core/GameList";
 import styles from "./UnplayedPreordered.module.scss";
 
 const PreorderedGames: SFC<{ visible: boolean }> = observer(({ visible }) => {
+	const { collectionStore, viewStateStore } = useContext(StoresContext);
+
 	if (!visible) {
 		return null;
 	}
-	const { collectionStore, viewStateStore } = useContext(StoresContext);
 	const games = collectionStore.preorderedGames;
 	return (
 		<div className={styles["pending"]} id="pending">

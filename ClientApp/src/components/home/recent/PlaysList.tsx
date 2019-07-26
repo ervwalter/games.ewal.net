@@ -11,7 +11,7 @@ const PlaysList: SFC<{ plays: Play[] }> = React.memo(({ plays }) => (
 				<div className="columns is-mobile is-gapless">
 					<div className="column">
 						<div>
-							<a target="_blank" href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}>
+							<a target="_blank" rel="noopener noreferrer" href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}>
 								{play.name}
 							</a>
 						</div>

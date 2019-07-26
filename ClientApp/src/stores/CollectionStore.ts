@@ -73,6 +73,11 @@ class CollectionStore {
 		return _.sortBy(wantToBuy, "sortableName");
 	}
 
+	@computed
+	public get gamesById() {
+		return _.keyBy(this.allGames, "gameId");
+	}
+
 	@action
 	public changeSort(sortBy: SortColumns) {
 		if (this.sortBy === sortBy) {

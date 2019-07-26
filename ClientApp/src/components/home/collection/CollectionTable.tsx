@@ -1,11 +1,10 @@
-import cx from "classnames";
-import { observer } from "mobx-react-lite";
 import React, { SFC, SyntheticEvent } from "react";
-
 import { SortColumns } from "../../../stores/CollectionStore";
 import { Game } from "../../../stores/Models";
 import CollectionRow from "./CollectionRow";
 import styles from "./CollectionTable.module.scss";
+
+/* eslint jsx-a11y/anchor-is-valid: "off" */
 
 const CollectionTable: SFC<{ games: Game[]; onSort: (column: SortColumns) => void }> = React.memo(
 	({ games, onSort }) => {

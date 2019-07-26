@@ -1,8 +1,6 @@
 import cx from "classnames";
-import { observer } from "mobx-react-lite";
-import React, { SFC, useContext } from "react";
+import React, { SFC } from "react";
 
-import StoresContext from "../../../stores/StoresContext";
 import styles from "./Rating.module.scss";
 
 const Rating: SFC<{ rating?: number }> = React.memo(({ rating }) => {

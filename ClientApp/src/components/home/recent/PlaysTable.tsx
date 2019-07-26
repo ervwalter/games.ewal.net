@@ -23,7 +23,7 @@ const PlaysTable: SFC<{ plays: Play[] }> = React.memo(({ plays }) => (
 						{play.playDate.format("MMM D")}
 					</td>
 					<td className="name">
-						<a target="_blank" href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}>
+						<a target="_blank" rel="noopener noreferrer" href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}>
 							{play.name}
 						</a>
 					</td>

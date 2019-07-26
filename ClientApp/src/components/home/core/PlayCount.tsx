@@ -1,8 +1,4 @@
-import cx from "classnames";
-import { observer } from "mobx-react-lite";
 import React, { SFC } from "react";
-
-import styles from "./PlayCount.module.scss";
 
 const PlayCount: SFC<{ plays: number }> = React.memo(({ plays }) => {
 	if (plays > 0) {

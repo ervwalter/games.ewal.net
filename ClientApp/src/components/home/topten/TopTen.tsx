@@ -1,4 +1,3 @@
-import cx from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
 
@@ -9,10 +8,11 @@ import TopTenDesktop from "./TopTenDesktop";
 import TopTenMobile from "./TopTenMobile";
 
 const TopTen: SFC<{ visible: boolean }> = observer(({ visible }) => {
+	const { topTenStore, viewStateStore } = useContext(StoresContext);
+
 	if (!visible) {
 		return null;
 	}
-	const { topTenStore, viewStateStore } = useContext(StoresContext);
 	if (topTenStore.games.length === 0) {
 		return null;
 	}

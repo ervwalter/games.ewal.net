@@ -1,6 +1,4 @@
-import cx from "classnames";
 import _ from "lodash";
-import { observer } from "mobx-react-lite";
 import React, { SFC } from "react";
 
 import { PlayedGame } from "../../../stores/Models";

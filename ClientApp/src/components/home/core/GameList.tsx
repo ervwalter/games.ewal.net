@@ -1,5 +1,3 @@
-import cx from "classnames";
-import { observer } from "mobx-react-lite";
 import React, { SFC } from "react";
 
 import { Game } from "../../../stores/Models";
@@ -11,7 +9,7 @@ const GameList: SFC<{ games: Game[] }> = React.memo(({ games }) => {
 			<ul className={styles["list"]}>
 				{games.map(game => (
 					<li key={game.gameId}>
-						<a href={`https://boardgamegeek.com/boardgame/${game.gameId}/`} target="_blank">
+						<a href={`https://boardgamegeek.com/boardgame/${game.gameId}/`} target="_blank" rel="noopener noreferrer">
 							{game.name}
 						</a>
 					</li>

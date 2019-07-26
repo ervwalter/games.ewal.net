@@ -3,15 +3,19 @@ import _ from "lodash";
 import { action, computed, observable, runInAction } from "mobx";
 import moment from "moment";
 
-import { GameImage, Play } from "./Models";
+import { GameImage, Play, Game } from "./Models";
+import CollectionStore from "./CollectionStore";
 
 class PlayStore {
 	@observable public plays: Play[];
 	@observable public isLoading: boolean;
 
-	public constructor() {
+	private collectionStore: CollectionStore;
+
+	public constructor(collectionStore: CollectionStore) {
 		this.plays = [];
 		this.isLoading = true;
+		this.collectionStore = collectionStore;
 		this.loadPlays();
 	}
 
@@ -76,6 +80,24 @@ class PlayStore {
 			.values()
 			.orderBy(["numPlays", "name"], ["desc", "asc"])
 			.value();
+	}
+
+	@computed
+	public get playedNotOwned() {
+		if (this.collectionStore.isLoading) {
+			return [];
+		}
+		const notOwned: { [key: string]: Game } = {};
+		this.plays.forEach((play) => {
+			const game = this.collectionStore.gamesById[play.gameId];
+			if (game) {
+				if (!game.owned && !game.previousOwned) {
+					notOwned[game.gameId] = game;
+				}
+			}
+		});
+
+		return _.chain(notOwned).values().orderBy("sortableName").value();
 	}
 }
 

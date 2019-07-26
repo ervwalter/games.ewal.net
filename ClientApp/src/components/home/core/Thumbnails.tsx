@@ -10,7 +10,7 @@ const Thumbnails: SFC<{ games: GameImage[]; multiRow?: boolean }> = React.memo((
 			{games.map(game => (
 				<a
 					href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}
-					target="_blank"
+					target="_blank" rel="noopener noreferrer"
 					key={game.gameId}
 					className="fade-in">
 					<img src={game.thumbnail} alt={game.name} title={game.name} />

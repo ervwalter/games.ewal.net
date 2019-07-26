@@ -5,23 +5,23 @@ import StoresContext from "../../../stores/StoresContext";
 import BackToTop from "../core/BackToTop";
 import Thumbnails from "../core/Thumbnails";
 import GameList from "../core/GameList";
-import styles from "./UnplayedPreordered.module.scss";
+import styles from "./PlayedNotOwned.module.scss";
 
-const UnplayedGames: SFC<{ visible: boolean }> = observer(({ visible }) => {
-	const { collectionStore, viewStateStore } = useContext(StoresContext);
+const PlayedNotOwned: SFC<{ visible: boolean }> = observer(({ visible }) => {
+	const { playStore, viewStateStore } = useContext(StoresContext);
 	if (!visible) {
 		return null;
 	}
-	const games = collectionStore.unplayedGames;
+	const games = playStore.playedNotOwned;
 	return (
-		<div className={styles["pending"]} id="pending">
+		<div className={styles["notowned"]} id="notowned">
 			<div className="title is-4">
 				<BackToTop />
-				<span className="is-hidden-mobile">Patiently </span>Waiting to be Played
+				Played But Not Owned
 			</div>
 			{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}
 		</div>
 	);
 });
 
-export default UnplayedGames;
+export default PlayedNotOwned;

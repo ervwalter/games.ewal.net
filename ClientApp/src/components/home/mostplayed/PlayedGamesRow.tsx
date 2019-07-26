@@ -1,5 +1,4 @@
 import cx from "classnames";
-import { observer } from "mobx-react-lite";
 import numeral from "numeral";
 import React, { SFC } from "react";
 
@@ -25,7 +24,7 @@ const PlayedGamesRow: SFC<{ game: PlayedGame; rank: number }> = React.memo(({ ga
 			<td className={styles["rank"]}>{rank + 1}</td>
 
 			<td className={styles["name"]}>
-				<a target="_blank" href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}>
+				<a target="_blank" rel="noopener noreferrer" href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}>
 					{game.name}
 				</a>
 			</td>

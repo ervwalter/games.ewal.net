@@ -6,9 +6,12 @@ import StoresContext from "../../../stores/StoresContext";
 import { Tabs } from "../../../stores/ViewStateStore";
 import styles from "./TabStrip.module.scss";
 
+/* eslint jsx-a11y/anchor-is-valid: "off" */
+
 const TabStrip: SFC = observer(() => {
 	const { viewStateStore } = useContext(StoresContext);
 	const isMobile = viewStateStore.isMobile;
+	const showPlayedNotOwned = viewStateStore.showPlayedNotOwned;
 
 	if (isMobile) {
 		return null;
@@ -36,8 +39,13 @@ const TabStrip: SFC = observer(() => {
 					Collection
 				</Tab>
 				<Tab tab="pending" isActive={activeTab === "pending"} onChange={handleTabChange}>
-					Unplayed<span className="is-hidden-touch">&nbsp;/ Preordered</span>
+					Unplayed<span className="is-hidden-touch">&nbsp;/ Coming Soon</span>
 				</Tab>
+				{showPlayedNotOwned &&
+					<Tab tab="playedNotOwned" isActive={activeTab === "playedNotOwned"} onChange={handleTabChange}>
+						Played Not Owned
+					</Tab>
+				}
 			</ul>
 		</div>
 	);

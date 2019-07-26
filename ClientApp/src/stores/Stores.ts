@@ -13,8 +13,8 @@ export interface IStores {
 }
 
 export const createStores = () => {
-	const playStore = new PlayStore();
 	const collectionStore = new CollectionStore();
+	const playStore = new PlayStore(collectionStore);
 	const statsStore = new StatsStore(playStore, collectionStore);
 	const topTenStore = new TopTenStore();
 	const viewStateStore = new ViewStateStore();

@@ -3,6 +3,8 @@ import React, { SFC, useState } from "react";
 
 import styles from "./Navbar.module.scss";
 
+/* eslint jsx-a11y/anchor-is-valid: "off" */
+
 const Navbar: SFC<{ showMenu: boolean }> = React.memo(({ showMenu }) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 
@@ -60,7 +62,7 @@ const Navbar: SFC<{ showMenu: boolean }> = React.memo(({ showMenu }) => {
 							Top 10
 						</a>
 						<a className="navbar-item" onClick={scrollToSection.bind(null, "pending")}>
-							Unplayed / Preordered
+							Unplayed / Coming Soon
 						</a>
 						<a className="navbar-item" onClick={scrollToSection.bind(null, "collection")}>
 							Collection

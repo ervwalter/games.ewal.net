@@ -1,8 +1,9 @@
 import cx from "classnames";
-import { observer } from "mobx-react-lite";
 import React, { SFC } from "react";
 
 import styles from "./BackToTop.module.scss";
+
+/* eslint jsx-a11y/anchor-is-valid: "off" */
 
 const BackToTop: SFC = React.memo(() => {
 	const scrollToTop = () => {

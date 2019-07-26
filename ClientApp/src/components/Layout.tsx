@@ -8,7 +8,7 @@ const Layout: SFC<{ children: ReactNode }> = ({ children }) => {
 	return (
 		<>
 			<Navbar showMenu={true} />
-			<section className={cx(styles["wrapper"], styles["content"])}>
+			<section id="wrapper" className={cx(styles["wrapper"], styles["content"])}>
 				<div className="container">{children}</div>
 			</section>
 		</>
