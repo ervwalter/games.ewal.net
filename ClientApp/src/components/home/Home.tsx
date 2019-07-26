@@ -9,6 +9,7 @@ import TabStrip from "./core/TabStrip";
 import styles from "./Home.module.scss";
 import MostPlayed from "./mostplayed/MostPlayed";
 import PreorderedGames from "./pending/PreorderedGames";
+import WantToBuyGames from "./pending/WantToBuyGames";
 import UnplayedGames from "./pending/UnplayedGames";
 import RecentPlays from "./recent/RecentPlays";
 import StatsBlock from "./stats/StatsBlock";
@@ -31,6 +32,7 @@ const Home: SFC = observer(() => {
 			<TopTen visible={isMobile || activeTab == "top10"} />
 			<UnplayedGames visible={isMobile || activeTab == "pending"} />
 			<PreorderedGames visible={isMobile || activeTab == "pending"} />
+			<WantToBuyGames visible={isMobile || activeTab == "pending"} />
 			<Collection visible={isMobile || activeTab == "collection"} />
 			<Loading />
 			{/* <SectionTabs />

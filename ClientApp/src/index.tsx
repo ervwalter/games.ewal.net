@@ -1,5 +1,5 @@
 import "react-app-polyfill/ie9";
-import "corejs";
+import "core-js/es5";
 import "regenerator-runtime/runtime"
 
 import "./index.scss";

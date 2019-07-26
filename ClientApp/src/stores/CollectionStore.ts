@@ -55,6 +55,24 @@ class CollectionStore {
 		return _.sortBy(preordered, "sortableName");
 	}
 
+	@computed
+	public get wantToBuyGames() {
+		const wantToBuy: Game[] = [];
+		for (const game of this.allGames) {
+			if (game.wantToBuy) {
+				wantToBuy.push(game);
+			}
+			if (game.allExpansions) {
+				for (const expansion of game.allExpansions) {
+					if (expansion.wantToBuy) {
+						wantToBuy.push(expansion);
+					}
+				}
+			}
+		}
+		return _.sortBy(wantToBuy, "sortableName");
+	}
+
 	@action
 	public changeSort(sortBy: SortColumns) {
 		if (this.sortBy === sortBy) {
