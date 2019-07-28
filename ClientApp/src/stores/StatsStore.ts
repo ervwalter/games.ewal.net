@@ -168,7 +168,7 @@ class StatsStore {
 					}
 
 					// how many games have never been played
-					if (game.numPlays === 0) {
+					if (game.numPlays === 0 && !game.forTrade && !game.collectingOnly) {
 						stats.yetToBePlayed++;
 					}
 
