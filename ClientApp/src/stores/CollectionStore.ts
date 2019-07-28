@@ -32,7 +32,7 @@ class CollectionStore {
 	@computed
 	public get unplayedGames() {
 		return _(this.games)
-			.filter(game => game.numPlays === 0)
+			.filter(game => game.numPlays === 0 && !game.forTrade)
 			.sortBy("sortableName")
 			.value();
 	}
