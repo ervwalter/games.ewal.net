@@ -79,6 +79,8 @@ export interface Game {
 	wantToBuy: boolean;
 	wantToPlay: boolean;
 	wishList: boolean;
+	wishListPriority: number;
+	collectingOnly: boolean;
 	userComment: string;
 	expansions?: Game[];
 	allExpansions?: Game[];
