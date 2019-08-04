@@ -1,9 +1,9 @@
 import React, { SFC } from "react";
 
-import { Game } from "../../../stores/Models";
+import { GameBase } from "../../../stores/Models";
 import styles from "./GameList.module.scss";
 
-const GameList: SFC<{ games: Game[] }> = React.memo(({ games }) => {
+const GameList: SFC<{ games: GameBase[] }> = React.memo(({ games }) => {
 	return (
 		<div className="content">
 			<ul className={styles["list"]}>

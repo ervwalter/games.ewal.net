@@ -42,8 +42,8 @@ const TabStrip: SFC = observer(() => {
 					Unplayed<span className="is-hidden-touch">&nbsp;/ Coming Soon</span>
 				</Tab>
 				{showPlayedNotOwned &&
-					<Tab tab="playedNotOwned" isActive={activeTab === "playedNotOwned"} onChange={handleTabChange}>
-						Played Not Owned
+					<Tab tab="cleanup" isActive={activeTab === "cleanup"} onChange={handleTabChange}>
+						Cleanup
 					</Tab>
 				}
 			</ul>

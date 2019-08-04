@@ -1,3 +1,5 @@
+import { number } from "prop-types";
+
 type Moment = import("moment").Moment;
 
 export interface Play {
@@ -15,6 +17,7 @@ export interface Play {
 	excludeFromStats: boolean;
 	players: Player[];
 	comments: string;
+	rating?: number;
 }
 
 export interface Player {
@@ -36,16 +39,26 @@ export interface GameImage {
 	thumbnail: string;
 }
 
-export interface PlayedGame {
+export interface GameBase {
+	gameId: string;
+	name: string;
+	image: string;
+	thumbnail: string;
+	rating?: number;
+}
+	
+export interface PlayedGame  extends GameBase {
 	gameId: string;
 	name: string;
 	image: string;
 	thumbnail: string;
 	numPlays?: number;
 	duration?: number;
+	lastPlayDate: Moment;
+	rating?: number;
 }
 
-export interface Game {
+export interface Game extends GameBase{
 	gameId: string;
 	name: string;
 	sortableName: string;

@@ -1,6 +1,6 @@
 import { action, computed, observable } from "mobx";
 
-export type Tabs = "stats" | "recentPlays" | "mostPlays" | "top10" | "pending" | "collection" | "playedNotOwned";
+export type Tabs = "stats" | "recentPlays" | "mostPlays" | "top10" | "pending" | "collection" | "cleanup";
 
 export class ViewStateStore {
 	@observable public width: number = 0;

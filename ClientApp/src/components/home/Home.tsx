@@ -14,7 +14,8 @@ import UnplayedGames from "./pending/UnplayedGames";
 import RecentPlays from "./recent/RecentPlays";
 import StatsBlock from "./stats/StatsBlock";
 import TopTen from "./topten/TopTen";
-import PlayedNotOwned from "./notowned/PlayedNotOwned";
+import PlayedNotOwned from "./cleanup/PlayedNotOwned";
+import PlayedNotRated from "./cleanup/PlayedNotRated";
 
 const Home: SFC = observer(() => {
 	const { viewStateStore } = useContext(StoresContext);
@@ -35,7 +36,8 @@ const Home: SFC = observer(() => {
 			<PreorderedGames visible={isMobile || activeTab === "pending"} />
 			<WantToBuyGames visible={isMobile || activeTab === "pending"} />
 			<Collection visible={isMobile || activeTab === "collection"} />
-			<PlayedNotOwned visible={!isMobile && activeTab === "playedNotOwned"} />
+			<PlayedNotRated visible={!isMobile && activeTab === "cleanup"} />
+			<PlayedNotOwned visible={!isMobile && activeTab === "cleanup"} />
 			<Loading />
 			{/* <SectionTabs />
             <Loading /> */}

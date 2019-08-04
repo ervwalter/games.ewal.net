@@ -3,7 +3,7 @@ import _ from "lodash";
 import { action, computed, observable, runInAction } from "mobx";
 import moment from "moment";
 
-import { GameImage, Play, Game } from "./Models";
+import { GameImage, Play, Game, PlayedGame } from "./Models";
 import CollectionStore from "./CollectionStore";
 
 class PlayStore {
@@ -59,23 +59,7 @@ class PlayStore {
 		return _.chain(this.plays)
 			.groupBy("gameId")
 			.mapValues(plays => {
-				return {
-					gameId: plays[0].gameId,
-					name: plays[0].name,
-					image: plays[0].image,
-					thumbnail: plays[0].thumbnail,
-					numPlays: _.sumBy(plays, play => play.numPlays || 1),
-					duration: _.sumBy(plays, play => {
-						if (play.duration && play.duration > 0) {
-							return play.duration;
-						} else if (play.estimatedDuration && play.estimatedDuration > 0) {
-							// use the estimated duration of an explicit one was not specified
-							return play.estimatedDuration * (play.numPlays || 1);
-						} else {
-							return 0;
-						}
-					})
-				};
+				return this.playsToPlayedGame(plays);
 			})
 			.values()
 			.orderBy(["numPlays", "name"], ["desc", "asc"])
@@ -83,21 +67,83 @@ class PlayStore {
 	}
 
 	@computed
-	public get playedNotOwned() {
+	public get playedNotOwned(): PlayedGame[] {
 		if (this.collectionStore.isLoading) {
 			return [];
 		}
-		const notOwned: { [key: string]: Game } = {};
-		this.plays.forEach((play) => {
-			const game = this.collectionStore.gamesById[play.gameId];
+		const playedGames = _.chain(this.plays)
+			.groupBy("gameId")
+			.mapValues(plays => {
+				return this.playsToPlayedGame(plays);
+			})
+			.values()
+			.value();
+		const notOwned: { [key: string]: PlayedGame } = {};
+		playedGames.forEach((playedGame) => {
+			const game = this.collectionStore.gamesById[playedGame.gameId];
 			if (game) {
 				if (!game.owned && !game.previousOwned) {
-					notOwned[game.gameId] = game;
+					notOwned[playedGame.gameId] = playedGame;
 				}
+			}
+			else {
+				notOwned[playedGame.gameId] = playedGame
 			}
 		});
 
-		return _.chain(notOwned).values().orderBy("sortableName").value();
+		return _.chain(notOwned).values().sortBy("lastPlayDate").reverse().value();
+	}
+
+	@computed
+	public get playedNotRated(): PlayedGame[] {
+		if (this.collectionStore.isLoading) {
+			return [];
+		}
+		const playedGames = _.chain(this.plays)
+			.groupBy("gameId")
+			.mapValues(plays => {
+				return this.playsToPlayedGame(plays);
+			})
+			.values()
+			.orderBy(["numPlays", "name"], ["desc", "asc"])
+			.value();
+		const notPlayed: { [key: string]: PlayedGame } = {};
+		playedGames.forEach((playedGame) => {
+			const game = this.collectionStore.gamesById[playedGame.gameId];
+			if (game) {
+				if (!game.rating) {
+					notPlayed[playedGame.gameId] = playedGame;
+				}
+			}
+			else {
+				notPlayed[playedGame.gameId] = playedGame
+			}
+		});
+
+		return _.chain(notPlayed).values().sortBy("lastPlayDate").reverse().value();
+	}
+
+	private playsToPlayedGame(plays: Play[]): PlayedGame {
+		return {
+			gameId: plays[0].gameId,
+			name: plays[0].name,
+			image: plays[0].image,
+			rating: plays[0].rating,
+			thumbnail: plays[0].thumbnail,
+			numPlays: _.sumBy(plays, play => play.numPlays || 1),
+			duration: _.sumBy(plays, play => {
+				if (play.duration && play.duration > 0) {
+					return play.duration;
+				} else if (play.estimatedDuration && play.estimatedDuration > 0) {
+					// use the estimated duration of an explicit one was not specified
+					return play.estimatedDuration * (play.numPlays || 1);
+				} else {
+					return 0;
+				}
+			}),
+			lastPlayDate: _.chain(plays).sortBy("playDate", play => play.playDate).last().value().playDate
+		};
+
 	}
 }
 
