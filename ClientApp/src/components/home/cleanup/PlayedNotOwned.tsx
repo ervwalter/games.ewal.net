@@ -13,6 +13,9 @@ const PlayedNotOwned: SFC<{ visible: boolean }> = observer(({ visible }) => {
 		return null;
 	}
 	const games = playStore.playedNotOwned;
+	if (games.length === 0) {
+		return null;
+	}
 	return (
 		<div className={styles["notowned"]} id="notowned">
 			<div className="title is-4">
