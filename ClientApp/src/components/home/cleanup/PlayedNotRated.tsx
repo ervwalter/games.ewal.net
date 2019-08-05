@@ -17,7 +17,7 @@ const PlayedNotRated: SFC<{ visible: boolean }> = observer(({ visible }) => {
 		return null;
 	}
 	return (
-		<div className={styles["notowned"]} id="notowned">
+		<div className={styles["notrated"]} id="notrated">
 			<div className="title is-4">
 				<BackToTop />
 				Played But Not Rated
