@@ -39,7 +39,7 @@ const TabStrip: SFC = observer(() => {
 					Collection
 				</Tab>
 				<Tab tab="pending" isActive={activeTab === "pending"} onChange={handleTabChange}>
-					Unplayed<span className="is-hidden-touch">&nbsp;/ Coming Soon</span>
+					Coming Soon<span className="is-hidden-touch">&nbsp;/ Unplayed</span>
 				</Tab>
 				{showPlayedNotOwned &&
 					<Tab tab="cleanup" isActive={activeTab === "cleanup"} onChange={handleTabChange}>

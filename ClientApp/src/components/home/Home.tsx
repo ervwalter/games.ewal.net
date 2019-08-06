@@ -32,9 +32,9 @@ const Home: SFC = observer(() => {
 			<RecentPlays count={isMobile ? 15 : 25} visible={isMobile || activeTab === "recentPlays"} />
 			<MostPlayed visible={isMobile || activeTab === "mostPlays"} />
 			<TopTen visible={isMobile || activeTab === "top10"} />
-			<UnplayedGames visible={isMobile || activeTab === "pending"} />
 			<PreorderedGames visible={isMobile || activeTab === "pending"} />
 			<WantToBuyGames visible={isMobile || activeTab === "pending"} />
+			<UnplayedGames visible={isMobile || activeTab === "pending"} />
 			<Collection visible={isMobile || activeTab === "collection"} />
 			<PlayedNotRated visible={!isMobile && activeTab === "cleanup"} />
 			<PlayedNotOwned visible={!isMobile && activeTab === "cleanup"} />
