@@ -13,6 +13,9 @@ const WantToBuyGames: SFC<{ visible: boolean }> = observer(({ visible }) => {
 		return null;
 	}
 	const games = collectionStore.wantToBuyGames;
+	if (games.length === 0) {
+		return null;
+	}
 	return (
 		<div className={styles["pending"]} id="pending">
 			<div className="title is-4">
