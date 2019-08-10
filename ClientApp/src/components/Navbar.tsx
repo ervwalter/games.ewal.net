@@ -35,9 +35,7 @@ const Navbar: SFC<{ showMenu: boolean }> = React.memo(({ showMenu }) => {
 							<span className={styles["slashes"]}>{"// "}</span>
 							<a href="https://www.ewal.net">Ewal.net</a>
 						</div>
-						<div className={cx(styles["description"], "is-hidden-mobile")}>
-							Chronicles of a board game addict...
-						</div>
+						<div className={cx(styles["description"], "is-hidden-mobile")}>Chronicles of a board game addict...</div>
 					</div>
 					<a
 						role="button"
@@ -62,7 +60,7 @@ const Navbar: SFC<{ showMenu: boolean }> = React.memo(({ showMenu }) => {
 							Top 10
 						</a>
 						<a className="navbar-item" onClick={scrollToSection.bind(null, "pending")}>
-							Unplayed / Coming Soon
+							Coming Soon / Unplayed
 						</a>
 						<a className="navbar-item" onClick={scrollToSection.bind(null, "collection")}>
 							Collection

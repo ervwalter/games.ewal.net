@@ -3,8 +3,8 @@ import _ from "lodash";
 import { action, computed, observable, runInAction } from "mobx";
 import moment from "moment";
 
-import { GameImage, Play, Game, PlayedGame } from "./Models";
 import CollectionStore from "./CollectionStore";
+import { GameImage, Play, PlayedGame } from "./Models";
 
 class PlayStore {
 	@observable public plays: Play[];
@@ -79,19 +79,22 @@ class PlayStore {
 			.values()
 			.value();
 		const notOwned: { [key: string]: PlayedGame } = {};
-		playedGames.forEach((playedGame) => {
+		playedGames.forEach(playedGame => {
 			const game = this.collectionStore.gamesById[playedGame.gameId];
 			if (game) {
 				if (!game.owned && !game.previousOwned) {
 					notOwned[playedGame.gameId] = playedGame;
 				}
-			}
-			else {
-				notOwned[playedGame.gameId] = playedGame
+			} else {
+				notOwned[playedGame.gameId] = playedGame;
 			}
 		});
 
-		return _.chain(notOwned).values().sortBy("lastPlayDate").reverse().value();
+		return _.chain(notOwned)
+			.values()
+			.sortBy("lastPlayDate")
+			.reverse()
+			.value();
 	}
 
 	@computed
@@ -108,19 +111,22 @@ class PlayStore {
 			.orderBy(["numPlays", "name"], ["desc", "asc"])
 			.value();
 		const notPlayed: { [key: string]: PlayedGame } = {};
-		playedGames.forEach((playedGame) => {
+		playedGames.forEach(playedGame => {
 			const game = this.collectionStore.gamesById[playedGame.gameId];
 			if (game) {
 				if (!game.rating) {
 					notPlayed[playedGame.gameId] = playedGame;
 				}
-			}
-			else {
-				notPlayed[playedGame.gameId] = playedGame
+			} else {
+				notPlayed[playedGame.gameId] = playedGame;
 			}
 		});
 
-		return _.chain(notPlayed).values().sortBy("lastPlayDate").reverse().value();
+		return _.chain(notPlayed)
+			.values()
+			.sortBy("lastPlayDate")
+			.reverse()
+			.value();
 	}
 
 	private playsToPlayedGame(plays: Play[]): PlayedGame {
@@ -141,9 +147,11 @@ class PlayStore {
 					return 0;
 				}
 			}),
-			lastPlayDate: _.chain(plays).sortBy("playDate", play => play.playDate).last().value().playDate
+			lastPlayDate: _.chain(plays)
+				.sortBy("playDate", play => play.playDate)
+				.last()
+				.value().playDate
 		};
-
 	}
 }
 

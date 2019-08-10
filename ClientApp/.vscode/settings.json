@@ -1,0 +1,24 @@
+{
+	"prettier.eslintIntegration": true,
+	"prettier.jsxBracketSameLine": true,
+	"prettier.printWidth": 160,
+	"prettier.tabWidth": 4,
+	"prettier.useTabs": true,
+	"editor.formatOnSave": true,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"sort-imports.default-sort-style": "module",
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		{
+			"language": "typescript",
+			"autoFix": true
+		},
+		{
+			"language": "typescriptreact",
+			"autoFix": true
+		}
+	]
+}
