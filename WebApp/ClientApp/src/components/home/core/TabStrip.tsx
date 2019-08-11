@@ -8,6 +8,7 @@ import collectionIcon from "../../../images/collection.svg";
 import comingSoonIcon from "../../../images/coming-soon.svg";
 import mostPlayedIcon from "../../../images/most-played.svg";
 import recentIcon from "../../../images/recent.svg";
+import statsIcon from "../../../images/stats.svg";
 import topTenIcon from "../../../images/top-ten.svg";
 import StoresContext from "../../../stores/StoresContext";
 import { Tabs } from "../../../stores/ViewStateStore";
@@ -23,6 +24,7 @@ const TabStrip: SFC = observer(() => {
 		<div className={cx("tabs", "is-medium", styles["tab-strip"])}>
 			<ul>
 				<Tab tab="recentplays" icon={recentIcon} label={<>Recent <span className="is-hidden-touch">&nbsp;Plays</span></>} />
+				<Tab tab="stats" icon={statsIcon} label="Statistics" mobileOnly={true}/>
 				<Tab tab="mostplays" icon={mostPlayedIcon} label="Most Played" />
 				<Tab tab="topten" icon={topTenIcon} label="Top 10" />
 				<Tab tab="collection" icon={collectionIcon} label="Collection" />
@@ -35,13 +37,18 @@ const TabStrip: SFC = observer(() => {
 	);
 });
 
-const Tab: SFC<{ tab?: Tabs; icon: string; label: ReactNode; }> = observer(({
+const Tab: SFC<{ tab?: Tabs; icon: string; label: ReactNode; mobileOnly?: boolean}> = observer(({
 	tab,
 	icon,
-	label
+	label,
+	mobileOnly = false
 }) => {
 	const { viewStateStore } = useContext(StoresContext);
 	const { activeSection, isMobile } = viewStateStore;
+
+	if (!isMobile && mobileOnly) {
+		return null;
+	}
 
 	return (
 		<li className={cx(activeSection === tab && "is-active")}>

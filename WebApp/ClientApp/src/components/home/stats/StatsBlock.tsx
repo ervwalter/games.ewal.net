@@ -6,9 +6,12 @@ import React, { SFC, useContext } from "react";
 import StoresContext from "../../../stores/StoresContext";
 import styles from "./StatsBlock.module.scss";
 
-const StatsBlock: SFC = observer(() => {
+const StatsBlock: SFC<{visible: boolean}> = observer(({visible}) => {
 	const { statsStore } = useContext(StoresContext);
 	const { collectionStats, thirtyDaysStats, thisYearStats, allTimeStats } = statsStore;
+	if (!visible) {
+		return null;
+	}
 	return (
 		<div className={styles["stats"]}>
 			<div className="title is-4">Statistics</div>

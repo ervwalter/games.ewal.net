@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
-import { RouteComponentProps } from "react-router";
+import { Redirect, RouteComponentProps } from "react-router";
 
 import StoresContext from "../../stores/StoresContext";
 import { Tabs } from "../../stores/ViewStateStore";
@@ -28,7 +28,11 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
 	const { isMobile, activeSection } = viewStateStore;
 
 	const section = match.params.section;
-	
+	 
+	if (!isMobile && section === "stats") {
+		return <Redirect to="/" />
+	}
+
 	if (section && activeSection !== section) {
 		viewStateStore.changeSection(section);
 	}
@@ -36,6 +40,7 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
 		viewStateStore.changeSection("recentplays");
 	}
 	
+
 	return (
 		<>
 			<div className={cx(styles["blurb"], "content")}>
@@ -43,9 +48,10 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
 				of games, and I add to it more frequently than I should. I track the games that I own and the games that
 				I play on <a href="https://boardgamegeek.com">BoardGameGeek</a>, and this page chronicles my addiction.
 			</div>
-			<StatsBlock />
+			<StatsBlock visible={!isMobile} />
 			<TabStrip />
 			<RecentPlays count={25} visible={!section || section === "recentplays"} />
+			<StatsBlock visible={isMobile && section === "stats"} />
 			<MostPlayed visible={section === "mostplays"} />
 			<TopTen visible={section === "topten"} />
 			<PreorderedGames visible={ section === "comingsoon"} />

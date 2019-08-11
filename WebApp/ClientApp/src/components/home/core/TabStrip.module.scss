@@ -16,4 +16,12 @@
 		height: 24px;
 		width: 24px;
 	}
+	a {
+		padding: 0.5em 0.75em;
+	}
+	@media (min-width: 768px) {
+		a {
+			padding: 0.5em 1em;
+		}
+	}
 }
