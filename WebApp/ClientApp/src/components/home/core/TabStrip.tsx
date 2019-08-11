@@ -20,30 +20,26 @@ const TabStrip: SFC = observer(() => {
 
 	const activeSection = viewStateStore.activeSection;
 
-	const handleTabChange = (tab: Tabs) => {
-		viewStateStore.changeSection(tab);
-	};
-
 	return (
 		<div className={cx("tabs", "is-boxed", "is-medium", styles["tab-strip"])}>
 			<ul>
-				<Tab tab="recentplays" isActive={activeSection === "recentplays"} onChange={handleTabChange}>
+				<Tab isActive={activeSection === "recentplays"} >
 					Recent <span className="is-hidden-touch">&nbsp;Plays</span>
 				</Tab>
-				<Tab tab="mostplays" isActive={activeSection === "mostplays"} onChange={handleTabChange}>
+				<Tab tab="mostplays" isActive={activeSection === "mostplays"} >
 					Most Played
 				</Tab>
-				<Tab tab="topten" isActive={activeSection === "topten"} onChange={handleTabChange}>
+				<Tab tab="topten" isActive={activeSection === "topten"} >
 					Top 10
 				</Tab>
-				<Tab tab="collection" isActive={activeSection === "collection"} onChange={handleTabChange}>
+				<Tab tab="collection" isActive={activeSection === "collection"} >
 					Collection
 				</Tab>
-				<Tab tab="comingsoon" isActive={activeSection === "comingsoon"} onChange={handleTabChange}>
+				<Tab tab="comingsoon" isActive={activeSection === "comingsoon"} >
 					Coming Soon<span className="is-hidden-touch">&nbsp;/ Unplayed</span>
 				</Tab>
 				{showPlayedNotOwned &&
-					<Tab tab="cleanup" isActive={activeSection === "cleanup"} onChange={handleTabChange}>
+					<Tab tab="cleanup" isActive={activeSection === "cleanup"} >
 						Cleanup
 					</Tab>
 				}
@@ -52,16 +48,15 @@ const TabStrip: SFC = observer(() => {
 	);
 });
 
-const Tab: SFC<{ tab: Tabs; isActive: boolean; onChange: (tab: Tabs) => void; children: ReactNode }> = ({
+const Tab: SFC<{ tab?: Tabs; isActive: boolean; children: ReactNode }> = ({
 	tab,
 	isActive,
-	onChange,
 	children
 }) => {
 
 	return (
 		<li className={cx(isActive && "is-active")}>
-			<Link to={`/${tab}`} >{children}</Link>
+			<Link to={`/${tab || ""}`} >{children}</Link>
 		</li>
 	);
 };

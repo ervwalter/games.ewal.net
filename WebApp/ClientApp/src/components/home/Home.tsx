@@ -33,6 +33,9 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
 	if (section && activeSection !== section) {
 		viewStateStore.changeSection(section);
 	}
+	else if (!section && activeSection !== "recentplays") {
+		viewStateStore.changeSection("recentplays");
+	}
 	
 	useEffect(() => {
 		if (isMobile && !isLoading) {
