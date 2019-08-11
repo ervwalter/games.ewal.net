@@ -17,7 +17,7 @@ const TopTen: SFC<{ visible: boolean }> = observer(({ visible }) => {
 		return null;
 	}
 	return (
-		<div className={styles["topten"]} id="top10">
+		<div className={styles["topten"]} id="topten">
 			<div className="title is-4">
 				<BackToTop />
 				Top 10 Favorite Games

@@ -3,8 +3,8 @@ import React, { SFC, useContext } from "react";
 
 import StoresContext from "../../../stores/StoresContext";
 import BackToTop from "../core/BackToTop";
-import Thumbnails from "../core/Thumbnails";
 import GameList from "../core/GameList";
+import Thumbnails from "../core/Thumbnails";
 import styles from "./UnplayedPreordered.module.scss";
 
 const UnplayedGames: SFC<{ visible: boolean }> = observer(({ visible }) => {
@@ -17,7 +17,7 @@ const UnplayedGames: SFC<{ visible: boolean }> = observer(({ visible }) => {
 		return null;
 	}
 	return (
-		<div className={styles["pending"]} id="pending">
+		<div className={styles["pending"]} id="comingsoon">
 			<div className="title is-4">
 				<BackToTop />
 				<span className="is-hidden-mobile">Patiently </span>Waiting to be Played

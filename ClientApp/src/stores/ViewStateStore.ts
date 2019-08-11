@@ -1,16 +1,16 @@
 import { action, computed, observable } from "mobx";
 
-export type Tabs = "stats" | "recentPlays" | "mostPlays" | "top10" | "pending" | "collection" | "cleanup";
+export type Tabs = "stats" | "recentplays" | "mostplays" | "topten" | "comingsoon" | "collection" | "cleanup";
 
 export class ViewStateStore {
 	@observable public width: number = 0;
 	@observable public height: number = 0;
-	@observable public activeTab: Tabs;
+	@observable public activeSection: Tabs;
 	@observable public showPlayedNotOwned: boolean = false;
 
 	public constructor() {
 		let running = false;
-		this.activeTab = "recentPlays";
+		this.activeSection = "recentplays";
 		window.addEventListener("resize", () => {
 			if (!running) {
 				running = true;
@@ -44,8 +44,8 @@ export class ViewStateStore {
 	}
 
 	@action
-	public changeTab(newTab: Tabs) {
-		this.activeTab = newTab;
+	public changeSection(newTab: Tabs) {
+		this.activeSection = newTab;
 	}
 
 	@action

@@ -15,7 +15,7 @@ const App: SFC = () => {
 		<StoresContext.Provider value={stores}>
 			<Layout>
 				<Switch>
-					<Route path="/" component={Home} />
+					<Route path="/:section?" component={Home} />
 				</Switch>
 			</Layout>
 		</StoresContext.Provider>

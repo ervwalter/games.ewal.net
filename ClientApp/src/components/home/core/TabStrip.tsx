@@ -1,6 +1,7 @@
 import cx from "classnames";
 import { observer } from "mobx-react-lite";
-import React, { ReactNode, SFC, SyntheticEvent, useContext } from "react";
+import React, { ReactNode, SFC, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import StoresContext from "../../../stores/StoresContext";
 import { Tabs } from "../../../stores/ViewStateStore";
@@ -17,32 +18,32 @@ const TabStrip: SFC = observer(() => {
 		return null;
 	}
 
-	const activeTab = viewStateStore.activeTab;
+	const activeSection = viewStateStore.activeSection;
 
 	const handleTabChange = (tab: Tabs) => {
-		viewStateStore.changeTab(tab);
+		viewStateStore.changeSection(tab);
 	};
 
 	return (
 		<div className={cx("tabs", "is-boxed", "is-medium", styles["tab-strip"])}>
 			<ul>
-				<Tab tab="recentPlays" isActive={activeTab === "recentPlays"} onChange={handleTabChange}>
+				<Tab tab="recentplays" isActive={activeSection === "recentplays"} onChange={handleTabChange}>
 					Recent <span className="is-hidden-touch">&nbsp;Plays</span>
 				</Tab>
-				<Tab tab="mostPlays" isActive={activeTab === "mostPlays"} onChange={handleTabChange}>
+				<Tab tab="mostplays" isActive={activeSection === "mostplays"} onChange={handleTabChange}>
 					Most Played
 				</Tab>
-				<Tab tab="top10" isActive={activeTab === "top10"} onChange={handleTabChange}>
+				<Tab tab="topten" isActive={activeSection === "topten"} onChange={handleTabChange}>
 					Top 10
 				</Tab>
-				<Tab tab="collection" isActive={activeTab === "collection"} onChange={handleTabChange}>
+				<Tab tab="collection" isActive={activeSection === "collection"} onChange={handleTabChange}>
 					Collection
 				</Tab>
-				<Tab tab="pending" isActive={activeTab === "pending"} onChange={handleTabChange}>
+				<Tab tab="comingsoon" isActive={activeSection === "comingsoon"} onChange={handleTabChange}>
 					Coming Soon<span className="is-hidden-touch">&nbsp;/ Unplayed</span>
 				</Tab>
 				{showPlayedNotOwned &&
-					<Tab tab="cleanup" isActive={activeTab === "cleanup"} onChange={handleTabChange}>
+					<Tab tab="cleanup" isActive={activeSection === "cleanup"} onChange={handleTabChange}>
 						Cleanup
 					</Tab>
 				}
@@ -57,14 +58,10 @@ const Tab: SFC<{ tab: Tabs; isActive: boolean; onChange: (tab: Tabs) => void; ch
 	onChange,
 	children
 }) => {
-	const handleTabChange = (tab: Tabs, e: SyntheticEvent) => {
-		e.preventDefault();
-		onChange(tab);
-	};
 
 	return (
 		<li className={cx(isActive && "is-active")}>
-			<a onClick={e => handleTabChange(tab, e)}>{children}</a>
+			<Link to={`/${tab}`} >{children}</Link>
 		</li>
 	);
 };

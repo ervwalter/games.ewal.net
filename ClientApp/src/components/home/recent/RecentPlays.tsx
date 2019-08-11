@@ -18,7 +18,7 @@ const RecentPlays: SFC<{ visible: boolean; count: number }> = observer(({ visibl
 	const plays = _.take(playStore.plays, count);
 
 	return (
-		<div className={styles["recent"]} id="recentPlays">
+		<div className={styles["recent"]} id="recentplays">
 			<div className="title is-4">
 				<BackToTop />
 				Recent Plays

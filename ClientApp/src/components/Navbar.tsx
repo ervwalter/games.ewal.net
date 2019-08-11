@@ -1,5 +1,6 @@
 import cx from "classnames";
 import React, { SFC, useState } from "react";
+import { Link } from "react-router-dom";
 
 import styles from "./Navbar.module.scss";
 
@@ -14,16 +15,6 @@ const Navbar: SFC<{ showMenu: boolean }> = React.memo(({ showMenu }) => {
 
 	const closeMenu = () => {
 		setMenuOpen(false);
-	};
-
-	const scrollToSection = (section: string) => {
-		closeMenu();
-		const el = document.getElementById(section);
-		if (el) {
-			setImmediate(() => {
-				el.scrollIntoView();
-			});
-		}
 	};
 
 	return (
@@ -50,21 +41,21 @@ const Navbar: SFC<{ showMenu: boolean }> = React.memo(({ showMenu }) => {
 				</div>
 				<div className={cx("navbar-menu", "is-hidden-tablet", menuOpen && "is-active")}>
 					<div className="navbar-end">
-						<a className="navbar-item" onClick={scrollToSection.bind(null, "recentPlays")}>
+						<Link to="/recentplays" className="navbar-item" onClick={closeMenu} >
 							Recent Plays
-						</a>
-						<a className="navbar-item" onClick={scrollToSection.bind(null, "mostPlays")}>
+						</Link>
+						<Link to="/mostplays" className="navbar-item" onClick={closeMenu} >
 							Most Played
-						</a>
-						<a className="navbar-item" onClick={scrollToSection.bind(null, "top10")}>
+							</Link>
+						<Link to="/topten" className="navbar-item" onClick={closeMenu} >
 							Top 10
-						</a>
-						<a className="navbar-item" onClick={scrollToSection.bind(null, "pending")}>
+							</Link>
+						<Link to="/comingsoon" className="navbar-item" onClick={closeMenu} >
 							Coming Soon / Unplayed
-						</a>
-						<a className="navbar-item" onClick={scrollToSection.bind(null, "collection")}>
+							</Link>
+						<Link to="/collection" className="navbar-item" onClick={closeMenu} >
 							Collection
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>
