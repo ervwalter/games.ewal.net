@@ -45,7 +45,7 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
 			</div>
 			<StatsBlock />
 			<TabStrip />
-			<RecentPlays count={isMobile ? 15 : 25} visible={!section || section === "recentplays"} />
+			<RecentPlays count={25} visible={!section || section === "recentplays"} />
 			<MostPlayed visible={section === "mostplays"} />
 			<TopTen visible={section === "topten"} />
 			<PreorderedGames visible={ section === "comingsoon"} />
