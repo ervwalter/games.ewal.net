@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesApp", "WebApp\GamesApp.csproj", "{47FD68A7-B897-494C-9FCD-3DCA6CA6D1FE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdaterFunctions", "CacheUpdater\UpdaterFunctions.csproj", "{97F2E38E-7AF4-4E95-8F51-3A2722E8A98E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{3063F467-746A-4910-960A-7A58B5BB2A94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47FD68A7-B897-494C-9FCD-3DCA6CA6D1FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47FD68A7-B897-494C-9FCD-3DCA6CA6D1FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47FD68A7-B897-494C-9FCD-3DCA6CA6D1FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47FD68A7-B897-494C-9FCD-3DCA6CA6D1FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97F2E38E-7AF4-4E95-8F51-3A2722E8A98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97F2E38E-7AF4-4E95-8F51-3A2722E8A98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97F2E38E-7AF4-4E95-8F51-3A2722E8A98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97F2E38E-7AF4-4E95-8F51-3A2722E8A98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3063F467-746A-4910-960A-7A58B5BB2A94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3063F467-746A-4910-960A-7A58B5BB2A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3063F467-746A-4910-960A-7A58B5BB2A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3063F467-746A-4910-960A-7A58B5BB2A94}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C093B21-F0D0-4780-A1D0-D370963C78AA}
+	EndGlobalSection
+EndGlobal

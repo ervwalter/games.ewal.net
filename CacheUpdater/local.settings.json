@@ -1,0 +1,10 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "bgg_username" : "ervwalter",
+        "bgg_password" : "",
+        "cache_storage" : "UseDevelopmentStorage=true"
+    }
+}
