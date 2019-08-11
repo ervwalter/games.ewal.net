@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { observer } from "mobx-react-lite";
-import React, { SFC, useContext, useEffect } from "react";
+import React, { SFC, useContext } from "react";
 import { RouteComponentProps } from "react-router";
 
 import StoresContext from "../../stores/StoresContext";
@@ -24,10 +24,9 @@ interface MatchParams {
 }
 
 const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
-	const { viewStateStore, collectionStore, playStore, topTenStore } = useContext(StoresContext);
+	const { viewStateStore } = useContext(StoresContext);
 	const { isMobile, activeSection } = viewStateStore;
 
-	const isLoading = collectionStore.isLoading || playStore.isLoading || topTenStore.isLoading;
 	const section = match.params.section;
 	
 	if (section && activeSection !== section) {
@@ -35,22 +34,6 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
 	}
 	else if (!section && activeSection !== "recentplays") {
 		viewStateStore.changeSection("recentplays");
-	}
-	
-	useEffect(() => {
-		if (isMobile && !isLoading) {
-			const target:string = section || "masthead";
-			const el = document.getElementById(target);
-			if (el) {
-				setImmediate(() => {
-					el.scrollIntoView();
-				});
-			}
-		}
-	},[isMobile, section, isLoading]);
-
-	if (isLoading && isMobile && section) {
-		return <Loading />;
 	}
 	
 	return (
@@ -62,13 +45,13 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
 			</div>
 			<StatsBlock />
 			<TabStrip />
-			<RecentPlays count={isMobile ? 15 : 25} visible={isMobile ||!section || section === "recentplays"} />
-			<MostPlayed visible={isMobile || section === "mostplays"} />
-			<TopTen visible={isMobile || section === "topten"} />
-			<PreorderedGames visible={isMobile || section === "comingsoon"} />
-			<WantToBuyGames visible={isMobile || section === "comingsoon"} />
-			<UnplayedGames visible={isMobile || section === "comingsoon"} />
-			<Collection visible={isMobile || section === "collection"} />
+			<RecentPlays count={isMobile ? 15 : 25} visible={!section || section === "recentplays"} />
+			<MostPlayed visible={section === "mostplays"} />
+			<TopTen visible={section === "topten"} />
+			<PreorderedGames visible={ section === "comingsoon"} />
+			<WantToBuyGames visible={ section === "comingsoon"} />
+			<UnplayedGames visible={ section === "comingsoon"} />
+			<Collection visible={ section === "collection"} />
 			<PlayedNotRated visible={!isMobile && section === "cleanup"} />
 			<PlayedNotOwned visible={!isMobile && section === "cleanup"} />
 			<Loading />

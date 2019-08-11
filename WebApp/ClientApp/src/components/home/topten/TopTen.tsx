@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
 
 import StoresContext from "../../../stores/StoresContext";
-import BackToTop from "../core/BackToTop";
 import styles from "./TopTen.module.scss";
 import TopTenDesktop from "./TopTenDesktop";
 import TopTenMobile from "./TopTenMobile";
@@ -19,7 +18,6 @@ const TopTen: SFC<{ visible: boolean }> = observer(({ visible }) => {
 	return (
 		<div className={styles["topten"]} id="topten">
 			<div className="title is-4">
-				<BackToTop />
 				Top 10 Favorite Games
 			</div>
 			{viewStateStore.isMobile ? (

@@ -3,7 +3,6 @@ import React, { SFC, useContext } from "react";
 
 import { SortColumns } from "../../../stores/CollectionStore";
 import StoresContext from "../../../stores/StoresContext";
-import BackToTop from "../core/BackToTop";
 import styles from "./Collection.module.scss";
 import CollectionTable from "./CollectionTable";
 
@@ -20,7 +19,6 @@ const Collection: SFC<{ visible: boolean }> = observer(({ visible }) => {
 	return (
 		<div className={styles["collection"]} id="collection">
 			<div className="title is-4">
-				<BackToTop />
 				<span className="is-hidden-mobile">Current </span>Game Collection
 				<a
 					className={styles["link"]}

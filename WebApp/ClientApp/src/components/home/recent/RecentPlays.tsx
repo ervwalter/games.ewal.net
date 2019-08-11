@@ -3,7 +3,6 @@ import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
 
 import StoresContext from "../../../stores/StoresContext";
-import BackToTop from "../core/BackToTop";
 import Thumbnails from "../core/Thumbnails";
 import RecentPlayDetails from "./RecentPlayDetails";
 import styles from "./RecentPlays.module.scss";
@@ -20,7 +19,6 @@ const RecentPlays: SFC<{ visible: boolean; count: number }> = observer(({ visibl
 	return (
 		<div className={styles["recent"]} id="recentplays">
 			<div className="title is-4">
-				<BackToTop />
 				Recent Plays
 				<a
 					className={styles["link"]}

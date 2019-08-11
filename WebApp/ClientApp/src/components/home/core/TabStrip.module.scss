@@ -6,4 +6,14 @@
 	a:hover {
 		text-decoration: none;
 	}
+	.svg-inline--fa {
+		fill: currentColor;
+	}
+	svg {
+		fill: currentColor;
+	}
+	a > div {
+		height: 24px;
+		width: 24px;
+	}
 }

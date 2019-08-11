@@ -2,9 +2,8 @@ import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
 
 import StoresContext from "../../../stores/StoresContext";
-import BackToTop from "../core/BackToTop";
-import Thumbnails from "../core/Thumbnails";
 import GameList from "../core/GameList";
+import Thumbnails from "../core/Thumbnails";
 import styles from "./PlayedNotRated.module.scss";
 
 const PlayedNotRated: SFC<{ visible: boolean }> = observer(({ visible }) => {
@@ -19,7 +18,6 @@ const PlayedNotRated: SFC<{ visible: boolean }> = observer(({ visible }) => {
 	return (
 		<div className={styles["notrated"]} id="notrated">
 			<div className="title is-4">
-				<BackToTop />
 				Played But Not Rated
 			</div>
 			{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}

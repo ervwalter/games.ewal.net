@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
 
 import StoresContext from "../../../stores/StoresContext";
-import BackToTop from "../core/BackToTop";
 import GameList from "../core/GameList";
 import Thumbnails from "../core/Thumbnails";
 import styles from "./UnplayedPreordered.module.scss";
@@ -19,7 +18,6 @@ const WantToBuyGames: SFC<{ visible: boolean }> = observer(({ visible }) => {
 	return (
 		<div className={styles["pending"]} id="comingsoon">
 			<div className="title is-4">
-				<BackToTop />
 				Games<span className="is-hidden-mobile"> and Expansions</span> I Want to Buy
 			</div>
 			{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}

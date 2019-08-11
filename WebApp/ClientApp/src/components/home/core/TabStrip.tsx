@@ -2,7 +2,13 @@ import cx from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { ReactNode, SFC, useContext } from "react";
 import { Link } from "react-router-dom";
+import ReactSVG from "react-svg";
 
+import collectionIcon from "../../../images/collection.svg";
+import comingSoonIcon from "../../../images/coming-soon.svg";
+import mostPlayedIcon from "../../../images/most-played.svg";
+import recentIcon from "../../../images/recent.svg";
+import topTenIcon from "../../../images/top-ten.svg";
 import StoresContext from "../../../stores/StoresContext";
 import { Tabs } from "../../../stores/ViewStateStore";
 import styles from "./TabStrip.module.scss";
@@ -11,54 +17,40 @@ import styles from "./TabStrip.module.scss";
 
 const TabStrip: SFC = observer(() => {
 	const { viewStateStore } = useContext(StoresContext);
-	const isMobile = viewStateStore.isMobile;
 	const showPlayedNotOwned = viewStateStore.showPlayedNotOwned;
 
-	if (isMobile) {
-		return null;
-	}
-
-	const activeSection = viewStateStore.activeSection;
-
 	return (
-		<div className={cx("tabs", "is-boxed", "is-medium", styles["tab-strip"])}>
+		<div className={cx("tabs", "is-medium", styles["tab-strip"])}>
 			<ul>
-				<Tab isActive={activeSection === "recentplays"} >
-					Recent <span className="is-hidden-touch">&nbsp;Plays</span>
-				</Tab>
-				<Tab tab="mostplays" isActive={activeSection === "mostplays"} >
-					Most Played
-				</Tab>
-				<Tab tab="topten" isActive={activeSection === "topten"} >
-					Top 10
-				</Tab>
-				<Tab tab="collection" isActive={activeSection === "collection"} >
-					Collection
-				</Tab>
-				<Tab tab="comingsoon" isActive={activeSection === "comingsoon"} >
-					Coming Soon<span className="is-hidden-touch">&nbsp;/ Unplayed</span>
-				</Tab>
+				<Tab tab="recentplays" icon={recentIcon} label={<>Recent <span className="is-hidden-touch">&nbsp;Plays</span></>} />
+				<Tab tab="mostplays" icon={mostPlayedIcon} label="Most Played" />
+				<Tab tab="topten" icon={topTenIcon} label="Top 10" />
+				<Tab tab="collection" icon={collectionIcon} label="Collection" />
+				<Tab tab="comingsoon" icon={comingSoonIcon} label={<>Coming Soon<span className="is-hidden-touch">&nbsp;/ Unplayed</span></>} />
 				{showPlayedNotOwned &&
-					<Tab tab="cleanup" isActive={activeSection === "cleanup"} >
-						Cleanup
-					</Tab>
+					<Tab tab="cleanup" icon={recentIcon} label="Cleanup" />
 				}
 			</ul>
 		</div>
 	);
 });
 
-const Tab: SFC<{ tab?: Tabs; isActive: boolean; children: ReactNode }> = ({
+const Tab: SFC<{ tab?: Tabs; icon: string; label: ReactNode; }> = observer(({
 	tab,
-	isActive,
-	children
+	icon,
+	label
 }) => {
+	const { viewStateStore } = useContext(StoresContext);
+	const { activeSection, isMobile } = viewStateStore;
 
 	return (
-		<li className={cx(isActive && "is-active")}>
-			<Link to={`/${tab || ""}`} >{children}</Link>
+		<li className={cx(activeSection === tab && "is-active")}>
+			<Link to={`/${tab || ""}`} >
+				{isMobile && <ReactSVG src={icon} />}
+				{!isMobile && label}
+			</Link>
 		</li>
 	);
-};
+});
 
 export default TabStrip;

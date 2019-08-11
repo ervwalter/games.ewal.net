@@ -2,9 +2,8 @@ import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
 
 import StoresContext from "../../../stores/StoresContext";
-import BackToTop from "../core/BackToTop";
-import Thumbnails from "../core/Thumbnails";
 import GameList from "../core/GameList";
+import Thumbnails from "../core/Thumbnails";
 import styles from "./PlayedNotOwned.module.scss";
 
 const PlayedNotOwned: SFC<{ visible: boolean }> = observer(({ visible }) => {
@@ -19,7 +18,6 @@ const PlayedNotOwned: SFC<{ visible: boolean }> = observer(({ visible }) => {
 	return (
 		<div className={styles["notowned"]} id="notowned">
 			<div className="title is-4">
-				<BackToTop />
 				Played But Not Owned
 			</div>
 			{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}
