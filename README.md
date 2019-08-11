@@ -1,7 +1,11 @@
-
 This is the source for the [games.ewal.net](https://games.ewal.net) website.
 
+| Web App                                                                                                                                                                                                             | Cache Updater                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [![Build Status](https://games-ewal.visualstudio.com/Games/_apis/build/status/Games-ASP.NET%20Core-CI?branchName=master)](https://games-ewal.visualstudio.com/Games/_build/latest?definitionId=1&branchName=master) | [![Build Status](https://dev.azure.com/games-cache-updater-functions/MyFirstProject/_apis/build/status/GamesCacheUpdater%20-%20CI?branchName=master)](https://dev.azure.com/games-cache-updater-functions/MyFirstProject/_build/latest?definitionId=1&branchName=master) |
+
 ## License
+
 Copyright (c) 2017 Erv Walter
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
