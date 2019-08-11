@@ -1,3 +1,4 @@
+using DotNetCoreOpen.PrerenderMiddleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -48,6 +49,8 @@ namespace GamesApp
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Games API", Version = "v1" });
             });
 
+            services.ConfigureSection<PrerenderConfiguration>(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +69,7 @@ namespace GamesApp
 
             app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
+            app.UsePrerender();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseResponseCaching();
