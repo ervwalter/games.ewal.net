@@ -18,7 +18,7 @@ const Collection: SFC<{ visible: boolean }> = observer(({ visible }) => {
 
 	return (
 		<div className={styles["collection"]} id="collection">
-			<div className="title is-4">
+			<div className="title">
 				<span className="is-hidden-mobile">Current </span>Game Collection
 				<a
 					className={styles["link"]}

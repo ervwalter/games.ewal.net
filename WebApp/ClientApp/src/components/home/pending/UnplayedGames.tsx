@@ -17,7 +17,7 @@ const UnplayedGames: SFC<{ visible: boolean }> = observer(({ visible }) => {
 	}
 	return (
 		<div className={styles["pending"]} id="comingsoon">
-			<div className="title is-4">
+			<div className="title">
 				<span className="is-hidden-mobile">Patiently </span>Waiting to be Played
 			</div>
 			{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}

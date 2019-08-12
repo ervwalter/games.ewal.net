@@ -15,7 +15,7 @@ const MostPlayed: SFC<{ visible: boolean }> = observer(({ visible }) => {
 
 	return (
 		<div className={styles["most-played"]} id="mostplays">
-			<div className="title is-4">
+			<div className="title">
 				Most Played Games <Legend stats={statsStore.allTimeStats} />
 			</div>
 			<PlayedGamesTable games={playStore.playedGames} />

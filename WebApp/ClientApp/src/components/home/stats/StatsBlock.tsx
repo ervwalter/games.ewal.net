@@ -14,7 +14,7 @@ const StatsBlock: SFC<{visible: boolean}> = observer(({visible}) => {
 	}
 	return (
 		<div className={styles["stats"]}>
-			<div className="title is-4">Statistics</div>
+			<div className="title">Statistics</div>
 			<div className="columns is-multiline is-mobile">
 				<div className="column is-one-quarter-desktop is-half-tablet is-half-mobile">
 					<small>COLLECTION</small>

@@ -17,7 +17,7 @@ const TopTen: SFC<{ visible: boolean }> = observer(({ visible }) => {
 	}
 	return (
 		<div className={styles["topten"]} id="topten">
-			<div className="title is-4">
+			<div className="title">
 				Top 10 Favorite Games
 			</div>
 			{viewStateStore.isMobile ? (

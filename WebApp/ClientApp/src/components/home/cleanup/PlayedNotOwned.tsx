@@ -17,7 +17,7 @@ const PlayedNotOwned: SFC<{ visible: boolean }> = observer(({ visible }) => {
 	}
 	return (
 		<div className={styles["notowned"]} id="notowned">
-			<div className="title is-4">
+			<div className="title">
 				Played But Not Owned
 			</div>
 			{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}

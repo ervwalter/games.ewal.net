@@ -18,7 +18,7 @@ const RecentPlays: SFC<{ visible: boolean; count: number }> = observer(({ visibl
 
 	return (
 		<div className={styles["recent"]} id="recentplays">
-			<div className="title is-4">
+			<div className="title">
 				Recent Plays
 				<a
 					className={styles["link"]}
