@@ -53,7 +53,7 @@ const Tab: SFC<{ tab?: Tabs; icon: string; label: ReactNode; mobileOnly?: boolea
 	return (
 		<li className={cx(activeSection === tab && "is-active")}>
 			<Link to={`/${tab || ""}`} >
-				{isMobile && <ReactSVG src={icon} />}
+				{isMobile && <ReactSVG src={icon} className={styles[`tab-${tab}`]}/>}
 				{!isMobile && label}
 			</Link>
 		</li>
