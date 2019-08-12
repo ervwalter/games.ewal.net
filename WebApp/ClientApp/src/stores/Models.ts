@@ -119,6 +119,7 @@ export interface CollectionStats {
 	numberOfPreviouslyOwned: TBD;
 	yetToBePlayed: TBD;
 	preordered: TBD;
+	wantToBuy: TBD;
 	averageRating: TBD;
 	top100Games: TBD;
 }

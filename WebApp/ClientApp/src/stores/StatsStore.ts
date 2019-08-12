@@ -143,7 +143,8 @@ class StatsStore {
 			yetToBePlayed: "...",
 			preordered: "...",
 			averageRating: "...",
-			top100Games: "..."
+			top100Games: "...",
+			wantToBuy: "..."
 		};
 
 		if (games) {
@@ -153,6 +154,7 @@ class StatsStore {
 			stats.yetToBePlayed = 0;
 			stats.preordered = 0;
 			stats.top100Games = 0;
+			stats.wantToBuy = 0;
 
 			let ratingNumerator = 0;
 			let ratingDenominator = 0;
@@ -185,6 +187,8 @@ class StatsStore {
 					stats.numberOfPreviouslyOwned++;
 				} else if (game.preOrdered) {
 					stats.preordered++;
+				} else if (game.wantToBuy) {
+					stats.wantToBuy++;
 				}
 			}
 			if (ratingDenominator > 0) {

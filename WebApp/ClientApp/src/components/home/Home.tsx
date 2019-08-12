@@ -5,16 +5,13 @@ import { Redirect, RouteComponentProps } from "react-router";
 
 import StoresContext from "../../stores/StoresContext";
 import { Tabs } from "../../stores/ViewStateStore";
-import PlayedNotOwned from "./cleanup/PlayedNotOwned";
-import PlayedNotRated from "./cleanup/PlayedNotRated";
+import Cleanup from "./cleanup/Cleanup";
 import Collection from "./collection/Collection";
 import Loading from "./core/Loading";
 import TabStrip from "./core/TabStrip";
 import styles from "./Home.module.scss";
 import MostPlayed from "./mostplayed/MostPlayed";
-import PreorderedGames from "./pending/PreorderedGames";
-import UnplayedGames from "./pending/UnplayedGames";
-import WantToBuyGames from "./pending/WantToBuyGames";
+import ComingSoon from "./pending/ComingSoon";
 import RecentPlays from "./recent/RecentPlays";
 import StatsBlock from "./stats/StatsBlock";
 import TopTen from "./topten/TopTen";
@@ -24,18 +21,18 @@ interface MatchParams {
 }
 
 interface ISection {
-	components: FunctionComponent<any>[];
+	component: FunctionComponent<any>;
 	title: string;
 }
 
 const sections: { [key: string]: ISection } = {
-	stats: { components: [StatsBlock], title: "Statistics" },
-	recentplays: { components: [RecentPlays], title: "Recent Plays" },
-	collection: { components: [Collection], title: "Collection" },
-	mostplays: { components: [MostPlayed], title: "Most Played" },
-	topten: { components: [TopTen], title: "Top 10" },
-	comingsoon: { components: [PreorderedGames, WantToBuyGames, UnplayedGames], title: "Coming Soon / Unplayed" },
-	cleanup: { components: [PlayedNotRated, PlayedNotOwned], title: "Cleanup" }
+	stats: { component: StatsBlock, title: "Statistics" },
+	recentplays: { component: RecentPlays, title: "Recent Plays" },
+	collection: { component: Collection, title: "Collection" },
+	mostplays: { component: MostPlayed, title: "Most Played" },
+	topten: { component: TopTen, title: "Top 10" },
+	comingsoon: { component: ComingSoon, title: "Coming Soon / Unplayed" },
+	cleanup: { component: Cleanup, title: "Cleanup" }
 };
 
 const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ match }) => {
@@ -43,7 +40,7 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ match }) => {
 	const { isMobile, activeSection } = viewStateStore;
 
 	const section = match.params.section || "recentplays";
-	const components = sections[section].components;
+	const Component = sections[section].component;
 	const title = sections[section].title;
 
 	useEffect(() => {
@@ -67,9 +64,7 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ match }) => {
 			</div>
 			{!isMobile && <StatsBlock />}
 			<TabStrip />
-			{components.map((Component, index) => (
-				<Component key={index} />
-			))}
+			<Component />
 			<Loading />
 
 			{/* <RecentPlays count={25} visible={!section || section === "recentplays"} />

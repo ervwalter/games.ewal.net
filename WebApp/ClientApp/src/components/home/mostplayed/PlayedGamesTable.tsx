@@ -6,7 +6,6 @@ import PlayedGamesRow from "./PlayedGamesRow";
 import styles from "./PlayedGamesTable.module.scss";
 
 const PlayedGamesTable: SFC<{ games: PlayedGame[] }> = React.memo(({ games }) => {
-	games = _.filter(games, g => g.numPlays! >= 5);
 	return (
 		<div className={styles["games"]}>
 			<table className="table">
