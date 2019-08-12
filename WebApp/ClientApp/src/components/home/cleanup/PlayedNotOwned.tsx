@@ -6,11 +6,8 @@ import GameList from "../core/GameList";
 import Thumbnails from "../core/Thumbnails";
 import styles from "./PlayedNotOwned.module.scss";
 
-const PlayedNotOwned: SFC<{ visible: boolean }> = observer(({ visible }) => {
+const PlayedNotOwned: SFC = observer(() => {
 	const { playStore, viewStateStore } = useContext(StoresContext);
-	if (!visible) {
-		return null;
-	}
 	const games = playStore.playedNotOwned;
 	if (games.length === 0) {
 		return null;

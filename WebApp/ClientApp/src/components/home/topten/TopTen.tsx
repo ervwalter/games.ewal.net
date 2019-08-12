@@ -6,12 +6,8 @@ import styles from "./TopTen.module.scss";
 import TopTenDesktop from "./TopTenDesktop";
 import TopTenMobile from "./TopTenMobile";
 
-const TopTen: SFC<{ visible: boolean }> = observer(({ visible }) => {
+const TopTen: SFC = observer(() => {
 	const { topTenStore, viewStateStore } = useContext(StoresContext);
-
-	if (!visible) {
-		return null;
-	}
 	if (topTenStore.games.length === 0) {
 		return null;
 	}

@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { observer } from "mobx-react-lite";
-import React, { SFC, useContext } from "react";
+import React, { FunctionComponent, SFC, useContext, useEffect } from "react";
 import { Redirect, RouteComponentProps } from "react-router";
 
 import StoresContext from "../../stores/StoresContext";
@@ -23,44 +23,65 @@ interface MatchParams {
 	section?: Tabs;
 }
 
-const Home: SFC<RouteComponentProps<MatchParams>> = observer(({match}) => {
+interface ISection {
+	components: FunctionComponent<any>[];
+	title: string;
+}
+
+const sections: { [key: string]: ISection } = {
+	stats: { components: [StatsBlock], title: "Statistics" },
+	recentplays: { components: [RecentPlays], title: "Recent Plays" },
+	collection: { components: [Collection], title: "Collection" },
+	mostplays: { components: [MostPlayed], title: "Most Played" },
+	topten: { components: [TopTen], title: "Top 10" },
+	comingsoon: { components: [PreorderedGames, WantToBuyGames, UnplayedGames], title: "Coming Soon / Unplayed" },
+	cleanup: { components: [PlayedNotRated, PlayedNotOwned], title: "Cleanup" }
+};
+
+const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ match }) => {
 	const { viewStateStore } = useContext(StoresContext);
 	const { isMobile, activeSection } = viewStateStore;
 
-	const section = match.params.section;
-	 
-	if (!isMobile && section === "stats") {
-		return <Redirect to="/" />
-	}
+	const section = match.params.section || "recentplays";
+	const components = sections[section].components;
+	const title = sections[section].title;
 
-	if (section && activeSection !== section) {
+	useEffect(() => {
+		document.title = `${title} - Board Games`;
+	}, [title]);
+
+	if (activeSection !== section) {
 		viewStateStore.changeSection(section);
 	}
-	else if (!section && activeSection !== "recentplays") {
-		viewStateStore.changeSection("recentplays");
+
+	if (!isMobile && section === "stats") {
+		return <Redirect to="/" />;
 	}
-	
 
 	return (
 		<>
 			<div className={cx(styles["blurb"], "content")}>
-				I freely admit that I am <i>obsessed</i> with modern/designer board games. I have a sizable collection
-				of games, and I add to it more frequently than I should. I track the games that I own and the games that
-				I play on <a href="https://boardgamegeek.com">BoardGameGeek</a>, and this page chronicles my addiction.
+				I freely admit that I am <i>obsessed</i> with modern/designer board games. I have a sizable collection of games, and I add to it more frequently
+				than I should. I track the games that I own and the games that I play on <a href="https://boardgamegeek.com">BoardGameGeek</a>, and this page
+				chronicles my addiction.
 			</div>
-			<StatsBlock visible={!isMobile} />
+			{!isMobile && <StatsBlock />}
 			<TabStrip />
-			<RecentPlays count={25} visible={!section || section === "recentplays"} />
+			{components.map((Component, index) => (
+				<Component key={index} />
+			))}
+			<Loading />
+
+			{/* <RecentPlays count={25} visible={!section || section === "recentplays"} />
 			<StatsBlock visible={isMobile && section === "stats"} />
 			<MostPlayed visible={section === "mostplays"} />
 			<TopTen visible={section === "topten"} />
-			<PreorderedGames visible={ section === "comingsoon"} />
-			<WantToBuyGames visible={ section === "comingsoon"} />
-			<UnplayedGames visible={ section === "comingsoon"} />
-			<Collection visible={ section === "collection"} />
+			<PreorderedGames visible={section === "comingsoon"} />
+			<WantToBuyGames visible={section === "comingsoon"} />
+			<UnplayedGames visible={section === "comingsoon"} />
+			<Collection visible={section === "collection"} />
 			<PlayedNotRated visible={!isMobile && section === "cleanup"} />
-			<PlayedNotOwned visible={!isMobile && section === "cleanup"} />
-			<Loading />
+			<PlayedNotOwned visible={!isMobile && section === "cleanup"} /> */}
 		</>
 	);
 });

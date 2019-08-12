@@ -7,10 +7,10 @@ import Thumbnails from "../core/Thumbnails";
 import RecentPlayDetails from "./RecentPlayDetails";
 import styles from "./RecentPlays.module.scss";
 
-const RecentPlays: SFC<{ visible: boolean; count: number }> = observer(({ visible, count }) => {
+const RecentPlays: SFC = observer(() => {
 	const { playStore } = useContext(StoresContext);
-
-	if (!visible || playStore.isLoading) {
+	const count = 25;
+	if (playStore.isLoading) {
 		return null;
 	}
 

@@ -6,11 +6,8 @@ import GameList from "../core/GameList";
 import Thumbnails from "../core/Thumbnails";
 import styles from "./UnplayedPreordered.module.scss";
 
-const UnplayedGames: SFC<{ visible: boolean }> = observer(({ visible }) => {
+const UnplayedGames: SFC = observer(() => {
 	const { collectionStore, viewStateStore } = useContext(StoresContext);
-	if (!visible) {
-		return null;
-	}
 	const games = collectionStore.unplayedGames;
 	if (games.length === 0) {
 		return null;

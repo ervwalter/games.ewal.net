@@ -6,13 +6,8 @@ import Legend from "./Legend";
 import styles from "./MostPlayed.module.scss";
 import PlayedGamesTable from "./PlayedGamesTable";
 
-const MostPlayed: SFC<{ visible: boolean }> = observer(({ visible }) => {
+const MostPlayed: SFC= observer(() => {
 	const { playStore, statsStore } = useContext(StoresContext);
-
-	if (!visible) {
-		return null;
-	}
-
 	return (
 		<div className={styles["most-played"]} id="mostplays">
 			<div className="title">

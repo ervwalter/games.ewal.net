@@ -1,5 +1,4 @@
 {
-	"prettier.eslintIntegration": true,
 	"prettier.jsxBracketSameLine": true,
 	"prettier.printWidth": 160,
 	"prettier.tabWidth": 4,
@@ -21,5 +20,7 @@
 			"autoFix": true
 		}
 	],
-	"typescript.tsdk": "node_modules\\typescript\\lib"
+	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"prettier.tslintIntegration": true,
+	"typescript.implementationsCodeLens.enabled": true
 }

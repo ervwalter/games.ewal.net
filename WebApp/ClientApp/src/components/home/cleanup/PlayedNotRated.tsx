@@ -6,11 +6,8 @@ import GameList from "../core/GameList";
 import Thumbnails from "../core/Thumbnails";
 import styles from "./PlayedNotRated.module.scss";
 
-const PlayedNotRated: SFC<{ visible: boolean }> = observer(({ visible }) => {
+const PlayedNotRated: SFC= observer(() => {
 	const { playStore, viewStateStore } = useContext(StoresContext);
-	if (!visible) {
-		return null;
-	}
 	const games = playStore.playedNotRated;
 	if (games.length === 0) {
 		return null;

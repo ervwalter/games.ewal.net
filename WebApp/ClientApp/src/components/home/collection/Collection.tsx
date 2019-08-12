@@ -6,11 +6,8 @@ import StoresContext from "../../../stores/StoresContext";
 import styles from "./Collection.module.scss";
 import CollectionTable from "./CollectionTable";
 
-const Collection: SFC<{ visible: boolean }> = observer(({ visible }) => {
+const Collection: SFC = observer(() => {
 	const { collectionStore } = useContext(StoresContext);
-	if (!visible) {
-		return null;
-	}
 
 	const handleSort = (column: SortColumns) => {
 		collectionStore.changeSort(column);
