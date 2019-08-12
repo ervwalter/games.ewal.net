@@ -69,7 +69,7 @@ namespace GamesApp
 
             app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
-            //app.UsePrerender();
+            app.UsePrerender();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseResponseCaching();
