@@ -5,7 +5,7 @@ import moment from "moment";
 import numeral from "numeral";
 import React, { SFC, useContext } from "react";
 import Helmet from "react-helmet";
-import { Area, Bar, CartesianGrid, Cell, ComposedChart, Curve, Legend, Pie, PieChart, PieLabelRenderProps, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Area, Bar, CartesianGrid, Cell, ComposedChart, Curve, Legend, Pie, PieChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import StoresContext from "../../../stores/StoresContext";
 import styles from "./StatsBlock.module.scss";
@@ -120,7 +120,7 @@ const StatsBlock: SFC = observer(() => {
 						<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40 }}>
 							<CartesianGrid stroke="#eee" />
 							<Area dataKey="hoursPlayed" name="Hours" type="monotone" fill="orange" stroke="darkorange" isAnimationActive={false} />
-							<Bar dataKey="numberOfPlays" name="Plays" fill="green" isAnimationActive={false} />
+							<Bar dataKey="numberOfPlays" name="Plays" fill="green" isAnimationActive={true} />
 							{isMobile ? <XAxis dataKey="month" tick={Tick} interval={0} height={40} /> : <XAxis dataKey="month" />}
 							<YAxis width={40} />
 							<Legend />
@@ -140,8 +140,8 @@ const StatsBlock: SFC = observer(() => {
 									startAngle={-270}
 									endAngle={-630}
 									fill="#8884d8"
-									label={props => renderPieLabel(props, playsByDayOfWeek, "day")}
-									labelLine={props => renderPieLabelLine(props)}
+									label={DaysOfWeekLabel}
+									labelLine={PieLabelLine}
 									isAnimationActive={false}>
 									{playsByDayOfWeek.map((entry, index) => (
 										<Cell key={index} fill={daysOfWeekColors[index].hexString()} />
@@ -164,9 +164,8 @@ const StatsBlock: SFC = observer(() => {
 									startAngle={-270}
 									endAngle={-630}
 									fill="#8884d8"
-									// label
-									label={props => renderPieLabel(props, playsByPlayerCount, "playerCount")}
-									labelLine={props => renderPieLabelLine(props)}
+									label={PlayerCountLabel}
+									labelLine={PieLabelLine}
 									isAnimationActive={false}>
 									{playsByPlayerCount.map((entry, index) => (
 										<Cell key={index} fill={playerCountColors[index].hexString()} />
@@ -191,10 +190,10 @@ const Tick: SFC<{ payload: any; x: number; y: number }> = ({ x, y, payload }) =>
 	);
 };
 
-// const CustomLabel: SFC<{x:number; y:number; fill:string; value:}
+const labelPercentLimit = 0.03;
 
-const renderPieLabelLine = (props: any) => {
-	if (props.percent < 0.05) {
+const PieLabelLine: SFC<any> = props => {
+	if (props.percent < labelPercentLimit) {
 		return null;
 	}
 	const points = [
@@ -203,15 +202,19 @@ const renderPieLabelLine = (props: any) => {
 	];
 	return <Curve {...props} points={points} type="linear" stroke="#aaa" />;
 };
-const renderPieLabel = (props: PieLabelRenderProps, data: any[], dataKey: string) => {
+
+const DaysOfWeekLabel: SFC<any> = props => <PieLabel dataKey="day" {...props} />;
+const PlayerCountLabel: SFC<any> = props => <PieLabel dataKey="playerCount" {...props} />;
+
+const PieLabel: SFC<any> = ({ dataKey, ...props }) => {
 	const cx = props.cx as number;
 	const cy = props.cy as number;
 	const midAngle = props.midAngle as number;
 	const outerRadius = props.outerRadius as number;
-	const index = props.index as number;
 	const percent = props.percent as number;
+	const payload = props.payload;
 
-	if (percent < 0.05) {
+	if (percent < labelPercentLimit) {
 		return null;
 	}
 
@@ -219,7 +222,7 @@ const renderPieLabel = (props: PieLabelRenderProps, data: any[], dataKey: string
 
 	return (
 		<text x={x} y={y} fill="#666" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
-			{data[index][dataKey]}
+			{payload[dataKey]}
 		</text>
 	);
 };

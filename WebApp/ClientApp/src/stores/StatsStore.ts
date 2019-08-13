@@ -52,11 +52,45 @@ class StatsStore {
 	@computed
 	public get playsByMonthStats() {
 		if (!this.playStore.isLoading) {
-			const cutoff = moment()
+			const now = moment();
+			const startMonth = moment()
 				.add(-11, "months")
 				.startOf("month");
-			const plays = _.takeWhile(this.playStore.plays, play => play.playDate.isAfter(cutoff));
-			return this.calculatePlaysByMonth(plays);
+			const plays = _.takeWhile(this.playStore.plays, play => play.playDate.isAfter(startMonth));
+			const months: MonthStat[] = [];
+			const statsByMonth: { [key: string]: MonthStat } = {};
+
+			const thisMonth = now.endOf("month");
+			for (let month = startMonth; !month.isAfter(thisMonth); month.add(1, "month")) {
+				const monthLabel = month.format("MMM");
+				const monthStats = {
+					month: monthLabel,
+					monthShort: monthLabel.substr(0, 1),
+					numberOfPlays: 0,
+					hoursPlayed: 0
+				};
+				months.push(monthStats);
+				statsByMonth[monthStats.month] = monthStats;
+			}
+
+			plays.forEach(play => {
+				const playMonth = play.playDate.format("MMM");
+				const monthStats = statsByMonth[playMonth];
+
+				let duration = 0;
+				if (play.duration && play.duration > 0) {
+					duration += play.duration;
+				} else if (play.estimatedDuration && play.estimatedDuration > 0) {
+					// use the estimated duration of an explicit one was not specified
+					duration += play.estimatedDuration * (play.numPlays || 1);
+				}
+
+				duration = Math.round(duration / 60);
+
+				monthStats.numberOfPlays++;
+				monthStats.hoursPlayed += duration || 0;
+			});
+			return months;
 		}
 		return [];
 	}
@@ -255,54 +289,6 @@ class StatsStore {
 			}
 		}
 		return stats;
-	};
-
-	private calculatePlaysByMonth = (plays?: Play[]) => {
-		if (!plays) {
-			plays = [];
-		}
-
-		const months: MonthStat[] = [];
-		const statsByMonth: { [key: string]: MonthStat } = {};
-
-		const cutoff = moment().endOf("month");
-		for (
-			let month = moment()
-				.add(-11, "months")
-				.startOf("month");
-			!month.isAfter(cutoff);
-			month.add(1, "month")
-		) {
-			const monthLabel = month.format("MMM");
-			const monthStats = {
-				month: monthLabel,
-				monthShort: monthLabel.substr(0, 1),
-				numberOfPlays: 0,
-				hoursPlayed: 0
-			};
-			months.push(monthStats);
-			statsByMonth[monthStats.month] = monthStats;
-		}
-
-		plays.forEach(play => {
-			const playMonth = play.playDate.format("MMM");
-			const monthStats = statsByMonth[playMonth];
-
-			let duration = 0;
-			if (play.duration && play.duration > 0) {
-				duration += play.duration;
-			} else if (play.estimatedDuration && play.estimatedDuration > 0) {
-				// use the estimated duration of an explicit one was not specified
-				duration += play.estimatedDuration * (play.numPlays || 1);
-			}
-
-			duration = Math.round(duration / 60);
-
-			monthStats.numberOfPlays++;
-			monthStats.hoursPlayed += duration || 0;
-		});
-
-		return months;
 	};
 }
 
