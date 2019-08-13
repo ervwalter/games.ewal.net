@@ -1,4 +1,5 @@
 import cx from "classnames";
+import color from "color";
 import rainbow from "color-rainbow";
 import { observer } from "mobx-react-lite";
 import moment from "moment";
@@ -24,8 +25,13 @@ const StatsBlock: SFC = observer(() => {
 		allTimeStats.uniqueGames
 	} unique games all-time.`;
 
-	const daysOfWeekColors = rotate(rainbow.create(playsByDayOfWeek.length), Math.round(playsByDayOfWeek.length * 0.5));
-	const playerCountColors = rotate(rainbow.create(playsByPlayerCount.length), Math.round(playsByPlayerCount.length * 0.5));
+	const darkenFactor = 0.15;
+	const daysOfWeekColors = rotate(rainbow.create(playsByDayOfWeek.length), Math.round(playsByDayOfWeek.length * 0.5)).map(c =>
+		color(c.hexString()).darken(darkenFactor)
+	);
+	const playerCountColors = rotate(rainbow.create(playsByPlayerCount.length), Math.round(playsByPlayerCount.length * 0.5)).map(c =>
+		color(c.hexString()).darken(darkenFactor)
+	);
 
 	return (
 		<>
@@ -120,55 +126,55 @@ const StatsBlock: SFC = observer(() => {
 						<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40 }}>
 							<CartesianGrid stroke="#eee" />
 							<Area dataKey="hoursPlayed" name="Hours" type="monotone" fill="orange" stroke="darkorange" isAnimationActive={false} />
-							<Bar dataKey="numberOfPlays" name="Plays" fill="green" isAnimationActive={true} />
+							<Bar dataKey="numberOfPlays" name="Plays" fill="#080" isAnimationActive={true} />
 							{isMobile ? <XAxis dataKey="month" tick={Tick} interval={0} height={40} /> : <XAxis dataKey="month" />}
 							<YAxis width={40} />
 							<Legend />
 						</ComposedChart>
 					</ResponsiveContainer>
 				</div>
-				<div className={cx("column", "is-one-quarter-desktop", "is-one-half-tablet", "is-full-mobile", styles["pie-days"])}>
+				<div className={cx("column", "is-one-quarter-desktop", "is-half-tablet", "is-full-mobile", styles["pie-days"])}>
 					<div>
 						<div className={styles["title"]}>Plays by Day of Week</div>
-						<ResponsiveContainer width="100%" height={180}>
+						<ResponsiveContainer width="100%" height={150}>
 							<PieChart>
 								<Pie
 									data={playsByDayOfWeek}
 									dataKey="numberOfPlays"
 									innerRadius={30}
-									outerRadius={60}
+									outerRadius={50}
 									startAngle={-270}
 									endAngle={-630}
-									fill="#8884d8"
 									label={DaysOfWeekLabel}
 									labelLine={PieLabelLine}
+									// labelLine={false}
 									isAnimationActive={false}>
 									{playsByDayOfWeek.map((entry, index) => (
-										<Cell key={index} fill={daysOfWeekColors[index].hexString()} />
+										<Cell key={index} fill={daysOfWeekColors[index].hex()} />
 									))}
 								</Pie>
 							</PieChart>
 						</ResponsiveContainer>
 					</div>
 				</div>
-				<div className={cx("column", "is-one-quarter-desktop", "is-one-half-tablet", "is-full-mobile", styles["pie-players"])}>
+				<div className={cx("column", "is-one-quarter-desktop", "is-half-tablet", "is-full-mobile", styles["pie-players"])}>
 					<div>
 						<div className={styles["title"]}>Plays by Player Count</div>
-						<ResponsiveContainer width="100%" height={180}>
+						<ResponsiveContainer width="100%" height={150}>
 							<PieChart>
 								<Pie
 									data={playsByPlayerCount}
 									dataKey="numberOfPlays"
+									outerRadius={50}
 									innerRadius={30}
-									outerRadius={60}
 									startAngle={-270}
 									endAngle={-630}
-									fill="#8884d8"
 									label={PlayerCountLabel}
 									labelLine={PieLabelLine}
+									// labelLine={false}
 									isAnimationActive={false}>
 									{playsByPlayerCount.map((entry, index) => (
-										<Cell key={index} fill={playerCountColors[index].hexString()} />
+										<Cell key={index} fill={playerCountColors[index].hex()} />
 									))}
 								</Pie>
 							</PieChart>
@@ -183,14 +189,14 @@ const StatsBlock: SFC = observer(() => {
 const Tick: SFC<{ payload: any; x: number; y: number }> = ({ x, y, payload }) => {
 	return (
 		<g transform={`translate(${x},${y})`}>
-			<text x={0} y={0} dy={12} dx={2} textAnchor="end" fill="#666" transform="rotate(-45)">
+			<text x={0} y={0} dy={8} dx={0} textAnchor="end" fill="#666" transform="rotate(-60)">
 				{payload.value}
 			</text>
 		</g>
 	);
 };
 
-const labelPercentLimit = 0.03;
+const labelPercentLimit = 0.025;
 
 const PieLabelLine: SFC<any> = props => {
 	if (props.percent < labelPercentLimit) {
@@ -219,7 +225,6 @@ const PieLabel: SFC<any> = ({ dataKey, ...props }) => {
 	}
 
 	const { x, y } = polarToCartesian(cx, cy, outerRadius + 18, midAngle);
-
 	return (
 		<text x={x} y={y} fill="#666" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
 			{payload[dataKey]}

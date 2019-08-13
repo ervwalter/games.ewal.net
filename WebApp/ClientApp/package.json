@@ -7,6 +7,7 @@
 		"axios": "^0.19.0",
 		"bulma": "^0.7.5",
 		"classnames": "^2.2.6",
+		"color": "^3.1.2",
 		"color-rainbow": "0.0.0",
 		"corejs": "^1.0.0",
 		"lodash": "^4.17.15",
@@ -27,6 +28,7 @@
 	},
 	"devDependencies": {
 		"@types/classnames": "^2.2.9",
+		"@types/color": "^3.0.0",
 		"@types/jest": "^24.0.17",
 		"@types/lodash": "^4.14.136",
 		"@types/node": "^12.7.1",
