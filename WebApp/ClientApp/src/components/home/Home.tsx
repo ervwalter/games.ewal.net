@@ -1,13 +1,15 @@
 import cx from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { FunctionComponent, SFC, useContext, useEffect } from "react";
-import { Redirect, RouteComponentProps } from "react-router";
+import Helmet from "react-helmet";
+import { RouteComponentProps } from "react-router";
 
 import StoresContext from "../../stores/StoresContext";
 import { Tabs } from "../../stores/ViewStateStore";
 import Cleanup from "./cleanup/Cleanup";
 import Collection from "./collection/Collection";
 import Loading from "./core/Loading";
+import RedirectWithPrerender from "./core/RedirectWithPrerender";
 import TabStrip from "./core/TabStrip";
 import styles from "./Home.module.scss";
 import MostPlayed from "./mostplayed/MostPlayed";
@@ -32,51 +34,64 @@ const sections: { [key: string]: ISection } = {
 	mostplays: { component: MostPlayed, title: "Most Played" },
 	topten: { component: TopTen, title: "Top 10" },
 	comingsoon: { component: ComingSoon, title: "Coming Soon / Unplayed" },
-	cleanup: { component: Cleanup, title: "Cleanup" }
+	other: { component: Cleanup, title: "Other" }
 };
 
-const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ match }) => {
+const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ location, match }) => {
 	const { viewStateStore } = useContext(StoresContext);
-	const { isMobile, activeSection } = viewStateStore;
+	const { activeSection } = viewStateStore;
 
-	const section = match.params.section || "recentplays";
-	const Component = sections[section].component;
-	const title = sections[section].title;
+	const section = match.params.section || "stats";
+	const sectionDetails: ISection | undefined = sections[section];
+	const title = sectionDetails ? sectionDetails.title : "";
 
 	useEffect(() => {
 		document.title = `${title} - Board Games`;
 	}, [title]);
 
+	if (!sectionDetails) {
+		return <RedirectWithPrerender to="/" />;
+	}
+
+	const Component = sectionDetails.component;
+
 	if (activeSection !== section) {
 		viewStateStore.changeSection(section);
 	}
 
-	if (!isMobile && section === "stats") {
-		return <Redirect to="/" />;
+	if (!viewStateStore.showPlayedNotOwned && section === "other") {
+		return <RedirectWithPrerender to="/" />;
+	}
+
+	let helmet;
+	if (location.state && location.state.isRedirect) {
+		helmet = (
+			<Helmet>
+				<meta name="prerender-status-code" content="301" />
+				<meta name="prerender-header" content={`Location: ${window.location.origin}${location.state.redirectLocation}`} />
+			</Helmet>
+		);
+	} else {
+		helmet = (
+			<Helmet>
+				<meta name="prerender-status-code" content="" />
+				<meta name="prerender-header" content="" />
+			</Helmet>
+		);
 	}
 
 	return (
 		<>
+			{helmet}
 			<div className={cx(styles["blurb"], "content")}>
 				I freely admit that I am <i>obsessed</i> with modern/designer board games. I have a sizable collection of games, and I add to it more frequently
 				than I should. I track the games that I own and the games that I play on <a href="https://boardgamegeek.com">BoardGameGeek</a>, and this page
 				chronicles my addiction.
 			</div>
-			{!isMobile && <StatsBlock />}
+			{/* {!isMobile && <StatsBlock />} */}
 			<TabStrip />
 			<Component />
 			<Loading />
-
-			{/* <RecentPlays count={25} visible={!section || section === "recentplays"} />
-			<StatsBlock visible={isMobile && section === "stats"} />
-			<MostPlayed visible={section === "mostplays"} />
-			<TopTen visible={section === "topten"} />
-			<PreorderedGames visible={section === "comingsoon"} />
-			<WantToBuyGames visible={section === "comingsoon"} />
-			<UnplayedGames visible={section === "comingsoon"} />
-			<Collection visible={section === "collection"} />
-			<PlayedNotRated visible={!isMobile && section === "cleanup"} />
-			<PlayedNotOwned visible={!isMobile && section === "cleanup"} /> */}
 		</>
 	);
 });

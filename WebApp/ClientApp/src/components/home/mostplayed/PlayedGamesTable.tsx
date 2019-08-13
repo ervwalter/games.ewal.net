@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React, { SFC } from "react";
 
 import { PlayedGame } from "../../../stores/Models";

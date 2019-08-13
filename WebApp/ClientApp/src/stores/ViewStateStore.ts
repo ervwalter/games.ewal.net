@@ -1,6 +1,6 @@
 import { action, computed, observable } from "mobx";
 
-export type Tabs = "stats" | "recentplays" | "mostplays" | "topten" | "comingsoon" | "collection" | "cleanup";
+export type Tabs = "stats" | "recentplays" | "mostplays" | "topten" | "comingsoon" | "collection" | "other";
 
 export class ViewStateStore {
 	@observable public width: number = 0;
@@ -10,7 +10,7 @@ export class ViewStateStore {
 
 	public constructor() {
 		let running = false;
-		this.activeSection = "recentplays";
+		this.activeSection = "stats";
 		window.addEventListener("resize", () => {
 			if (!running) {
 				running = true;
@@ -26,21 +26,20 @@ export class ViewStateStore {
 		let clickCount = 0;
 		const root = document.getElementById("root");
 		if (root) {
-			root.addEventListener("click", (event) => {
+			root.addEventListener("click", event => {
 				const wrapper = document.getElementById("wrapper");
 				if (event.target === wrapper) {
 					clickCount++;
 					if (clickCount === 1) {
-						setTimeout(() => { clickCount = 0; }, 2000);
-					}
-					else if (clickCount === 5) {
+						setTimeout(() => {
+							clickCount = 0;
+						}, 2000);
+					} else if (clickCount === 5) {
 						this.showPlayedNotOwned = true;
 					}
 				}
 			});
 		}
-
-
 	}
 
 	@action

@@ -23,6 +23,7 @@ const TabStrip: SFC = observer(() => {
 	return (
 		<div className={cx("tabs", "is-medium", styles["tab-strip"])}>
 			<ul>
+				<Tab tab="stats" path="/" icon={statsIcon} label="Stats" />
 				<Tab
 					tab="recentplays"
 					icon={recentIcon}
@@ -32,7 +33,6 @@ const TabStrip: SFC = observer(() => {
 						</>
 					}
 				/>
-				<Tab tab="stats" icon={statsIcon} label="Statistics" mobileOnly={true} />
 				<Tab tab="mostplays" icon={mostPlayedIcon} label="Most Played" />
 				<Tab tab="topten" icon={topTenIcon} label="Top 10" />
 				<Tab tab="collection" icon={collectionIcon} label="Collection" />
@@ -45,28 +45,23 @@ const TabStrip: SFC = observer(() => {
 						</>
 					}
 				/>
-				{showPlayedNotOwned && <Tab tab="cleanup" icon={recentIcon} label="Cleanup" />}
+				{showPlayedNotOwned && <Tab tab="other" icon={recentIcon} label="Other" />}
 			</ul>
 		</div>
 	);
 });
 
-const Tab: SFC<{ tab?: Tabs; icon: string; label: ReactNode; mobileOnly?: boolean }> = observer(({ tab, icon, label, mobileOnly = false }) => {
+const Tab: SFC<{ tab?: Tabs; icon: string; label: ReactNode; path?: string }> = observer(({ tab, icon, label, path }) => {
 	const { viewStateStore } = useContext(StoresContext);
-	const { activeSection, isMobile } = viewStateStore;
+	const { activeSection } = viewStateStore;
 
-	if (!isMobile && mobileOnly) {
-		return null;
-	}
-	const path = tab === "recentplays" ? "/" : `/${tab}` || "/";
+	path = path || `/${tab}`;
 
 	return (
 		<li className={cx(activeSection === tab && "is-active")}>
 			<Link to={path}>
 				<ReactSVG src={icon} className={cx("is-mobile-only", styles[`tab-${tab}`])} />
 				<span className="is-hidden-mobile">{label}</span>
-				{/* {isMobile && <ReactSVG src={icon} className={styles[`tab-${tab}`]}/>}
-				{!isMobile && label} */}
 			</Link>
 		</li>
 	);
