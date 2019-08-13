@@ -10,11 +10,14 @@ import styles from "./StatsBlock.module.scss";
 const StatsBlock: SFC = observer(() => {
 	const { statsStore } = useContext(StoresContext);
 	const { collectionStats, thirtyDaysStats, thisYearStats, allTimeStats } = statsStore;
-	const description = `I own ${collectionStats.numberOfGames} games and ${collectionStats.numberOfExpansions} expansions. This year I have played games ${
+
+	const description = `I own ${collectionStats.numberOfGames} games and ${collectionStats.numberOfExpansions} expansions. I have played games ${
 		thisYearStats.numberOfPlays
-	} times for a cumulative ${numeral(thisYearStats.hoursPlayed).format("0")} hours of play time. That is across ${thisYearStats.uniqueGames} unique games, ${
-		thisYearStats.newGames
-	} of which were new to me.`;
+	} times this year and ${allTimeStats.numberOfPlays} times all-time for a cumulative ${numeral(thisYearStats.hoursPlayed).format(
+		"0"
+	)} hours this year and ${numeral(allTimeStats.hoursPlayed).format("0")} hours all-time. I played ${thisYearStats.uniqueGames} unique games this year and ${
+		allTimeStats.uniqueGames
+	} unique games all-time.`;
 	return (
 		<>
 			<Helmet>
