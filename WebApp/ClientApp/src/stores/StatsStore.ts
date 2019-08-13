@@ -3,7 +3,7 @@ import { computed } from "mobx";
 import moment from "moment";
 
 import CollectionStore from "./CollectionStore";
-import { CollectionStats, Game, Play, PlayStats, PlayedGame } from "./Models";
+import { CollectionStats, DayOfWeekStat, Game, MonthStat, Play, PlayStats, PlayedGame, PlayerCountStat } from "./Models";
 import PlayStore from "./PlayStore";
 
 class StatsStore {
@@ -47,6 +47,65 @@ class StatsStore {
 			return this.calculatCollectionStats(this.collectionStore.allGames);
 		}
 		return this.calculatCollectionStats();
+	}
+
+	@computed
+	public get playsByMonthStats() {
+		if (!this.playStore.isLoading) {
+			const cutoff = moment()
+				.add(-11, "months")
+				.startOf("month");
+			const plays = _.takeWhile(this.playStore.plays, play => play.playDate.isAfter(cutoff));
+			return this.calculatePlaysByMonth(plays);
+		}
+		return [];
+	}
+
+	@computed
+	public get playsByDayOfWeek() {
+		if (!this.playStore.isLoading) {
+			const playsByDayOfWeek: DayOfWeekStat[] = [];
+			const groupedPlays = _.chain(this.playStore.plays)
+				.groupBy(p => p.playDate.format("d"))
+				.value();
+			_.chain(groupedPlays)
+				.keys()
+				.sort()
+				.value()
+				.forEach(key => {
+					const group = groupedPlays[key];
+					playsByDayOfWeek.push({
+						day: group[0].playDate.format("ddd"),
+						numberOfPlays: _.sumBy(group, g => g.numPlays)
+					});
+				});
+			return playsByDayOfWeek;
+		}
+		return [];
+	}
+
+	@computed
+	public get playsByPlayerCount() {
+		if (!this.playStore.isLoading) {
+			const playsByPlayerCount: PlayerCountStat[] = [];
+			const groupedPlays = _.chain(this.playStore.plays)
+				.filter(p => p.players.length > 0)
+				.groupBy(p => p.players.length)
+				.value();
+			_.chain(groupedPlays)
+				.keys()
+				.value()
+				.forEach(key => {
+					const group = groupedPlays[key];
+					playsByPlayerCount.push({
+						playerCount: group[0].players.length,
+						numberOfPlays: _.sumBy(group, g => g.numPlays)
+					});
+				});
+
+			return _.sortBy(playsByPlayerCount, p => p.playerCount);
+		}
+		return [];
 	}
 
 	private calculatePlayStats = (plays?: Play[], games?: PlayedGame[]) => {
@@ -196,6 +255,54 @@ class StatsStore {
 			}
 		}
 		return stats;
+	};
+
+	private calculatePlaysByMonth = (plays?: Play[]) => {
+		if (!plays) {
+			plays = [];
+		}
+
+		const months: MonthStat[] = [];
+		const statsByMonth: { [key: string]: MonthStat } = {};
+
+		const cutoff = moment().endOf("month");
+		for (
+			let month = moment()
+				.add(-11, "months")
+				.startOf("month");
+			!month.isAfter(cutoff);
+			month.add(1, "month")
+		) {
+			const monthLabel = month.format("MMM");
+			const monthStats = {
+				month: monthLabel,
+				monthShort: monthLabel.substr(0, 1),
+				numberOfPlays: 0,
+				hoursPlayed: 0
+			};
+			months.push(monthStats);
+			statsByMonth[monthStats.month] = monthStats;
+		}
+
+		plays.forEach(play => {
+			const playMonth = play.playDate.format("MMM");
+			const monthStats = statsByMonth[playMonth];
+
+			let duration = 0;
+			if (play.duration && play.duration > 0) {
+				duration += play.duration;
+			} else if (play.estimatedDuration && play.estimatedDuration > 0) {
+				// use the estimated duration of an explicit one was not specified
+				duration += play.estimatedDuration * (play.numPlays || 1);
+			}
+
+			duration = Math.round(duration / 60);
+
+			monthStats.numberOfPlays++;
+			monthStats.hoursPlayed += duration || 0;
+		});
+
+		return months;
 	};
 }
 

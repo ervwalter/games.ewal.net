@@ -1,15 +1,20 @@
+import cx from "classnames";
+import rainbow from "color-rainbow";
 import { observer } from "mobx-react-lite";
 import moment from "moment";
 import numeral from "numeral";
 import React, { SFC, useContext } from "react";
 import Helmet from "react-helmet";
+import { Area, Bar, CartesianGrid, Cell, ComposedChart, Curve, Legend, Pie, PieChart, PieLabelRenderProps, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import StoresContext from "../../../stores/StoresContext";
 import styles from "./StatsBlock.module.scss";
 
 const StatsBlock: SFC = observer(() => {
-	const { statsStore } = useContext(StoresContext);
-	const { collectionStats, thirtyDaysStats, thisYearStats, allTimeStats } = statsStore;
+	const { statsStore, viewStateStore } = useContext(StoresContext);
+	const { collectionStats, thirtyDaysStats, thisYearStats, allTimeStats, playsByMonthStats, playsByDayOfWeek, playsByPlayerCount } = statsStore;
+
+	const isMobile = viewStateStore.isMobile;
 
 	const description = `I own ${collectionStats.numberOfGames} games and ${collectionStats.numberOfExpansions} expansions. I have played games ${
 		thisYearStats.numberOfPlays
@@ -18,6 +23,10 @@ const StatsBlock: SFC = observer(() => {
 	)} hours this year and ${numeral(allTimeStats.hoursPlayed).format("0")} hours all-time. I played ${thisYearStats.uniqueGames} unique games this year and ${
 		allTimeStats.uniqueGames
 	} unique games all-time.`;
+
+	const daysOfWeekColors = rotate(rainbow.create(playsByDayOfWeek.length), Math.round(playsByDayOfWeek.length * 0.5));
+	const playerCountColors = rotate(rainbow.create(playsByPlayerCount.length), Math.round(playsByPlayerCount.length * 0.5));
+
 	return (
 		<>
 			<Helmet>
@@ -104,8 +113,126 @@ const StatsBlock: SFC = observer(() => {
 					</div>
 				</div>
 			</div>
+			<div className="columns is-multiline is-mobile">
+				<div className={cx("column", "is-half-desktop", "is-full-tablet", "is-full-mobile", styles["chart"])}>
+					<div className={styles["title"]}>Plays and Time by Month (Past 12 Months)</div>
+					<ResponsiveContainer width="100%" height={200}>
+						<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40 }}>
+							<CartesianGrid stroke="#eee" />
+							<Area dataKey="hoursPlayed" name="Hours" type="monotone" fill="orange" stroke="darkorange" isAnimationActive={false} />
+							<Bar dataKey="numberOfPlays" name="Plays" fill="green" isAnimationActive={false} />
+							{isMobile ? <XAxis dataKey="month" tick={Tick} interval={0} height={40} /> : <XAxis dataKey="month" />}
+							<YAxis width={40} />
+							<Legend />
+						</ComposedChart>
+					</ResponsiveContainer>
+				</div>
+				<div className={cx("column", "is-one-quarter-desktop", "is-one-half-tablet", "is-full-mobile", styles["pie-days"])}>
+					<div>
+						<div className={styles["title"]}>Plays by Day of Week</div>
+						<ResponsiveContainer width="100%" height={180}>
+							<PieChart>
+								<Pie
+									data={playsByDayOfWeek}
+									dataKey="numberOfPlays"
+									innerRadius={30}
+									outerRadius={60}
+									startAngle={-270}
+									endAngle={-630}
+									fill="#8884d8"
+									label={props => renderPieLabel(props, playsByDayOfWeek, "day")}
+									labelLine={props => renderPieLabelLine(props)}
+									isAnimationActive={false}>
+									{playsByDayOfWeek.map((entry, index) => (
+										<Cell key={index} fill={daysOfWeekColors[index].hexString()} />
+									))}
+								</Pie>
+							</PieChart>
+						</ResponsiveContainer>
+					</div>
+				</div>
+				<div className={cx("column", "is-one-quarter-desktop", "is-one-half-tablet", "is-full-mobile", styles["pie-players"])}>
+					<div>
+						<div className={styles["title"]}>Plays by Player Count</div>
+						<ResponsiveContainer width="100%" height={180}>
+							<PieChart>
+								<Pie
+									data={playsByPlayerCount}
+									dataKey="numberOfPlays"
+									innerRadius={30}
+									outerRadius={60}
+									startAngle={-270}
+									endAngle={-630}
+									fill="#8884d8"
+									// label
+									label={props => renderPieLabel(props, playsByPlayerCount, "playerCount")}
+									labelLine={props => renderPieLabelLine(props)}
+									isAnimationActive={false}>
+									{playsByPlayerCount.map((entry, index) => (
+										<Cell key={index} fill={playerCountColors[index].hexString()} />
+									))}
+								</Pie>
+							</PieChart>
+						</ResponsiveContainer>
+					</div>
+				</div>
+			</div>
 		</>
 	);
 });
+
+const Tick: SFC<{ payload: any; x: number; y: number }> = ({ x, y, payload }) => {
+	return (
+		<g transform={`translate(${x},${y})`}>
+			<text x={0} y={0} dy={12} dx={2} textAnchor="end" fill="#666" transform="rotate(-45)">
+				{payload.value}
+			</text>
+		</g>
+	);
+};
+
+// const CustomLabel: SFC<{x:number; y:number; fill:string; value:}
+
+const renderPieLabelLine = (props: any) => {
+	if (props.percent < 0.05) {
+		return null;
+	}
+	const points = [
+		polarToCartesian(props.cx, props.cy, props.outerRadius, props.midAngle),
+		polarToCartesian(props.cx, props.cy, props.outerRadius + 10, props.midAngle)
+	];
+	return <Curve {...props} points={points} type="linear" stroke="#aaa" />;
+};
+const renderPieLabel = (props: PieLabelRenderProps, data: any[], dataKey: string) => {
+	const cx = props.cx as number;
+	const cy = props.cy as number;
+	const midAngle = props.midAngle as number;
+	const outerRadius = props.outerRadius as number;
+	const index = props.index as number;
+	const percent = props.percent as number;
+
+	if (percent < 0.05) {
+		return null;
+	}
+
+	const { x, y } = polarToCartesian(cx, cy, outerRadius + 18, midAngle);
+
+	return (
+		<text x={x} y={y} fill="#666" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
+			{data[index][dataKey]}
+		</text>
+	);
+};
+
+const polarToCartesian = (cx: number, cy: number, radius: number, angle: number) => ({
+	x: cx + Math.cos(-Radian * angle) * radius,
+	y: cy + Math.sin(-Radian * angle) * radius
+});
+
+const rotate = (array: any[], n: number) => {
+	return array.slice(n, array.length).concat(array.slice(0, n));
+};
+
+const Radian = Math.PI / 180;
 
 export default StatsBlock;

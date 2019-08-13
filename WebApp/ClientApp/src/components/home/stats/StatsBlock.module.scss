@@ -12,3 +12,25 @@
 		}
 	}
 }
+
+.chart {
+	max-width: 968px;
+}
+
+.pie-days > div {
+	@media (min-width: 1024px) {
+		width: 230px;
+	}
+}
+
+.pie-players > div {
+	@media (min-width: 1024px) {
+		width: 180px;
+	}
+}
+
+.title {
+	text-align: center;
+	font-weight: 600;
+	margin-bottom: 10px;
+}

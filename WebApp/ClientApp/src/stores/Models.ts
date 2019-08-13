@@ -124,6 +124,22 @@ export interface CollectionStats {
 	top100Games: TBD;
 }
 
+export interface MonthStat {
+	month: string;
+	numberOfPlays: number;
+	hoursPlayed: number;
+}
+
+export interface DayOfWeekStat {
+	day: string;
+	numberOfPlays: number;
+}
+
+export interface PlayerCountStat {
+	playerCount: number;
+	numberOfPlays: number;
+}
+
 export interface TopTenItem {
 	rank?: number;
 	gameId: string;
