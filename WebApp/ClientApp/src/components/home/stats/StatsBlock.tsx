@@ -129,7 +129,7 @@ const StatsBlock: SFC = observer(() => {
 							<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40 }}>
 								<CartesianGrid stroke="#eee" />
 								<Area dataKey="hoursPlayed" name="Hours" type="monotone" fill="orange" stroke="darkorange" isAnimationActive={false} />
-								<Bar dataKey="numberOfPlays" name="Plays" fill="#080" isAnimationActive={true} />
+								<Bar dataKey="numberOfPlays" name="Plays" fill="#080" isAnimationActive={false} />
 								{isMobile ? <XAxis dataKey="month" tick={Tick} interval={0} height={40} /> : <XAxis dataKey="month" />}
 								<YAxis width={40} />
 								<Legend />
