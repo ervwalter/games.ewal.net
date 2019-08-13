@@ -3,6 +3,7 @@ import Helmet from "react-helmet";
 
 import PlayedNotOwned from "./PlayedNotOwned";
 import PlayedNotRated from "./PlayedNotRated";
+import WantToTrade from "./WantToTrade";
 
 const Cleanup: SFC = () => (
 	<>
@@ -14,6 +15,7 @@ const Cleanup: SFC = () => (
 		</Helmet>
 		<PlayedNotRated />
 		<PlayedNotOwned />
+		<WantToTrade />
 	</>
 );
 

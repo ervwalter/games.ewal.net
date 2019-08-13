@@ -56,6 +56,24 @@ class CollectionStore {
 	}
 
 	@computed
+	public get forTradeGames() {
+		const forTrade: Game[] = [];
+		for (const game of this.allGames) {
+			if (game.forTrade) {
+				forTrade.push(game);
+			}
+			if (game.allExpansions) {
+				for (const expansion of game.allExpansions) {
+					if (expansion.forTrade) {
+						forTrade.push(expansion);
+					}
+				}
+			}
+		}
+		return _.sortBy(forTrade, "sortableName");
+	}
+
+	@computed
 	public get wantToBuyGames() {
 		const wantToBuy: Game[] = [];
 		for (const game of this.allGames) {

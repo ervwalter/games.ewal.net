@@ -1,0 +1,7 @@
+@import "../../../variables";
+@import "../SharedStyles";
+
+.notrated {
+	@include section-styles;
+	@include title-styles;
+}
