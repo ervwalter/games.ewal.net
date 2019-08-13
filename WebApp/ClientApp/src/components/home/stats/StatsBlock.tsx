@@ -33,6 +33,8 @@ const StatsBlock: SFC = observer(() => {
 		color(c.hexString()).darken(darkenFactor)
 	);
 
+	const chartDataAvailable = playsByDayOfWeek.length > 0 && playsByDayOfWeek.length > 0 && playsByPlayerCount.length > 0;
+
 	return (
 		<>
 			<Helmet>
@@ -119,69 +121,71 @@ const StatsBlock: SFC = observer(() => {
 					</div>
 				</div>
 			</div>
-			<div className="columns is-multiline is-mobile">
-				<div className={cx("column", "is-half-desktop", "is-full-tablet", "is-full-mobile", styles["chart"])}>
-					<div className={styles["title"]}>Plays and Time by Month (Past 12 Months)</div>
-					<ResponsiveContainer width="100%" height={200}>
-						<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40 }}>
-							<CartesianGrid stroke="#eee" />
-							<Area dataKey="hoursPlayed" name="Hours" type="monotone" fill="orange" stroke="darkorange" isAnimationActive={false} />
-							<Bar dataKey="numberOfPlays" name="Plays" fill="#080" isAnimationActive={true} />
-							{isMobile ? <XAxis dataKey="month" tick={Tick} interval={0} height={40} /> : <XAxis dataKey="month" />}
-							<YAxis width={40} />
-							<Legend />
-						</ComposedChart>
-					</ResponsiveContainer>
-				</div>
-				<div className={cx("column", "is-one-quarter-desktop", "is-half-tablet", "is-full-mobile", styles["pie-days"])}>
-					<div>
-						<div className={styles["title"]}>Plays by Day of Week</div>
-						<ResponsiveContainer width="100%" height={150}>
-							<PieChart>
-								<Pie
-									data={playsByDayOfWeek}
-									dataKey="numberOfPlays"
-									innerRadius={30}
-									outerRadius={50}
-									startAngle={-270}
-									endAngle={-630}
-									label={DaysOfWeekLabel}
-									labelLine={PieLabelLine}
-									// labelLine={false}
-									isAnimationActive={false}>
-									{playsByDayOfWeek.map((entry, index) => (
-										<Cell key={index} fill={daysOfWeekColors[index].hex()} />
-									))}
-								</Pie>
-							</PieChart>
+			{chartDataAvailable && (
+				<div className="columns is-multiline is-mobile">
+					<div className={cx("column", "is-half-desktop", "is-full-tablet", "is-full-mobile", styles["chart"])}>
+						<div className={styles["title"]}>Plays and Time by Month (Past 12 Months)</div>
+						<ResponsiveContainer width="100%" height={200}>
+							<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40 }}>
+								<CartesianGrid stroke="#eee" />
+								<Area dataKey="hoursPlayed" name="Hours" type="monotone" fill="orange" stroke="darkorange" isAnimationActive={false} />
+								<Bar dataKey="numberOfPlays" name="Plays" fill="#080" isAnimationActive={true} />
+								{isMobile ? <XAxis dataKey="month" tick={Tick} interval={0} height={40} /> : <XAxis dataKey="month" />}
+								<YAxis width={40} />
+								<Legend />
+							</ComposedChart>
 						</ResponsiveContainer>
 					</div>
-				</div>
-				<div className={cx("column", "is-one-quarter-desktop", "is-half-tablet", "is-full-mobile", styles["pie-players"])}>
-					<div>
-						<div className={styles["title"]}>Plays by Player Count</div>
-						<ResponsiveContainer width="100%" height={150}>
-							<PieChart>
-								<Pie
-									data={playsByPlayerCount}
-									dataKey="numberOfPlays"
-									outerRadius={50}
-									innerRadius={30}
-									startAngle={-270}
-									endAngle={-630}
-									label={PlayerCountLabel}
-									labelLine={PieLabelLine}
-									// labelLine={false}
-									isAnimationActive={false}>
-									{playsByPlayerCount.map((entry, index) => (
-										<Cell key={index} fill={playerCountColors[index].hex()} />
-									))}
-								</Pie>
-							</PieChart>
-						</ResponsiveContainer>
+					<div className={cx("column", "is-one-quarter-desktop", "is-half-tablet", "is-full-mobile", styles["pie-days"])}>
+						<div>
+							<div className={styles["title"]}>Plays by Day of Week</div>
+							<ResponsiveContainer width="100%" height={150}>
+								<PieChart>
+									<Pie
+										data={playsByDayOfWeek}
+										dataKey="numberOfPlays"
+										innerRadius={30}
+										outerRadius={50}
+										startAngle={-270}
+										endAngle={-630}
+										label={DaysOfWeekLabel}
+										labelLine={PieLabelLine}
+										// labelLine={false}
+										isAnimationActive={false}>
+										{playsByDayOfWeek.map((entry, index) => (
+											<Cell key={index} fill={daysOfWeekColors[index].hex()} />
+										))}
+									</Pie>
+								</PieChart>
+							</ResponsiveContainer>
+						</div>
+					</div>
+					<div className={cx("column", "is-one-quarter-desktop", "is-half-tablet", "is-full-mobile", styles["pie-players"])}>
+						<div>
+							<div className={styles["title"]}>Plays by Player Count</div>
+							<ResponsiveContainer width="100%" height={150}>
+								<PieChart>
+									<Pie
+										data={playsByPlayerCount}
+										dataKey="numberOfPlays"
+										outerRadius={50}
+										innerRadius={30}
+										startAngle={-270}
+										endAngle={-630}
+										label={PlayerCountLabel}
+										labelLine={PieLabelLine}
+										// labelLine={false}
+										isAnimationActive={false}>
+										{playsByPlayerCount.map((entry, index) => (
+											<Cell key={index} fill={playerCountColors[index].hex()} />
+										))}
+									</Pie>
+								</PieChart>
+							</ResponsiveContainer>
+						</div>
 					</div>
 				</div>
-			</div>
+			)}
 		</>
 	);
 });
