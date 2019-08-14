@@ -16,6 +16,8 @@
 	}
 
 	.name {
-		white-space: nowrap;
+		@media (min-width: 768px) {
+			white-space: nowrap;
+		}
 	}
 }
