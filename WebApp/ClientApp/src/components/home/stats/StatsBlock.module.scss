@@ -17,15 +17,23 @@
 	max-width: 968px;
 }
 
-.pie-days > div {
-	@media (min-width: 1024px) {
-		width: 200px;
+.pie {
+	@media (min-width: 768px) and (max-width: 1023px) {
+		text-align: center;
 	}
-}
 
-.pie-players > div {
-	@media (min-width: 1024px) {
-		width: 200px;
+	& > div {
+		@media (min-width: 768px) {
+			display: inline-block;
+			width: 230px;
+			// width: 200px;
+		}
+	}
+	& > div + div {
+		margin-top: 1.5rem;
+		@media (min-width: 768px) {
+			margin-top: 0;
+		}
 	}
 }
 
