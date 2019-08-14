@@ -125,13 +125,13 @@ const StatsBlock: SFC = observer(() => {
 				<div className="columns is-multiline is-mobile">
 					<div className={cx("column", "is-half-desktop", "is-full-tablet", "is-full-mobile", styles["chart"])}>
 						<div className={styles["title"]}>Plays and Time by Month (Past 12 Months)</div>
-						<ResponsiveContainer width="100%" height={isMobile ? 180 : 200}>
-							<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40 }}>
-								<CartesianGrid stroke="#eee" />
+						<ResponsiveContainer width="100%" height={isMobile ? 210 : 230}>
+							<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40, top: 20, bottom: 20 }}>
+								<CartesianGrid stroke="#eee" vertical={false} />
 								<Area dataKey="hoursPlayed" name="Hours" type="monotone" fill="orange" stroke="darkorange" isAnimationActive={false} />
 								<Bar dataKey="numberOfPlays" name="Plays" fill="#080" isAnimationActive={false} />
 								{isMobile ? <XAxis dataKey="month" tick={Tick} interval={0} height={40} /> : <XAxis dataKey="month" />}
-								<YAxis width={40} />
+								<YAxis width={40} interval={0} />
 								<Legend />
 							</ComposedChart>
 						</ResponsiveContainer>
@@ -139,8 +139,8 @@ const StatsBlock: SFC = observer(() => {
 					<div className={cx("column", "is-half-desktop", "is-full-tablet", "is-full-mobile", styles["pie"])}>
 						<div>
 							<div className={styles["title"]}>Plays by Day of Week</div>
-							<ResponsiveContainer width="100%" height={150}>
-								<PieChart>
+							<ResponsiveContainer width="100%" height={180}>
+								<PieChart margin={{ top: 20, bottom: 20 }}>
 									<Pie
 										data={playsByDayOfWeek}
 										dataKey="numberOfPlays"
@@ -163,8 +163,8 @@ const StatsBlock: SFC = observer(() => {
 					<div className={cx("column", "is-one-quarter-desktop", "is-half-tablet", "is-full-mobile", styles["pie-players"])}> */}
 						<div>
 							<div className={styles["title"]}>Plays by Player Count</div>
-							<ResponsiveContainer width="100%" height={150}>
-								<PieChart>
+							<ResponsiveContainer width="100%" height={180}>
+								<PieChart margin={{ top: 20, bottom: 20 }}>
 									<Pie
 										data={playsByPlayerCount}
 										dataKey="numberOfPlays"
