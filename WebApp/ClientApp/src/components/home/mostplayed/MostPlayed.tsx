@@ -15,10 +15,12 @@ const MostPlayed: SFC = observer(() => {
 
 	const games = _.chain(playStore.playedGames)
 		.filter(g => g.numPlays! >= 5)
+		.value();
+	const mostPlayed = _.chain(games)
 		.take(5)
 		.value()
 		.map(g => g.name);
-	const description = `I play some games a lot, and others only once or twice. My most played games include ${arrayToSentence(games)}. I have played ${
+	const description = `I play some games a lot, and others only once or twice. My most played games include ${arrayToSentence(mostPlayed)}. I have played ${
 		allTimeStats.quarters
 	} games at least 25 times each, and ${allTimeStats.dimes} games at least 10 time each.`;
 
@@ -31,7 +33,7 @@ const MostPlayed: SFC = observer(() => {
 				<div className="title">
 					Most Played Games <Legend stats={statsStore.allTimeStats} />
 				</div>
-				<PlayedGamesTable games={playStore.playedGames} />
+				<PlayedGamesTable games={games} />
 			</div>
 		</>
 	);
