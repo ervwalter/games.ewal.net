@@ -126,7 +126,7 @@ const StatsBlock: SFC = observer(() => {
 					<div className={cx("column", "is-half-desktop", "is-full-tablet", "is-full-mobile", styles["chart"])}>
 						<div className={styles["title"]}>Plays and Time by Month (Past 12 Months)</div>
 						<ResponsiveContainer width="100%" height={isMobile ? 210 : 230}>
-							<ComposedChart data={playsByMonthStats} barSize={15} margin={{ right: 40, top: 20, bottom: 20 }}>
+							<ComposedChart data={playsByMonthStats} barSize={isMobile ? 15 : 30} margin={{ right: 40, top: 20, bottom: 20 }}>
 								<CartesianGrid stroke="#eee" vertical={false} />
 								<Area dataKey="hoursPlayed" name="Hours" type="monotone" fill="orange" stroke="darkorange" isAnimationActive={false} />
 								<Bar dataKey="numberOfPlays" name="Plays" fill="#080" isAnimationActive={false} />
@@ -144,8 +144,8 @@ const StatsBlock: SFC = observer(() => {
 									<Pie
 										data={playsByDayOfWeek}
 										dataKey="numberOfPlays"
-										innerRadius={30}
-										outerRadius={50}
+										outerRadius={60}
+										innerRadius={20}
 										startAngle={-270}
 										endAngle={-630}
 										label={DaysOfWeekLabel}
@@ -168,8 +168,8 @@ const StatsBlock: SFC = observer(() => {
 									<Pie
 										data={playsByPlayerCount}
 										dataKey="numberOfPlays"
-										outerRadius={50}
-										innerRadius={30}
+										outerRadius={60}
+										innerRadius={20}
 										startAngle={-270}
 										endAngle={-630}
 										label={PlayerCountLabel}
@@ -200,16 +200,17 @@ const Tick: SFC<{ payload: any; x: number; y: number }> = ({ x, y, payload }) =>
 	);
 };
 
-const labelPercentLimit = 0.025;
+const labelPercentLimit = 0.05;
 
 const PieLabelLine: SFC<any> = props => {
-	if (props.percent < labelPercentLimit) {
+	const { cx, cy, midAngle, outerRadius, percent } = props;
+
+	if (percent < labelPercentLimit) {
 		return null;
 	}
-	const points = [
-		polarToCartesian(props.cx, props.cy, props.outerRadius, props.midAngle),
-		polarToCartesian(props.cx, props.cy, props.outerRadius + 10, props.midAngle)
-	];
+
+	const points = [polarToCartesian(cx, cy, outerRadius, midAngle), polarToCartesian(cx, cy, outerRadius + 10, midAngle)];
+
 	return <Curve {...props} points={points} type="linear" stroke="#aaa" />;
 };
 
@@ -217,22 +218,24 @@ const DaysOfWeekLabel: SFC<any> = props => <PieLabel dataKey="day" {...props} />
 const PlayerCountLabel: SFC<any> = props => <PieLabel dataKey="playerCount" {...props} />;
 
 const PieLabel: SFC<any> = ({ dataKey, ...props }) => {
-	const cx = props.cx as number;
-	const cy = props.cy as number;
-	const midAngle = props.midAngle as number;
-	const outerRadius = props.outerRadius as number;
-	const percent = props.percent as number;
-	const payload = props.payload;
+	const { cx, cy, midAngle, outerRadius, innerRadius, percent, payload } = props;
 
 	if (percent < labelPercentLimit) {
 		return null;
 	}
 
-	const { x, y } = polarToCartesian(cx, cy, outerRadius + 18, midAngle);
+	const { x: outsideX, y: outsideY } = polarToCartesian(cx, cy, outerRadius + 20, midAngle);
+	const { x: insideX, y: insideY } = polarToCartesian(cx, cy, (outerRadius - innerRadius) / 2 + innerRadius, midAngle);
+
 	return (
-		<text x={x} y={y} fill="#666" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
-			{payload[dataKey]}
-		</text>
+		<>
+			<text x={outsideX} y={outsideY} className={styles["label"]} textAnchor={outsideX > cx ? "start" : "end"} dominantBaseline="middle">
+				{payload[dataKey]}
+			</text>
+			<text x={insideX} y={insideY} className={styles["percent"]} textAnchor="middle" dominantBaseline="middle">
+				{`${numeral(percent * 100).format("0")}%`}
+			</text>
+		</>
 	);
 };
 
