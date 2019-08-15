@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import "react-app-polyfill/ie9";
 import "core-js";
 import "regenerator-runtime/runtime";
@@ -8,6 +10,7 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
+import analyticsTracker from "./Analytics";
 import Layout from "./components/Layout";
 import UnsupportedBrowser from "./components/UnsupportedBrowser";
 

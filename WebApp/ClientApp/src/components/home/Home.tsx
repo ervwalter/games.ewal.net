@@ -4,6 +4,7 @@ import React, { FunctionComponent, SFC, useContext, useEffect } from "react";
 import Helmet from "react-helmet";
 import { RouteComponentProps } from "react-router";
 
+import analyticsTracker from "../../Analytics";
 import StoresContext from "../../stores/StoresContext";
 import { Tabs } from "../../stores/ViewStateStore";
 import Cleanup from "./cleanup/Cleanup";
@@ -47,6 +48,7 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ location, match 
 
 	useEffect(() => {
 		document.title = `${title} - Board Games`;
+		analyticsTracker.track();
 	}, [title]);
 
 	if (!sectionDetails) {
