@@ -9,7 +9,6 @@ import WantToBuyGames from "./WantToBuyGames";
 
 const ComingSoon: SFC = observer(() => {
 	const { statsStore } = useContext(StoresContext);
-
 	const stats = statsStore.collectionStats;
 	const description = `My board game collection is constantly growing, and there are still many games I haven't played yet. I have ${
 		stats.preordered

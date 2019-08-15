@@ -4,9 +4,9 @@ import React, { FunctionComponent, SFC, useContext, useEffect } from "react";
 import Helmet from "react-helmet";
 import { RouteComponentProps } from "react-router";
 
-import analyticsTracker from "../../Analytics";
 import StoresContext from "../../stores/StoresContext";
 import { Tabs } from "../../stores/ViewStateStore";
+import analyticsTracker from "../../utils/Analytics";
 import Cleanup from "./cleanup/Cleanup";
 import Collection from "./collection/Collection";
 import Loading from "./core/Loading";
