@@ -1,4 +1,4 @@
 import Analytics from "ostrio-analytics";
 
-const analyticsTracker = new Analytics("JbeJ4KsDY9tToqmvc", false);
+const analyticsTracker = new Analytics("68bCGRQxE8hcjya6P", false);
 export default analyticsTracker;
