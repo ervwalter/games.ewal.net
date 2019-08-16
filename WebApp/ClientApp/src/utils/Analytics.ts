@@ -69,10 +69,10 @@ class Tracker {
 		}
 	};
 
-	private log = (message: string) =>
+	private log =
 		console.info.bind(console) ||
 		console.log.bind(console) ||
-		function(message: string) {
+		function() {
 			return;
 		};
 }

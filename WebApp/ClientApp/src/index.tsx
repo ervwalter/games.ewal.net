@@ -33,7 +33,8 @@ if (commitHash && buildId) {
 tracker.init({
 	gaugesIdentifier: "5c94e5859482cb34c9ee7690",
 	ostrioIdendifier: "68bCGRQxE8hcjya6P",
-	sentryDSN: "https://fa2b74a3356e44ae949f9bf9938fdbc0@sentry.io/1531751"
+	sentryDSN: "https://fa2b74a3356e44ae949f9bf9938fdbc0@sentry.io/1531751",
+	sentryRelease: version
 });
 
 if (isSupported) {
