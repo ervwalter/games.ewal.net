@@ -10,9 +10,10 @@ const log =
 
 const DNT = navigator.doNotTrack === "1";
 if (DNT) {
-	log("I respect your decision to be not tracked. Analytics tracking has been disabled for you.");
-	log("Learn more about DNT: https://en.wikipedia.org/wiki/Do_Not_Track");
-	log("Sincerely, https://trendweight.com");}
+	log("I respect your decision to be not tracked. Analytics & error tracking have been");
+	log("disabled for you. Learn more about DNT: https://en.wikipedia.org/wiki/Do_Not_Track");
+	log(`Sincerely, ${window.location.origin}`);
+}
 
 if (!DNT) {
 	Sentry.init({ dsn: "https://fa2b74a3356e44ae949f9bf9938fdbc0@sentry.io/1531751" });
