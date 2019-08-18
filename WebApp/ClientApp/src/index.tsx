@@ -21,19 +21,9 @@ const rootElement = document.getElementById("root");
 const isSupported = typeof Proxy !== "undefined" && typeof Symbol !== "undefined" && true;
 const App = React.lazy(() => import(/* webpackChunkName: "app" */ "./components/App"));
 
-let commitHash = (process && process.env && process.env.REACT_APP_COMMIT) || undefined;
-let buildId = (process && process.env && process.env.REACT_APP_BUILD_ID) || undefined;
-let version;
-if (commitHash && buildId) {
-	version = `trendweight-${buildId}-${commitHash.substr(0, 7)}`;
-} else {
-	version = "trendweight-dev";
-}
-
 tracker.init({
 	gaugesIdentifier: "58825bfcc88d9013770c8cf7",
 	sentryDSN: "https://fa2b74a3356e44ae949f9bf9938fdbc0@sentry.io/1531751",
-	sentryRelease: version
 });
 
 if (isSupported) {
