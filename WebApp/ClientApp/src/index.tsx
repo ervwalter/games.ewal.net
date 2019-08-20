@@ -23,7 +23,11 @@ const App = React.lazy(() => import(/* webpackChunkName: "app" */ "./components/
 
 tracker.init({
 	gaugesIdentifier: "58825bfcc88d9013770c8cf7",
-	sentryDSN: "https://fa2b74a3356e44ae949f9bf9938fdbc0@sentry.io/1531751",
+	matomoIdentifier: {
+		hostname: "ewal.matomo.cloud",
+		siteId: "4"
+	},
+	sentryDSN: "https://fa2b74a3356e44ae949f9bf9938fdbc0@sentry.io/1531751"
 });
 
 if (isSupported) {

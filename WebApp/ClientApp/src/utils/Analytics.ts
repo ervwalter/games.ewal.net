@@ -1,14 +1,12 @@
 import * as Sentry from "@sentry/browser";
-import OstrioAnalytics from "ostrio-analytics";
 
 class Tracker {
-	private ostrioIdentifier?: string;
+	private matomoIdentifier?: { hostname: string; siteId: string };
 	private gaguesIdentifier?: string;
 	private isInitialized: boolean = false;
-	private ostrioTracker?: { track(): void };
 	private DNT: boolean = navigator.doNotTrack === "1";
 
-	public init(options: { gaugesIdentifier?: string; ostrioIdendifier?: string; sentryDSN?: string; sentryRelease?: string }) {
+	public init(options: { gaugesIdentifier?: string; matomoIdentifier?: { hostname: string; siteId: string }; sentryDSN?: string; sentryRelease?: string }) {
 		if (this.DNT) {
 			this.log("I respect your decision to be not tracked. Analytics & error tracking have been");
 			this.log("disabled. Learn more about DNT: https://en.wikipedia.org/wiki/Do_Not_Track");
@@ -17,7 +15,7 @@ class Tracker {
 			return;
 		}
 
-		this.ostrioIdentifier = options.ostrioIdendifier;
+		this.matomoIdentifier = options.matomoIdentifier;
 		this.gaguesIdentifier = options.gaugesIdentifier;
 
 		// initialize Sentry.io
@@ -37,12 +35,38 @@ class Tracker {
 			return;
 		}
 
-		if (this.ostrioIdentifier) {
-			// trigger ostr.io tracker
-			if (!this.ostrioTracker) {
-				this.ostrioTracker = new OstrioAnalytics(this.ostrioIdentifier, false);
+		if (this.matomoIdentifier) {
+			const w = window as any;
+			const matomo = w._paq;
+			const siteId = this.matomoIdentifier.siteId;
+			const hostname = this.matomoIdentifier.hostname;
+			if (!matomo) {
+				let _paq = w._paq || [];
+				_paq.push(["trackPageView"]);
+				_paq.push(["enableLinkTracking"]);
+				(function() {
+					var u = `https://${hostname}.matomo.cloud/`;
+					_paq.push(["setTrackerUrl", u + "matomo.php"]);
+					_paq.push(["setSiteId", siteId]);
+					var d = document,
+						g = d.createElement("script"),
+						s = d.getElementsByTagName("script")[0];
+					g.type = "text/javascript";
+					g.async = true;
+					g.defer = true;
+					g.src = `//cdn.matomo.cloud/${hostname}.matomo.cloud/matomo.js`;
+					s.parentNode!.insertBefore(g, s);
+				})();
+			} else {
+				matomo.push(["setCustomUrl", window.location.pathname]);
+				matomo.push(["setDocumentTitle", document.title]);
+				matomo.push(["deleteCustomVariables", "page"]);
+				matomo.push(["setGenerationTimeMs", 0]);
+				matomo.push(["trackPageView"]);
+				setImmediate(() => {
+					matomo.push(["enableLinkTracking"]);
+				});
 			}
-			this.ostrioTracker!.track();
 		}
 
 		if (this.gaguesIdentifier) {
