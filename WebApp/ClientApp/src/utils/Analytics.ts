@@ -37,18 +37,18 @@ class Tracker {
 
 		if (this.matomoIdentifier) {
 			const w = window as any;
-			const matomo = w._paq;
+			let paq = w._paq;
 			const siteId = this.matomoIdentifier.siteId;
 			const hostname = this.matomoIdentifier.hostname;
-			if (!matomo) {
+			if (!paq) {
 				w._paq = w._paq || [];
-				const _paq = w._paq;
-				_paq.push(["trackPageView"]);
-				_paq.push(["enableLinkTracking"]);
+				paq = w._paq;
+				paq.push(["trackPageView"]);
+				paq.push(["enableLinkTracking"]);
 				(function() {
 					var u = `https://${hostname}/`;
-					_paq.push(["setTrackerUrl", u + "matomo.php"]);
-					_paq.push(["setSiteId", siteId]);
+					paq.push(["setTrackerUrl", u + "matomo.php"]);
+					paq.push(["setSiteId", siteId]);
 					var d = document,
 						g = d.createElement("script"),
 						s = d.getElementsByTagName("script")[0];
@@ -59,13 +59,14 @@ class Tracker {
 					s.parentNode!.insertBefore(g, s);
 				})();
 			} else {
-				matomo.push(["setCustomUrl", window.location.pathname]);
-				matomo.push(["setDocumentTitle", document.title]);
-				matomo.push(["deleteCustomVariables", "page"]);
-				matomo.push(["setGenerationTimeMs", 0]);
-				matomo.push(["trackPageView"]);
+				paq.push(["setCustomUrl", window.location.pathname]);
+				paq.push(["setDocumentTitle", document.title]);
+				paq.push(["deleteCustomVariables", "page"]);
+				paq.push(["setGenerationTimeMs", 0]);
+				paq.push(["trackPageView"]);
+				// run this after the render completes and the DOM is updated
 				setImmediate(() => {
-					matomo.push(["enableLinkTracking"]);
+					paq.push(["enableLinkTracking"]);
 				});
 			}
 		}
