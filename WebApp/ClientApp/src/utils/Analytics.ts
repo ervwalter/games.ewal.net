@@ -41,7 +41,8 @@ class Tracker {
 			const siteId = this.matomoIdentifier.siteId;
 			const hostname = this.matomoIdentifier.hostname;
 			if (!matomo) {
-				let _paq = w._paq || [];
+				w._paq = w._paq || [];
+				const _paq = w._paq;
 				_paq.push(["trackPageView"]);
 				_paq.push(["enableLinkTracking"]);
 				(function() {
