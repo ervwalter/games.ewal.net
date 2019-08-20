@@ -45,7 +45,7 @@ class Tracker {
 				_paq.push(["trackPageView"]);
 				_paq.push(["enableLinkTracking"]);
 				(function() {
-					var u = `https://${hostname}.matomo.cloud/`;
+					var u = `https://${hostname}/`;
 					_paq.push(["setTrackerUrl", u + "matomo.php"]);
 					_paq.push(["setSiteId", siteId]);
 					var d = document,
@@ -54,7 +54,7 @@ class Tracker {
 					g.type = "text/javascript";
 					g.async = true;
 					g.defer = true;
-					g.src = `//cdn.matomo.cloud/${hostname}.matomo.cloud/matomo.js`;
+					g.src = `//cdn.matomo.cloud/${hostname}/matomo.js`;
 					s.parentNode!.insertBefore(g, s);
 				})();
 			} else {
