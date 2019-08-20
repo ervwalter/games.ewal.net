@@ -36,10 +36,10 @@ class Tracker {
 		}
 
 		if (this.matomoIdentifier) {
-			const w = window as any;
-			let paq = w._paq;
 			const siteId = this.matomoIdentifier.siteId;
 			const hostname = this.matomoIdentifier.hostname;
+			const w = window as any;
+			let paq = w._paq;
 			if (!paq) {
 				w._paq = w._paq || [];
 				paq = w._paq;
