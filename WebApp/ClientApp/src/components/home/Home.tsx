@@ -48,6 +48,7 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ location, match 
 
 	useEffect(() => {
 		document.title = `${title} - Board Games`;
+		window.scrollTo(0, 0);
 		analyticsTracker.track();
 	}, [title]);
 
