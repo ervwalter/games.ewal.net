@@ -10,7 +10,7 @@ import styles from "./Purge.module.scss";
 
 const Purge: SFC = observer(() => {
 	useEffect(() => {
-		document.title = `Chopping Block - Board Games`;
+		document.title = `To Be Pruned - Board Games`;
 		analyticsTracker.track();
 	}, []);
 
