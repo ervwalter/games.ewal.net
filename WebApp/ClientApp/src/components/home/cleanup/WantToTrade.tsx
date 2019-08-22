@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { SFC, useContext } from "react";
+import { Link } from "react-router-dom";
 
 import StoresContext from "../../../stores/StoresContext";
 import GameList from "../core/GameList";
@@ -13,10 +14,17 @@ const WantToTrade: SFC = observer(() => {
 		return null;
 	}
 	return (
-		<div className={styles["notrated"]} id="notrated">
-			<div className="title">Want To Trade / Purge</div>
-			{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}
-		</div>
+		<>
+			<div className={styles["notrated"]} id="notrated">
+				<div className="title">Games to be Pruned</div>
+				{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}
+			</div>
+			<div>
+				<Link to="/">
+					<i className="fas fa-chevron-left" /> Back to Stats
+				</Link>
+			</div>
+		</>
 	);
 });
 
