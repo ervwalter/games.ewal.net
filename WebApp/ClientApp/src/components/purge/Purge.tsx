@@ -25,8 +25,10 @@ const Purge: SFC = observer(() => {
 		<>
 			{helmet}
 			<div className={cx(styles["blurb"], "content")}>
-				I own too many games. I regularly prune my collection of games that just weren't for me and that I am unlikely to play again. The following is a
-				list of the games currently on the chopping block.
+				I own too many games. I regularly prune my collection of games that just weren't for me observer that I am unlikely to play again. The following
+				is a list of the games currently need to find a good home (outside of my house). If any of these look interesting to you, feel free to email me
+				at <a href="mailto:erv@ewal.net">erv@ewal.net</a> or send a geek message on BGG to{" "}
+				<a href="https://boardgamegeek.com/geekmail/compose?touser=ervwalter">ervwalter</a>.
 			</div>
 			<WantToTrade />
 			<Loading />
