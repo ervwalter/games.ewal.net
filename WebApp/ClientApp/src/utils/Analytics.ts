@@ -3,8 +3,12 @@ import * as Sentry from "@sentry/browser";
 class Tracker {
 	private matomoIdentifier?: { hostname: string; siteId: string };
 	private gaguesIdentifier?: string;
+	private sentryDSN?: string;
 	private isInitialized: boolean = false;
+	private isTrackingStarted: boolean = false;
 	private DNT: boolean = navigator.doNotTrack === "1";
+	private userId?: string;
+	private isMatomoUserIdSet: boolean = false;
 
 	public init(options: { gaugesIdentifier?: string; matomoIdentifier?: { hostname: string; siteId: string }; sentryDSN?: string; sentryRelease?: string }) {
 		if (this.DNT) {
@@ -20,6 +24,7 @@ class Tracker {
 
 		// initialize Sentry.io
 		if (!this.DNT && options.sentryDSN) {
+			this.sentryDSN = options.sentryDSN;
 			if (options.sentryRelease) {
 				Sentry.init({ dsn: options.sentryDSN, release: options.sentryRelease });
 			} else {
@@ -29,6 +34,7 @@ class Tracker {
 
 		this.isInitialized = true;
 	}
+
 	public track = () => {
 		// skip tracking if DNT is enabled, or if things haven't been intiaized
 		if (this.DNT || !this.isInitialized) {
@@ -45,6 +51,7 @@ class Tracker {
 				paq = w._paq;
 				paq.push(["trackPageView"]);
 				paq.push(["enableLinkTracking"]);
+				paq.push(["enableHeartBeatTimer"]);
 				(function() {
 					var u = `https://${hostname}/`;
 					paq.push(["setTrackerUrl", u + "matomo.php"]);
@@ -63,6 +70,12 @@ class Tracker {
 				paq.push(["setDocumentTitle", document.title]);
 				paq.push(["deleteCustomVariables", "page"]);
 				paq.push(["setGenerationTimeMs", 0]);
+				if (this.userId) {
+					paq.push(["setUserId", this.userId]);
+					this.isMatomoUserIdSet = true;
+				} else if (this.isMatomoUserIdSet) {
+					paq.push(["resetUserId"]);
+				}
 				paq.push(["trackPageView"]);
 				// run this after the render completes and the DOM is updated
 				setImmediate(() => {
@@ -93,6 +106,35 @@ class Tracker {
 				gauges.push(["track"]);
 			}
 		}
+	};
+
+	public logEvent = (key: string, value: string) => {
+		if (!this.isTrackingStarted) {
+			return;
+		}
+	};
+
+	public setUser = (userId: string) => {
+		if (!this.isTrackingStarted) {
+			return;
+		}
+
+		if (this.sentryDSN) {
+			Sentry.setUser({ id: userId });
+		}
+
+		this.userId = userId;
+	};
+
+	public clearUser = () => {
+		if (!this.isTrackingStarted) {
+			return;
+		}
+		if (this.sentryDSN) {
+			Sentry.configureScope(scope => scope.clear());
+		}
+
+		this.userId = undefined;
 	};
 
 	private log =
