@@ -62,7 +62,7 @@ class Tracker {
 					g.type = "text/javascript";
 					g.async = true;
 					g.defer = true;
-					g.src = `//cdn.matomo.cloud/${hostname}/matomo.js`;
+					g.src = u + "matomo.js";
 					s.parentNode!.insertBefore(g, s);
 				})();
 			} else {
