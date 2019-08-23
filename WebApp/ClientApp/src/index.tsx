@@ -25,7 +25,7 @@ tracker.init({
 	gaugesIdentifier: "58825bfcc88d9013770c8cf7",
 	matomoIdentifier: {
 		hostname: "matomo.ewal.net",
-		siteId: "1y2NJ1vJGl"
+		siteId: "games.ewal.net"
 	},
 	sentryDSN: "https://fa2b74a3356e44ae949f9bf9938fdbc0@sentry.io/1531751"
 });
