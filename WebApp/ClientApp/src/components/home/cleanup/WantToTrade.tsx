@@ -20,8 +20,8 @@ const WantToTrade: SFC = observer(() => {
 				{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}
 			</div>
 			<div>
-				<Link to="/">
-					<i className="fas fa-chevron-left" /> Back to Stats
+				<Link to="/collection">
+					<i className="fas fa-chevron-left" /> Back to Collection
 				</Link>
 			</div>
 		</>

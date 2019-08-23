@@ -4,4 +4,53 @@
 .collection {
 	@include section-styles;
 	@include title-styles;
+
+	:global {
+		.title {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.prune {
+	font-weight: normal;
+	font-size: 1rem;
+	@include mobile {
+		margin-top: 20px;
+	}
+	@include tablet {
+		display: inline-block;
+	}
+
+	div {
+		display: inline-block;
+	}
+
+	@include mobile {
+		.stat:first-child {
+			margin-left: 0;
+		}
+	}
+
+	.stat {
+		margin-left: 1.5em;
+
+		div {
+			padding: 5px 8px;
+			border: 1px solid #eee;
+			border-radius: 5px;
+			background-color: #fafdff;
+		}
+	}
+
+	:global {
+		svg,
+		i.fas,
+		i.far,
+		i.fal {
+			vertical-align: middle;
+			font-size: 14px;
+			margin-bottom: 4px;
+		}
+	}
 }
