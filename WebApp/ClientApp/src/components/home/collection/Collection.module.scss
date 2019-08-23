@@ -4,12 +4,6 @@
 .collection {
 	@include section-styles;
 	@include title-styles;
-
-	:global {
-		.title {
-			margin-bottom: 0;
-		}
-	}
 }
 
 .prune {
