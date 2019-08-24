@@ -4,9 +4,9 @@ import React, { SFC, useEffect } from "react";
 import Helmet from "react-helmet";
 
 import analyticsTracker from "../../utils/Analytics";
-import WantToTrade from "../home/cleanup/WantToTrade";
 import Loading from "../home/core/Loading";
 import styles from "./Purge.module.scss";
+import WantToTrade from "./WantToTrade";
 
 const Purge: SFC = observer(() => {
 	useEffect(() => {

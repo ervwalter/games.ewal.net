@@ -1,0 +1,11 @@
+@import "../../variables";
+@import "../home/SharedStyles";
+
+.notrated {
+	@include section-styles;
+	@include title-styles;
+}
+
+.backlink {
+	margin-top: 20px;
+}
