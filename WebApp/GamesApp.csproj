@@ -5,7 +5,7 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <SpaRoot>ClientApp\</SpaRoot>
+    <SpaRoot>GamesFrontend\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <UserSecretsId>cec22516-8c4f-4471-b41e-c7ee059b65b1</UserSecretsId>
   </PropertyGroup>
@@ -28,6 +28,16 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="GamesFrontend\.eslintrc.json" />
+    <None Include="GamesFrontend\.vscode\launch.json" />
+    <None Include="GamesFrontend\.vscode\settings.json" />
+    <None Include="GamesFrontend\package-lock.json" />
+    <None Include="GamesFrontend\package.json" />
+    <None Include="GamesFrontend\public\manifest.json" />
+    <None Include="GamesFrontend\tsconfig.json" />
   </ItemGroup>
 
   <ItemGroup>

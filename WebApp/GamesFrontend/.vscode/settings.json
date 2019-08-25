@@ -22,6 +22,5 @@
 	],
 	"typescript.tsdk": "node_modules\\typescript\\lib",
 	"prettier.tslintIntegration": true,
-	"typescript.implementationsCodeLens.enabled": true,
-	"window.title": "${dirty}${activeEditorShort}${separator}${folderPath}${separator}${appName}"
+	"typescript.implementationsCodeLens.enabled": true
 }

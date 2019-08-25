@@ -39,7 +39,7 @@ namespace GamesApp
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "GamesFrontend/build";
             });
 
             services.AddSingleton<IConfiguration>(Configuration);
@@ -87,7 +87,7 @@ namespace GamesApp
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "GamesFrontend";
 
                 if (env.IsDevelopment())
                 {
