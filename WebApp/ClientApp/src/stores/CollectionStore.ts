@@ -73,6 +73,22 @@ class CollectionStore {
 		return _.sortBy(forTrade, "sortableName");
 	}
 
+	public get orphanedExpansions() {
+		const orphanedExpansions: Game[] = [];
+		for (const game of this.allGames) {
+			if (!game.owned) {
+				if (game.allExpansions) {
+					for (const expansion of game.allExpansions) {
+						if (expansion.owned) {
+							orphanedExpansions.push(expansion);
+						}
+					}
+				}
+			}
+		}
+		return _.sortBy(orphanedExpansions, "sortableName");
+	}
+
 	@computed
 	public get wantToBuyGames() {
 		const wantToBuy: Game[] = [];

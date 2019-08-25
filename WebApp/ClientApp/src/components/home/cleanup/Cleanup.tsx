@@ -1,6 +1,7 @@
 import React, { SFC } from "react";
 import Helmet from "react-helmet";
 
+import OrphanedExpansions from "./OrphanedExpansions";
 import PlayedNotOwned from "./PlayedNotOwned";
 import PlayedNotRated from "./PlayedNotRated";
 
@@ -14,6 +15,7 @@ const Cleanup: SFC = () => (
 		</Helmet>
 		<PlayedNotRated />
 		<PlayedNotOwned />
+		<OrphanedExpansions />
 	</>
 );
 
