@@ -35,11 +35,16 @@ export class ViewStateStore {
 							clickCount = 0;
 						}, 2000);
 					} else if (clickCount === 5) {
-						this.showPlayedNotOwned = true;
+						this.setShowPlayedNotOwned(true);
 					}
 				}
 			});
 		}
+	}
+
+	@action
+	public setShowPlayedNotOwned(show: boolean) {
+		this.showPlayedNotOwned = show;
 	}
 
 	@action

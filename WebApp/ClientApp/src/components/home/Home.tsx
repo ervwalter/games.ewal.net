@@ -46,6 +46,10 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ location, match 
 	const sectionDetails: ISection | undefined = sections[section];
 	const title = sectionDetails ? sectionDetails.title : "";
 
+	if (section === "other") {
+		viewStateStore.setShowPlayedNotOwned(true);
+	}
+
 	useEffect(() => {
 		document.title = `${title} - Board Games`;
 		window.scrollTo(0, 0);

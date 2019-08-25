@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import StoresContext from "../../stores/StoresContext";
 import GameList from "../home/core/GameList";
-import Loading from "../home/core/Loading";
 import Thumbnails from "../home/core/Thumbnails";
 import styles from "./WantToTrade.module.scss";
 
@@ -36,7 +35,7 @@ const WantToTrade: SFC = observer(() => {
 	}
 	return (
 		<>
-			<div className={styles["notrated"]} id="wanttotrade">
+			<div className={styles["wanttotrade"]} id="wanttotrade">
 				<div className="title">Games to be Pruned</div>
 				{viewStateStore.isMobile ? <GameList games={games} /> : <Thumbnails games={games} multiRow={true} />}
 			</div>
