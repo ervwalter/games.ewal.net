@@ -10,6 +10,7 @@
 		"classnames": "^2.2.6",
 		"color": "^3.1.2",
 		"color-rainbow": "0.0.0",
+		"common": "github:ervwalter/common",
 		"corejs": "^1.0.0",
 		"lodash": "^4.17.15",
 		"mobx": "^5.13.0",

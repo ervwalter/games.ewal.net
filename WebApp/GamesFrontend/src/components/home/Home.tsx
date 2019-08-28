@@ -1,4 +1,5 @@
 import cx from "classnames";
+import { analytics } from "common";
 import { observer } from "mobx-react-lite";
 import React, { FunctionComponent, SFC, useContext, useEffect } from "react";
 import Helmet from "react-helmet";
@@ -6,7 +7,6 @@ import { RouteComponentProps } from "react-router";
 
 import StoresContext from "../../stores/StoresContext";
 import { Tabs } from "../../stores/ViewStateStore";
-import analyticsTracker from "../../utils/Analytics";
 import Cleanup from "./cleanup/Cleanup";
 import Collection from "./collection/Collection";
 import Loading from "./core/Loading";
@@ -53,7 +53,7 @@ const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ location, match 
 	useEffect(() => {
 		document.title = `${title} - Board Games`;
 		window.scrollTo(0, 0);
-		analyticsTracker.track();
+		analytics.track();
 	}, [title]);
 
 	if (!sectionDetails) {

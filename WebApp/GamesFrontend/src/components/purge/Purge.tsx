@@ -1,9 +1,9 @@
 import cx from "classnames";
+import { analytics } from "common";
 import { observer } from "mobx-react-lite";
 import React, { SFC, useEffect } from "react";
 import Helmet from "react-helmet";
 
-import analyticsTracker from "../../utils/Analytics";
 import Loading from "../home/core/Loading";
 import styles from "./Purge.module.scss";
 import WantToTrade from "./WantToTrade";
@@ -11,7 +11,7 @@ import WantToTrade from "./WantToTrade";
 const Purge: SFC = observer(() => {
 	useEffect(() => {
 		document.title = `To Be Pruned - Board Games`;
-		analyticsTracker.track();
+		analytics.track();
 	}, []);
 
 	const helmet = (

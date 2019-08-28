@@ -1,12 +1,11 @@
 import "./UnsupportedBrowser.scss";
 
+import { analytics } from "common";
 import React, { SFC } from "react";
-
-import tracker from "../utils/Analytics";
 
 const UnsupportedBrowser: SFC = () => {
 	window.document.title = "Unsupported Browser - Board Games";
-	tracker.track();
+	analytics.track();
 
 	return (
 		<>
