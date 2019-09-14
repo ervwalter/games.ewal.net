@@ -25,7 +25,7 @@ const Collection: SFC = observer(() => {
 		collectionStats.numberOfExpansions
 	} expansions, with an average rating of ${numeral(collectionStats.averageRating).format("0.0")}.`;
 
-	const pruneCount = collectionStore.forTradeGames.length + 1;
+	const pruneCount = collectionStore.forTradeGames.length;
 
 	return (
 		<>
