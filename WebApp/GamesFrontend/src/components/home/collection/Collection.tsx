@@ -38,14 +38,16 @@ const Collection: SFC = observer(() => {
 					<a className={styles["link"]} target="_blank" rel="noopener noreferrer" href="https://boardgamegeek.com/collection/user/ervwalter?own=1">
 						<i className="fas fa-external-link-alt" />
 					</a>
-					<div className={styles["prune"]}>
-						<div className={styles["stat"]}>
-							<div>{pruneCount}</div> games to be pruned{" "}
-							<Link to="/prune">
-								<i className="fas fa-external-link-alt" />
-							</Link>
+					{pruneCount > 0 && (
+						<div className={styles["prune"]}>
+							<div className={styles["stat"]}>
+								<div>{pruneCount}</div> games to be pruned{" "}
+								<Link to="/prune">
+									<i className="fas fa-external-link-alt" />
+								</Link>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 				<CollectionTable games={collectionStore.sortedGames} onSort={handleSort} />
 			</div>

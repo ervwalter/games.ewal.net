@@ -1,11 +1,15 @@
 @import "../../variables";
 @import "../home/SharedStyles";
 
+.blurb + div {
+	padding-top: 0;
+}
+
 .notrated {
 	@include section-styles;
 	@include title-styles;
 }
 
 .backlink {
-	margin-top: 20px;
+	padding-top: 20px;
 }
