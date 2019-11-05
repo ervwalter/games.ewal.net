@@ -1,9 +1,9 @@
 import cx from "classnames";
-import { analytics } from "common";
 import { observer } from "mobx-react-lite";
 import React, { SFC, useContext, useEffect } from "react";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
+import { analytics } from "spa-analytics-wrapper";
 
 import { Game } from "../../stores/Models";
 import StoresContext from "../../stores/StoresContext";

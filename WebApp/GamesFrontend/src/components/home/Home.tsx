@@ -1,9 +1,9 @@
 import cx from "classnames";
-import { analytics } from "common";
 import { observer } from "mobx-react-lite";
 import React, { FunctionComponent, SFC, useContext, useEffect } from "react";
 import Helmet from "react-helmet";
 import { RouteComponentProps } from "react-router";
+import { analytics } from "spa-analytics-wrapper";
 
 import StoresContext from "../../stores/StoresContext";
 import { Tabs } from "../../stores/ViewStateStore";

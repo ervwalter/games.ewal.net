@@ -1,7 +1,7 @@
 import "./UnsupportedBrowser.scss";
 
-import { analytics } from "common";
 import React, { SFC } from "react";
+import { analytics } from "spa-analytics-wrapper";
 
 const UnsupportedBrowser: SFC = () => {
 	window.document.title = "Unsupported Browser - Board Games";

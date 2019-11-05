@@ -6,10 +6,10 @@ import "regenerator-runtime/runtime";
 
 import "./index.scss";
 
-import { analytics } from "common";
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { analytics } from "spa-analytics-wrapper";
 
 import Layout from "./components/Layout";
 import UnsupportedBrowser from "./components/UnsupportedBrowser";
