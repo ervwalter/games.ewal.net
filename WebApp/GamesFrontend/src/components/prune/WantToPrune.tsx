@@ -35,11 +35,10 @@ const WantToPrune: SFC = observer(() => {
 	if (games.length === 0) {
 		return (
 			<>
-				<div>
-					<p>
-						Sorry, but I have not identified any games I am looking to prune from my collection at this time. However, from time to time I look at
-						the games in my collection that are not likely to get played again, and I mark them to be pruned, so feel free to check back later.
-					</p>
+				{helmet}
+				<div className={cx(styles["blurb"], "content")}>
+					Sorry, but all of the games I was looking to prune from my collection have been claimed. However, from time to time I look at the games in
+					my collection that are not likely to get played again, and I add more games to this list, so feel free to check back later.
 				</div>
 				<div className={styles["backlink"]}>
 					<Link to="/collection">
