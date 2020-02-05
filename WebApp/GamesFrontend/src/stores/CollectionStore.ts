@@ -132,7 +132,7 @@ class CollectionStore {
 
 	@action
 	private async loadGames() {
-		const response = await axios.get("/api/collection");
+		const response = await axios.get("api/collection");
 		const games = response.data as Game[];
 
 		runInAction(() => {

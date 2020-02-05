@@ -16,7 +16,7 @@ class TopTenStore {
 
 	@action
 	private async loadGames() {
-		const response = await axios.get("/api/topten");
+		const response = await axios.get("api/topten");
 		const games = response.data as TopTenItem[];
 
 		runInAction(() => {

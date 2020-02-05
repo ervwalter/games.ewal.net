@@ -6,6 +6,7 @@ import "regenerator-runtime/runtime";
 
 import "./index.scss";
 
+import axios from "axios";
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
@@ -13,12 +14,19 @@ import { analytics } from "spa-analytics-wrapper";
 
 import Layout from "./components/Layout";
 import UnsupportedBrowser from "./components/UnsupportedBrowser";
+import lazy from "./utils/Lazy";
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href") || undefined;
 const rootElement = document.getElementById("root");
 
 const isSupported = typeof Proxy !== "undefined" && typeof Symbol !== "undefined" && true;
-const App = React.lazy(() => import(/* webpackChunkName: "app" */ "./components/App"));
+const App = lazy(() => import(/* webpackChunkName: "app" */ "./components/App"));
+
+if (process.env.NODE_ENV === "development") {
+	axios.defaults.baseURL = "https://games.ewal.net/";
+} else {
+	axios.defaults.baseURL = "/";
+}
 
 analytics.init({
 	gaugesIdentifier: "58825bfcc88d9013770c8cf7",

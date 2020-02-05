@@ -2,7 +2,7 @@ import cx from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { FunctionComponent, SFC, useContext, useEffect } from "react";
 import Helmet from "react-helmet";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, StaticContext } from "react-router";
 import { analytics } from "spa-analytics-wrapper";
 
 import StoresContext from "../../stores/StoresContext";
@@ -23,6 +23,10 @@ interface MatchParams {
 	section?: Tabs;
 }
 
+interface LocationState {
+	isRedirect: boolean;
+	redirectLocation: string;
+}
 interface ISection {
 	component: FunctionComponent<any>;
 	title: string;
@@ -38,7 +42,7 @@ const sections: { [key: string]: ISection } = {
 	other: { component: Cleanup, title: "Other" }
 };
 
-const Home: SFC<RouteComponentProps<MatchParams>> = observer(({ location, match }) => {
+const Home: SFC<RouteComponentProps<MatchParams, StaticContext, LocationState>> = observer(({ location, match }) => {
 	const { viewStateStore } = useContext(StoresContext);
 	const { activeSection } = viewStateStore;
 

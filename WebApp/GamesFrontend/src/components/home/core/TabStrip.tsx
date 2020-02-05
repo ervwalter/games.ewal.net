@@ -2,7 +2,7 @@ import cx from "classnames";
 import { observer } from "mobx-react-lite";
 import React, { ReactNode, SFC, useContext } from "react";
 import { Link } from "react-router-dom";
-import ReactSVG from "react-svg";
+import { ReactSVG } from "react-svg";
 
 import collectionIcon from "../../../images/collection.svg";
 import comingSoonIcon from "../../../images/coming-soon.svg";

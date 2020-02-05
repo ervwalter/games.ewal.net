@@ -21,7 +21,7 @@ class PlayStore {
 
 	@action
 	private async loadPlays() {
-		const response = await axios.get("/api/plays");
+		const response = await axios.get("api/plays");
 		const plays = response.data as Play[];
 		runInAction(() => {
 			// process each play
