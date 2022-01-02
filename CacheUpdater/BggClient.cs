@@ -1,4 +1,4 @@
-﻿using Flurl;
+using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace GamesCacheUpdater
         private static DateTimeOffset _lastDownloadCompleted = DateTimeOffset.MinValue;
         private static readonly TimeSpan MinimumTimeBetweenDownloads = new TimeSpan(0, 0, 0, 5, 100); // 5.1 second between BGG requests to prevent them from blocking us
 
-        private const string LoginUrl = "https://boardgamegeek.com/login";
+        private const string LoginUrl = "https://boardgamegeek.com/login/api/v1";
         private const string BaseUrl = "https://boardgamegeek.com/xmlapi2/";
         private const string LegacyBaseUrl = "https://boardgamegeek.com/xmlapi/";
 
@@ -132,16 +132,19 @@ namespace GamesCacheUpdater
             {
                 WaitForMinimumTimeToPass();
                 Debug.WriteLine("Logging in " + username);
-                NameValueCollection parameters = HttpUtility.ParseQueryString("");
-                parameters.Add("redirect", "1");
-                parameters.Add("username", username);
-                parameters.Add("password", password);
-                var data = Encoding.ASCII.GetBytes(parameters.ToString());
+                // NameValueCollection parameters = HttpUtility.ParseQueryString("");
+                // parameters.Add("redirect", "1");
+                // parameters.Add("username", username);
+                // parameters.Add("password", password);
+                var payload = string.Format("{\"credentials\":{\"username\":\"{0}\",\"password\":\"{1}\"}}", username, password);
+                // var data = Encoding.ASCII.GetBytes(parameters.ToString());
+                var data = Encoding.ASCII.GetBytes(payload);
                 var request = WebRequest.CreateHttp(LoginUrl);
                 request.CookieContainer = _cookies;
                 request.Timeout = 15000;
                 request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
+                // request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentType = "application/json";
                 request.ContentLength = data.Length;
                 //request.AllowAutoRedirect = false;
                 using (var postStream = await request.GetRequestStreamAsync())
