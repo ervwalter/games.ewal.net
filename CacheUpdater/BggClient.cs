@@ -1,8 +1,5 @@
-using Flurl;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -11,12 +8,14 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml.Linq;
+using Flurl;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace GamesCacheUpdater
 {
-    class BggClient
+    internal class BggClient
     {
         private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
         private static DateTimeOffset _lastDownloadCompleted = DateTimeOffset.MinValue;
@@ -59,7 +58,7 @@ namespace GamesCacheUpdater
                 WaitForMinimumTimeToPass();
                 Debug.WriteLine("Downloading " + url);
                 XDocument data = null;
-                int retries = 0;
+                var retries = 0;
 
                 try
                 {
@@ -136,7 +135,7 @@ namespace GamesCacheUpdater
                 // parameters.Add("redirect", "1");
                 // parameters.Add("username", username);
                 // parameters.Add("password", password);
-                var payload = string.Format("{\"credentials\":{\"username\":\"{0}\",\"password\":\"{1}\"}}", username, password);
+                var payload = JsonConvert.SerializeObject(new { credentials = new { username = username, password = password } });
                 // var data = Encoding.ASCII.GetBytes(parameters.ToString());
                 var data = Encoding.ASCII.GetBytes(payload);
                 var request = WebRequest.CreateHttp(LoginUrl);
@@ -265,13 +264,15 @@ namespace GamesCacheUpdater
             });
 
             _log.LogInformation("...downloading page 1");
-            var dataPages = new List<XDocument>();
-            dataPages.Add(await DownloadDataAsync(url.ToString()));
+            var dataPages = new List<XDocument>
+            {
+                await DownloadDataAsync(url.ToString())
+            };
             var totalPlays = dataPages[0].Element("plays").AttributeAs<int>("total");
             if (totalPlays > 100)
             {
-                int remaining = totalPlays - 100;
-                int page = 2;
+                var remaining = totalPlays - 100;
+                var page = 2;
                 while (remaining > 0)
                 {
                     _log.LogInformation(string.Format("...downloading page {0}", page));
@@ -407,9 +408,9 @@ namespace GamesCacheUpdater
         #region ParseFunctions
         private int? ParseRanking(XElement ratings)
         {
-            string value = (from rank in ratings.Element("ranks").Elements("rank")
-                            where rank.Attribute("id").Value == "1"
-                            select rank.Attribute("value").Value).SingleOrDefault();
+            var value = (from rank in ratings.Element("ranks").Elements("rank")
+                         where rank.Attribute("id").Value == "1"
+                         select rank.Attribute("value").Value).SingleOrDefault();
             if (value == null)
             {
                 return null;
@@ -419,8 +420,7 @@ namespace GamesCacheUpdater
                 return null;
             }
 
-            int ranking;
-            if (!int.TryParse(value, out ranking))
+            if (!int.TryParse(value, out var ranking))
             {
                 return null;
             }
@@ -429,8 +429,7 @@ namespace GamesCacheUpdater
 
         private DateTime? ParseDate(string value)
         {
-            DateTime date;
-            if (!DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+            if (!DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
             {
                 return null;
             }
