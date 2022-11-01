@@ -395,33 +395,33 @@ namespace GamesCacheUpdater
       _log.LogInformation("Saving results to blob storage");
       var json = JsonConvert.SerializeObject(_games);
       var blob = _container.GetBlockBlobReference(GameDetailsFilename);
+      await blob.UploadTextAsync(json);
       blob.Properties.ContentType = "application/json";
       await blob.SetPropertiesAsync();
-      await blob.UploadTextAsync(json);
 
       json = JsonConvert.SerializeObject(_plays);
       blob = _container.GetBlockBlobReference(string.Format(PlaysFilename, _username));
+      await blob.UploadTextAsync(json);
       blob.Properties.ContentType = "application/json";
       await blob.SetPropertiesAsync();
-      await blob.UploadTextAsync(json);
 
       json = JsonConvert.SerializeObject(_plays.Take(100));
       blob = _container.GetBlockBlobReference(string.Format(RecentPlaysFilename, _username));
+      await blob.UploadTextAsync(json);
       blob.Properties.ContentType = "application/json";
       await blob.SetPropertiesAsync();
-      await blob.UploadTextAsync(json);
 
       json = JsonConvert.SerializeObject(_collection);
       blob = _container.GetBlockBlobReference(string.Format(CollectionFilename, _username));
+      await blob.UploadTextAsync(json);
       blob.Properties.ContentType = "application/json";
       await blob.SetPropertiesAsync();
-      await blob.UploadTextAsync(json);
 
       json = JsonConvert.SerializeObject(_topTen);
       blob = _container.GetBlockBlobReference(string.Format(TopTenFilename, _username));
+      await blob.UploadTextAsync(json);
       blob.Properties.ContentType = "application/json";
       await blob.SetPropertiesAsync();
-      await blob.UploadTextAsync(json);
     }
 
 
