@@ -9,6 +9,7 @@ on:
       - master
     paths:
         - cache-updater/**
+        - .github/workflows/**
   workflow_dispatch:
 
 env:
