@@ -1,7 +1,0 @@
-{
-	"SASS Imports": {
-		"prefix": "imports",
-		"description": "Default SASS imports",
-		"body": ["@import \"../../../variables\";", "@import \"../SharedStyles\";"]
-	}
-}
