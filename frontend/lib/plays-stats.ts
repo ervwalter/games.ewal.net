@@ -18,6 +18,7 @@ export function groupPlays(plays: Play[]) {
   games = orderBy(games, ["numPlays", "name"], ["desc", "asc"]);
   return games;
 }
+
 export function duration(play: Play): number {
   if (play.duration && play.duration > 0) {
     return play.duration;

@@ -10,22 +10,17 @@ export async function getOverviewStats() {
   const [plays, collection] = await Promise.all([_plays, _collection]);
 
   const thisYear = dayjs().year().toString();
-  const thirtyDayCutoff = dayjs().startOf("day").subtract(60, "days");
 
   const collectionStats = calculateCollectionStats(collection);
   const allTimeStats = calculatePlayStats(plays, groupPlays(plays));
   const thisYearStats = calculatePlayStats(
     plays.filter((p) => p.playDate.startsWith(thisYear))
   );
-  const thirtyDayStats = calculatePlayStats(
-    plays.filter((p) => dayjs(p.playDate).isAfter(thirtyDayCutoff))
-  );
 
   return {
     collectionStats,
     allTimeStats,
     thisYearStats,
-    thirtyDayStats,
   };
 }
 
