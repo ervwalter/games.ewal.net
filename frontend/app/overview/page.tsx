@@ -1,6 +1,6 @@
-import { Suspense } from "react";
 import OverviewTable from "./overview-table";
-import OverviewTableSkeleton from "./overview-table-skeleton";
+
+export const revalidate = 10;
 
 export default async function Overview() {
   return (
@@ -19,10 +19,10 @@ export default async function Overview() {
         , and this page chronicles my addiction.
       </div>
       <h2 className="text-xl font-medium">Overview</h2>
-      <Suspense fallback={<OverviewTableSkeleton />}>
-        {/* @ts-ignore */}
-        <OverviewTable />
-      </Suspense>
+      {/* <Suspense fallback={<OverviewTableSkeleton />}> */}
+      {/* @ts-ignore */}
+      <OverviewTable />
+      {/* </Suspense> */}
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import "server-only";
-import { Play } from "./models";
 
 export async function getPlays() {
   const plays = await fetch(
-    "https://ewalgamescache.blob.core.windows.net/gamescache/recent-plays-ervwalter.json",
+    "https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json",
+    //    "https://jsonplaceholder.typicode.com/comments",
     { cache: "no-store" }
     // { next: { revalidate: 10 } }
   );
-  return plays.json() as Promise<Play[]>;
+  return await plays.json();
 }
