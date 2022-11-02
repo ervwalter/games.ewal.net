@@ -1,19 +1,17 @@
-import axios from "axios";
 import { cache } from "react";
+import { request } from "undici";
 import { Play } from "./models";
 
+// const _plays = await fetch(
+//   "https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json",
+//   // { cache: "no-store" }
+//   { next: { revalidate: 10 } }
+// );
+
 export const getPlays = cache(async () => {
-  console.log("before fetch");
-  // const _plays = await fetch(
-  //   "https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json",
-  //   // { cache: "no-store" }
-  //   { next: { revalidate: 10 } }
-  // );
-  const _plays = axios.get<Play[]>(
+  const { body } = await request(
     "https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json"
   );
-  console.log("after fetch/before .text()");
-  const plays = await (await _plays).data;
-  console.log("after .text()");
+  const plays = (await body.json()) as Play[];
   return plays;
 });

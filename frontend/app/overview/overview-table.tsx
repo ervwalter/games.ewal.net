@@ -5,7 +5,6 @@ export default async function OverviewTable() {
   return (
     <>
       <div>Found {plays.length + 1} recent plays</div>
-      <div>Rendered at {new Date().toTimeString()}</div>
     </>
   );
 }
