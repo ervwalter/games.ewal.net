@@ -2,7 +2,13 @@ import { Suspense } from "react";
 import OverviewTable from "./overview-table";
 import OverviewTableSkeleton from "./overview-table-skeleton";
 
-export const revalidate = 60;
+// workaround until fetch() works with large requests
+export const dynamic = "auto",
+  dynamicParams = true,
+  revalidate = 60,
+  fetchCache = "auto",
+  runtime = "nodejs",
+  preferredRegion = "auto";
 
 export default async function Overview() {
   return (

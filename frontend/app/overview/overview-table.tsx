@@ -1,4 +1,4 @@
-import { getPlays } from "./games-data";
+import { getPlays } from "lib/games-data";
 
 export default async function OverviewTable() {
   const plays = await getPlays();
