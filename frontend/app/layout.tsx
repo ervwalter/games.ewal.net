@@ -1,7 +1,7 @@
 import { Inter } from "@next/font/google";
 import clsx from "clsx";
-import ClientLayout from "./client-layout";
 import "./global.css";
+import Sidebar from "./sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +24,14 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.png" />
       </head>
       <body className="h-full">
-        <ClientLayout>{children}</ClientLayout>
+        <Sidebar>{children}</Sidebar>
+        <div className="flex flex-1 flex-col md:pl-64">
+          <main className="flex-1">
+            <div className="py-6">
+              <div className="max-w-7xl px-4 sm:px-6 md:px-8">{children}</div>
+            </div>
+          </main>
+        </div>
       </body>
     </html>
   );

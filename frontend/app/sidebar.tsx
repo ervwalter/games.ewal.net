@@ -1,13 +1,16 @@
 "use client";
+import "client-only";
 
 import { Dialog, Transition } from "@headlessui/react";
 import { clsx } from "clsx";
 import { usePathname } from "next/navigation";
 import { Fragment, useState } from "react";
 import { IconType } from "react-icons";
-import { FiHash } from "react-icons/fi";
-import { HiBars3, HiOutlineCalendarDays, HiXMark } from "react-icons/hi2";
-import { IoListSharp, IoPieChartSharp, IoRibbonSharp } from "react-icons/io5";
+import { AiFillHome } from "react-icons/ai";
+import { HiBars3, HiXMark } from "react-icons/hi2";
+import { ImBooks } from "react-icons/im";
+import { IoPieChartSharp, IoRibbonSharp } from "react-icons/io5";
+import { RiBarChartHorizontalFill } from "react-icons/ri";
 
 interface NavItem {
   name: string;
@@ -16,18 +19,14 @@ interface NavItem {
 }
 
 const navigation = [
-  { name: "Overview", href: "/overview", icon: HiOutlineCalendarDays },
-  { name: "Play Stats", href: "/stats", icon: IoPieChartSharp },
-  { name: "Most Played", href: "/mostplays", icon: FiHash },
+  { name: "Overview", href: "/overview", icon: AiFillHome },
+  { name: "Insights", href: "/insights", icon: IoPieChartSharp },
+  { name: "Most Played", href: "/mostplays", icon: RiBarChartHorizontalFill },
   { name: "Top 10", href: "/topten", icon: IoRibbonSharp },
-  { name: "Collection", href: "/collection", icon: IoListSharp },
+  { name: "Collection", href: "/collection", icon: ImBooks },
 ];
 
-export default function ClientLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Sidebar({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -84,8 +83,9 @@ export default function ClientLayout({
                     </button>
                   </div>
                 </Transition.Child>
-                <div className="h-0 flex-1 overflow-y-auto pt-5 pb-4">
+                <div className="h-0 flex-1 space-y-3 overflow-y-auto pt-5 pb-4">
                   <Header />
+                  <Blurb />
                   <nav className="mt-5 space-y-1 px-2">
                     {navigation.map((item) => (
                       <NavItem item={item} />
@@ -104,22 +104,23 @@ export default function ClientLayout({
       {/* Static sidebar for desktop */}
       <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
         <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
-          <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
+          <div className="flex flex-1 flex-col space-y-3 overflow-y-auto pt-5 pb-4">
             <Header />
+            <Blurb />
             <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
               {navigation.map((item) => (
-                <NavItem item={item} />
+                <NavItem item={item} key={item.href} />
               ))}
             </nav>
           </div>
         </div>
       </div>
       <div className="flex flex-1 flex-col md:pl-64">
-        <div className="sticky top-0 z-10 bg-white shadow-md pl-1 sm:pl-3 sm:pt-3 md:hidden">
-          <div className="flex flex-row">
+        <div className="sticky top-0 z-10 border-b border-gray-200 bg-white pl-1 md:hidden">
+          <div className="flex flex-row items-center">
             <button
               type="button"
-              className="border-r border-gray-100 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 py-2"
+              className="border-r border-gray-100 px-4 py-3 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
@@ -128,19 +129,23 @@ export default function ClientLayout({
             <Header />
           </div>
         </div>
-        <main className="flex-1">
-          <div className="py-6">
-            <div className="max-w-7xl px-4 sm:px-6 md:px-8">{children}</div>
-          </div>
-        </main>
       </div>
     </>
   );
 }
+
 function Header() {
   return (
-    <div className="flex flex-shrink-0 items-center px-4 text-xl">
-      //&nbsp;<span className="text-blue">Ewal</span>
+    <div className="flex flex-shrink-0 items-center px-4 text-2xl">
+      //&nbsp;<span className="text-primary">Ewal</span>
+    </div>
+  );
+}
+
+function Blurb() {
+  return (
+    <div className="px-4 text-sm text-gray-400">
+      Chronicles of a board game addict...
     </div>
   );
 }
@@ -156,7 +161,7 @@ function NavItem({ item }: { item: NavItem }) {
         isCurrent
           ? "bg-gray-100 text-gray-900"
           : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-        "group flex items-center px-2 py-2 text-base font-medium rounded-md"
+        "group flex items-center rounded-md px-2 py-2 text-base font-medium"
       )}
     >
       <item.icon
@@ -164,7 +169,7 @@ function NavItem({ item }: { item: NavItem }) {
           isCurrent
             ? "text-gray-500"
             : "text-gray-400 group-hover:text-gray-500",
-          "mr-4 flex-shrink-0 h-6 w-6"
+          "mr-4 h-6 w-6 flex-shrink-0"
         )}
         aria-hidden="true"
       />
