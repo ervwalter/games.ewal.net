@@ -96,30 +96,28 @@ export interface Game extends GameBase {
   ownedExpansionCount?: number;
 }
 
-type TBD = number | "...";
-
 export interface PlayStats {
-  numberOfPlays: TBD;
-  uniqueGames: TBD;
-  namedPlayers: TBD;
-  locations: TBD;
-  newGames: TBD;
-  hoursPlayed: string;
-  quarters: TBD;
-  dimes: TBD;
-  nickles: TBD;
-  hIndex: TBD;
+  numberOfPlays: number;
+  uniqueGames: number;
+  namedPlayers: number;
+  locations: number;
+  newGames: number;
+  hoursPlayed: number;
+  quarters: number;
+  dimes: number;
+  nickles: number;
+  hIndex: number;
 }
 
 export interface CollectionStats {
-  numberOfGames: TBD;
-  numberOfExpansions: TBD;
-  numberOfPreviouslyOwned: TBD;
-  yetToBePlayed: TBD;
-  preordered: TBD;
-  wantToBuy: TBD;
-  averageRating: TBD;
-  top100Games: TBD;
+  numberOfGames: number;
+  numberOfExpansions: number;
+  numberOfPreviouslyOwned: number;
+  yetToBePlayed: number;
+  preordered: number;
+  wantToBuy: number;
+  averageRating: number;
+  top100Games: number;
 }
 
 export interface MonthStat {

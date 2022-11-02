@@ -1,10 +1,12 @@
-import { getPlays } from "lib/games-data";
+import { getOverviewStats } from "lib/overview-stats";
 
 export default async function OverviewTable() {
-  const plays = await getPlays();
+  const stats = await getOverviewStats();
   return (
     <>
-      <div>Found {plays.length + 1} recent plays</div>
+      <pre>
+        <code>{JSON.stringify(stats, undefined, 2)}</code>
+      </pre>
     </>
   );
 }

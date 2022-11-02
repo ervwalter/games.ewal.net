@@ -2,6 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { clsx } from "clsx";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment, useState } from "react";
 import { IconType } from "react-icons";
@@ -153,8 +154,7 @@ function NavItem({ item }: { item: NavItem }) {
   const path = usePathname();
   const isCurrent = path.toLowerCase() == item.href.toLowerCase();
   return (
-    <a
-      key={item.name}
+    <Link
       href={item.href}
       className={clsx(
         isCurrent
@@ -173,6 +173,6 @@ function NavItem({ item }: { item: NavItem }) {
         aria-hidden="true"
       />
       {item.name}
-    </a>
+    </Link>
   );
 }
