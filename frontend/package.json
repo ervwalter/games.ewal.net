@@ -14,6 +14,7 @@
     "@types/node": "18.11.9",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
+    "axios": "^1.1.3",
     "clsx": "^1.2.1",
     "daisyui": "^2.38.0",
     "dayjs": "^1.11.6",
