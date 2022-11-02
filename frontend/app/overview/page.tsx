@@ -1,6 +1,6 @@
 import OverviewTable from "./overview-table";
 
-export const revalidate = 10;
+// export const revalidate = 10;
 
 export default async function Overview() {
   return (
