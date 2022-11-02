@@ -1,5 +1,4 @@
 "use client";
-import "client-only";
 
 import { Dialog, Transition } from "@headlessui/react";
 import { clsx } from "clsx";

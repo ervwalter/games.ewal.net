@@ -1,5 +1,3 @@
-import "server-only";
-
 export async function getPlays() {
   console.log("before fetch");
   const _plays = await fetch(
