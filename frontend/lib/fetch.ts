@@ -8,7 +8,6 @@
 
 // wrap fetch
 export const get = async <T>(url: string, init?: RequestInit) => {
-  console.log(`GET ${url}`);
   const res = await fetch(url, init);
   const data = (await res.json()) as T;
   return data;

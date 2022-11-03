@@ -1,9 +1,7 @@
-import { Inter } from "@next/font/google";
-import clsx from "clsx";
 import "./global.css";
 import Sidebar from "./sidebar";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -11,7 +9,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={clsx(inter.className, "h-full")}>
+    // <html lang="en" className={clsx(inter.className, "h-full")}>
+    <html lang="en" className="h-full">
       <head>
         <title>Board Games</title>
         <meta
