@@ -11,6 +11,7 @@
     ":updateNotScheduled",
     ":automergeDisabled",
     ":rebaseStalePrs",
+    ":pinVersions",
     ":maintainLockFilesMonthly",
     "group:allNonMajor",
     "helpers:disableTypesNodeMajor"
