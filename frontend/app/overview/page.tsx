@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import OverviewTable from "./overview-table";
 import OverviewTableSkeleton from "./overview-table-skeleton";
-import RecentPlays from "./recent-plays";
-import RecentPlaysSkeleton from "./recent-plays-skeleton";
+import RecentPlaysSection from "./recent-plays-section";
+import RecentPlaysSectionSkeleton from "./recent-plays-section-skeleton";
 
 // workaround until fetch() works with large requests
 export const dynamic = "auto",
@@ -34,9 +34,9 @@ export default async function Overview() {
         <OverviewTable />
       </Suspense>
       <h2 className="text-xl font-medium">Recent Plays</h2>
-      <Suspense fallback={<RecentPlaysSkeleton />}>
+      <Suspense fallback={<RecentPlaysSectionSkeleton />}>
         {/* @ts-ignore */}
-        <RecentPlays />
+        <RecentPlaysSection />
       </Suspense>
     </div>
   );

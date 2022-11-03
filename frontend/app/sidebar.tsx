@@ -21,7 +21,7 @@ interface NavItem {
 const navigation = [
   { name: "Overview", href: "/overview", icon: AiFillHome },
   { name: "Insights", href: "/insights", icon: IoPieChartSharp },
-  { name: "Most Played", href: "/mostplays", icon: RiBarChartHorizontalFill },
+  { name: "Most Played", href: "/mostplayed", icon: RiBarChartHorizontalFill },
   { name: "Top 10", href: "/topten", icon: IoRibbonSharp },
   { name: "Collection", href: "/collection", icon: ImBooks },
 ];

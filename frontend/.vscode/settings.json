@@ -7,5 +7,15 @@
     "source.organizeImports": true,
     "source.sortMembers": true
   },
-  "cSpell.words": ["preordered", "topten"]
+  "cSpell.words": [
+    "clsx",
+    "daisyui",
+    "Ewal",
+    "headlessui",
+    "mostplayed",
+    "preordered",
+    "tailwindcss",
+    "topten",
+    "Undici"
+  ]
 }

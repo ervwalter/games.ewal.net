@@ -3,7 +3,7 @@ import { take, uniqBy } from "lodash";
 import { RecentPlaysTable } from "./recent-plays-table";
 import { RecentThumbnails } from "./recent-thumbnails";
 
-export default async function RecentPlays() {
+export default async function RecentPlaysSection() {
   const plays = await getPlays();
 
   const recentThumbnails = take(
