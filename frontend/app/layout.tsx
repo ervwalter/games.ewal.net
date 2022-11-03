@@ -23,7 +23,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon.png" />
       </head>
       <body className="h-full">
-        <Sidebar>{children}</Sidebar>
+        <Sidebar />
         <div className="flex flex-1 flex-col md:pl-52 lg:pl-64">
           <main className="flex-1">
             <div className="py-6">

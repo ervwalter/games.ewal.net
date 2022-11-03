@@ -29,7 +29,7 @@ const navigation = [
   { name: "Collection", href: "/collection", icon: ImBooks },
 ];
 
-export default function Sidebar({ children }: { children: React.ReactNode }) {
+export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
