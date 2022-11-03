@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.3.tgz#853c598ff47b37cdd192c5cbee890d9b610c3ec0"
   integrity sha512-LGp06SrGv7BMaIQlTs8s2G06moqkI0cb0b8stgq7KZ3xcHdH3qMP+cRyV7qe5x4XEW/IGY48BW4fLesD6NQLng==
 
+"@mantine/hooks@^5.6.4":
+  version "5.6.4"
+  resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-5.6.4.tgz#252bddb0591a167ce0e132bb446c2e7a39a5f0da"
+  integrity sha512-oalipPx2B9WJzYRPs/3FQVx2/opYei/KvITfJyClPZDUAmgAIG5/PdU8kfQcH01cQxQ9GLXIGP8ceZuzo1x1+Q==
+
 "@next/env@13.0.2-canary.0":
   version "13.0.2-canary.0"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.0.2-canary.0.tgz#cbc6c0c93855ae6d5e64c9c72b565999d628bdbf"

@@ -88,7 +88,7 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
                   <Blurb />
                   <nav className="mt-5 space-y-1 px-2">
                     {navigation.map((item) => (
-                      <NavItem item={item} />
+                      <NavItem item={item} key={item.name} />
                     ))}
                   </nav>
                 </div>
