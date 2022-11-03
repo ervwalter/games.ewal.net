@@ -2,5 +2,22 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
-  ]
+    ":separateMajorReleases",
+    ":combinePatchMinorReleases",
+    ":ignoreUnstable",
+    ":prImmediately",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimitNone",
+    ":updateNotScheduled",
+    ":automergeDisabled",
+    ":rebaseStalePrs",
+    ":maintainLockFilesMonthly",
+    "group:allNonMajor",
+    "helpers:disableTypesNodeMajor"
+  ],
+  "timezone": "America/Chicago",
+  "assignees": [
+    "ervwalter"
+  ],
+  "labels": ["dependencies"]
 }
