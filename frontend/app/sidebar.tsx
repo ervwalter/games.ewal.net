@@ -7,10 +7,13 @@ import { usePathname } from "next/navigation";
 import { Fragment, useState } from "react";
 import { IconType } from "react-icons";
 import { AiFillHome } from "react-icons/ai";
-import { HiBars3, HiXMark } from "react-icons/hi2";
 import { ImBooks } from "react-icons/im";
 import { IoPieChartSharp, IoRibbonSharp } from "react-icons/io5";
-import { RiBarChartHorizontalFill } from "react-icons/ri";
+import {
+  RiBarChartHorizontalFill,
+  RiCloseLine,
+  RiMenuLine,
+} from "react-icons/ri";
 
 interface NavItem {
   name: string;
@@ -76,7 +79,7 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
                       onClick={() => setSidebarOpen(false)}
                     >
                       <span className="sr-only">Close sidebar</span>
-                      <HiXMark
+                      <RiCloseLine
                         className="h-6 w-6 text-white"
                         aria-hidden="true"
                       />
@@ -124,7 +127,7 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
-              <HiBars3 className="h-6 w-6" aria-hidden="true" />
+              <RiMenuLine className="h-6 w-6" aria-hidden="true" />
             </button>
             <Header />
           </div>
