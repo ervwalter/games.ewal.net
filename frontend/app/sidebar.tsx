@@ -140,7 +140,7 @@ export default function Sidebar() {
 function Header() {
   return (
     <div className="flex flex-shrink-0 items-center px-4 text-2xl">
-      //&nbsp;<span className="text-primary">Ewal</span>
+      {"//"}&nbsp;<span className="text-primary">Ewal</span>
     </div>
   );
 }

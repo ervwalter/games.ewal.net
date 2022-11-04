@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     // <html lang="en" className={clsx(inter.className, "h-full")}>
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full md:overflow-y-scroll">
       <head>
         <title>Board Games</title>
         <meta
