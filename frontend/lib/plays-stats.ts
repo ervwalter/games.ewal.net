@@ -9,7 +9,7 @@ export function groupPlays(plays: Play[]) {
       image: group[0].image,
       rating: group[0].rating,
       thumbnail: group[0].thumbnail,
-      lastPlayDate: maxBy(group, "playDate")?.playDate!,
+      lastPlayDate: maxBy(group, "playDate")?.playDate || "",
       duration: sumBy(group, (p) => duration(p)),
       numPlays: sumBy(group, (p) => p.numPlays || 1),
     };

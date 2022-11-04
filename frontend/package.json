@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@types/lodash": "4.14.187",
+    "@typescript-eslint/eslint-plugin": "5.42.0",
     "autoprefixer": "10.4.13",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",

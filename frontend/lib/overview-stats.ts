@@ -79,7 +79,7 @@ function calculateCollectionStats(games: Game[]) {
 }
 
 function calculatePlayStats(plays: Play[], games?: PlayedGame[]) {
-  let stats: PlayStats = {
+  const stats: PlayStats = {
     dimes: 0,
     hIndex: 0,
     hoursPlayed: 0,
@@ -136,17 +136,19 @@ function calculatePlayStats(plays: Play[], games?: PlayedGame[]) {
     let index = 0;
 
     for (const game of games) {
-      // calculate h-index
-      if (++index <= game.numPlays!) {
-        stats.hIndex++;
-      }
+      if (game.numPlays) {
+        // calculate h-index
+        if (++index <= game.numPlays) {
+          stats.hIndex++;
+        }
 
-      if (game.numPlays! >= 25) {
-        stats.quarters++;
-      } else if (game.numPlays! >= 10) {
-        stats.dimes++;
-      } else if (game.numPlays! >= 5) {
-        stats.nickles++;
+        if (game.numPlays >= 25) {
+          stats.quarters++;
+        } else if (game.numPlays >= 10) {
+          stats.dimes++;
+        } else if (game.numPlays >= 5) {
+          stats.nickles++;
+        }
       }
     }
   }
