@@ -155,7 +155,7 @@ function Blurb() {
 
 function NavItem({ item }: { item: NavItem }) {
   const path = usePathname();
-  const isCurrent = path.toLowerCase() == item.href.toLowerCase();
+  const isCurrent = path?.toLowerCase() == item.href.toLowerCase();
   return (
     <Link
       href={item.href}
