@@ -16,10 +16,9 @@ export default async function Overview() {
   return (
     <div className="flex flex-1 flex-col space-y-4">
       <div>
-        I freely admit that I own too many board games. I have a sizable
-        collection of modern/hobby board games, and there are too many that are
-        still waiting to be played for the first time. I track the games that I
-        own and the games that I play on{" "}
+        I have a sizable collection of modern/hobby board games—too many really.
+        I freely admit I have a bit of a problem. In any case, I track the games
+        that I own and that I play on{" "}
         <a
           href="https://boardgamegeek.com"
           className="link-hover link-primary link"
@@ -30,12 +29,12 @@ export default async function Overview() {
       </div>
       <h2 className="text-xl font-medium">Overview</h2>
       <Suspense fallback={<OverviewTableSkeleton />}>
-        {/* @ts-ignore */}
+        {/* @ts-expect-error: typescript isn't updated yet to allow async server components */}
         <OverviewTable />
       </Suspense>
       <h2 className="text-xl font-medium">Recent Plays</h2>
       <Suspense fallback={<RecentPlaysSectionSkeleton />}>
-        {/* @ts-ignore */}
+        {/* @ts-expect-error: typescript isn't updated yet to allow async server components */}
         <RecentPlaysSection />
       </Suspense>
     </div>

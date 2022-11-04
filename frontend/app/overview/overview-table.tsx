@@ -9,13 +9,13 @@ export default async function OverviewTable() {
   return (
     <>
       <div className="flex flex-wrap">
-        <div className="mb-4 w-full flex-none md:mb-0 md:w-1/3">
+        <div className="mb-4 w-full flex-none pr-2 md:mb-0 md:w-1/3">
           <CollectionStatsBlock stats={collectionStats} />
         </div>
-        <div className="w-1/2 flex-none md:w-1/3">
+        <div className="w-1/2 flex-none pr-2 md:w-1/3">
           <PlaysStatsBlock stats={allTimeStats} />
         </div>
-        <div className="w-1/2 flex-none md:w-1/3">
+        <div className="w-1/2 flex-none pr-2 md:w-1/3">
           <YearStatsBlock stats={thisYearStats} />
         </div>
       </div>
