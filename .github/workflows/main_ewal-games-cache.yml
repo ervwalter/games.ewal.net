@@ -6,7 +6,7 @@ name: Build and deploy dotnet core project to Azure Function App - ewal-games-ca
 on:
   push:
     branches:
-      - master
+      - main
     paths:
         - cache-updater/**
         - .github/workflows/**
