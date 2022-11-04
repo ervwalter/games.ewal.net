@@ -5,7 +5,7 @@ import { Game, Play, TopTenItem } from "./models";
 export async function getPlays() {
   let plays = await get<Play[]>(
     "https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json",
-    { next: { revalidate: 60 } }
+    { cache: "no-store" }
   );
   plays = orderBy(plays, ["playDate", "playId"], ["desc", "desc"]);
   for (const play of plays) {
@@ -19,7 +19,7 @@ export async function getPlays() {
 export async function getCollection() {
   const games = await get<Game[]>(
     "https://ewalgamescache.blob.core.windows.net/gamescache/collection-ervwalter.json",
-    { next: { revalidate: 60 } }
+    { cache: "no-store" }
   );
   for (const game of games) {
     if (!game.rating || !(game.rating > 0)) {
@@ -38,7 +38,7 @@ export async function getCollection() {
 export async function getTopTen() {
   const topten = await get<TopTenItem[]>(
     "https://ewalgamescache.blob.core.windows.net/gamescache/top10-ervwalter.json",
-    { next: { revalidate: 60 } }
+    { cache: "no-store" }
   );
   for (const game of topten) {
     if (!game.rating || !(game.rating > 0)) {
