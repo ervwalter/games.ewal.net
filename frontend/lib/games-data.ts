@@ -3,10 +3,9 @@ import { get } from "./fetch";
 import { Game, Play, TopTenItem } from "./models";
 
 export async function getPlays() {
-  let plays = await get<Play[]>(
-    "https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json",
-    { cache: "no-store" }
-  );
+  let plays = await get<Play[]>("https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json", {
+    cache: "no-store",
+  });
   plays = orderBy(plays, ["playDate", "playId"], ["desc", "desc"]);
   for (const play of plays) {
     if (!play.location || play.location === "") {
@@ -17,10 +16,9 @@ export async function getPlays() {
 }
 
 export async function getCollection() {
-  const games = await get<Game[]>(
-    "https://ewalgamescache.blob.core.windows.net/gamescache/collection-ervwalter.json",
-    { cache: "no-store" }
-  );
+  const games = await get<Game[]>("https://ewalgamescache.blob.core.windows.net/gamescache/collection-ervwalter.json", {
+    cache: "no-store",
+  });
   for (const game of games) {
     if (!game.rating || !(game.rating > 0)) {
       game.rating = 0;

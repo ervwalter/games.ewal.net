@@ -2,10 +2,7 @@
 // export const dynamic = "force-static";
 
 async function getTime() {
-  const res = await fetch(
-    "http://worldtimeapi.org/api/timezone/America/Chicago",
-    { next: { revalidate: 30 } }
-  );
+  const res = await fetch("http://worldtimeapi.org/api/timezone/America/Chicago", { next: { revalidate: 30 } });
   const time = await res.json();
   return time;
 }

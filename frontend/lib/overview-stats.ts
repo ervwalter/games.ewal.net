@@ -13,9 +13,7 @@ export async function getOverviewStats() {
 
   const collectionStats = calculateCollectionStats(collection);
   const allTimeStats = calculatePlayStats(plays, groupPlays(plays));
-  const thisYearStats = calculatePlayStats(
-    plays.filter((p) => p.playDate.startsWith(thisYear))
-  );
+  const thisYearStats = calculatePlayStats(plays.filter((p) => p.playDate.startsWith(thisYear)));
 
   return {
     collectionStats,

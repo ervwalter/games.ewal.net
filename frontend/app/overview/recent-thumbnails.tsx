@@ -25,8 +25,7 @@ const PlayThumbnail = ({ play }: PlayThumbnailProps) => {
       href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}
       target="_blank"
       rel="noopener noreferrer"
-      className="bg-black"
-    >
+      className="bg-black">
       <img
         src={play.thumbnail}
         alt={play.name}

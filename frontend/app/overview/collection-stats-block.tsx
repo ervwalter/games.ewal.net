@@ -28,8 +28,7 @@ export const CollectionStatsBlock = ({ stats }: CollectionStatsBlockProps) => {
         <span className="hidden lg:inline">games yet to be played</span>
       </div>
       <div>
-        <b>{stats.top100Games}</b>{" "}
-        <span className="hidden lg:inline">games from the </span> top 100
+        <b>{stats.top100Games}</b> <span className="hidden lg:inline">games from the </span> top 100
       </div>
       <div>
         <b>{stats.averageRating.toFixed(1)}</b> average rating

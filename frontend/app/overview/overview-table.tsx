@@ -4,8 +4,7 @@ import { PlaysStatsBlock } from "./plays-stats-block";
 import { YearStatsBlock } from "./year-stats-block";
 
 export default async function OverviewTable() {
-  const { collectionStats, allTimeStats, thisYearStats } =
-    await getOverviewStats();
+  const { collectionStats, allTimeStats, thisYearStats } = await getOverviewStats();
   return (
     <>
       <div className="flex flex-wrap">
