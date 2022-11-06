@@ -409,9 +409,9 @@ namespace GamesCacheUpdater
 			_stats = new Stats();
 			var thisYear = DateTime.Today.Year;
 
-			_stats.CollectionStats = CalculateCollectionStats();
-			_stats.AllTimeStats = CalculatePlayStats(_plays);
-			_stats.ThisYearStats = CalculatePlayStats(_plays.Where(p => p.PlayDate?.Year == thisYear).ToList());
+			_stats.Collection = CalculateCollectionStats();
+			_stats.PlaysAllTime = CalculatePlayStats(_plays);
+			_stats.PlaysThisYear = CalculatePlayStats(_plays.Where(p => p.PlayDate?.Year == thisYear).ToList());
 			_stats.ThisYear = thisYear;
 		}
 

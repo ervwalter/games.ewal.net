@@ -229,9 +229,9 @@ namespace GamesCacheUpdater
 	}
 
 	public class Stats {
-		public CollectionStats CollectionStats { get; set; }
-		public PlayStats AllTimeStats { get; set; }
-		public PlayStats ThisYearStats { get; set; }
+		public CollectionStats Collection { get; set; }
+		public PlayStats PlaysAllTime { get; set; }
+		public PlayStats PlaysThisYear { get; set; }
 		public int ThisYear { get; set; }
 	}
 
