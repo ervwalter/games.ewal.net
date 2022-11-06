@@ -31,6 +31,7 @@ namespace GamesCacheUpdater
             updater.ProcessPlays();
             updater.ProcessCollection();
             updater.ProcessTopTen();
+            updater.GenerateStats();
             await updater.SaveEverythingAsync();        }
     }
 }
