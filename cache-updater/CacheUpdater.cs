@@ -402,8 +402,9 @@ namespace GamesCacheUpdater
 
 		internal void GenerateStats()
 		{
+			_log.LogInformation("Generating stats");
 			_stats = new Stats();
-			var thisYear = new DateOnly().Year;
+			var thisYear = DateTime.Today.Year;
 
 			_stats.CollectionStats = CalculateCollectionStats();
 			_stats.AllTimeStats = CalculatePlayStats(_plays);
@@ -506,7 +507,7 @@ namespace GamesCacheUpdater
 			stats.NewGames = newGames;
 			stats.HoursPlayed = (int)Math.Round(((decimal)totalDuration) / 60);
 
-			var gamePlayCounts = plays.GroupBy(p => p.GameId).Select(g => g.Count());
+			var gamePlayCounts = plays.GroupBy(p => p.GameId).Select(g => g.Sum(p => p.NumPlays));
 			foreach (var gamePlayCount in gamePlayCounts)
 			{
 				if (gamePlayCount >= 25)
