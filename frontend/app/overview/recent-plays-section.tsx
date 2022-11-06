@@ -1,22 +1,20 @@
-import { getPlays } from "lib/games-data";
+import { getRecentPlays } from "lib/games-data";
 import { take, uniqBy } from "lodash";
 import { RecentPlaysTable } from "./recent-plays-table";
 import { RecentThumbnails } from "./recent-thumbnails";
 
 export default async function RecentPlaysSection() {
-  const plays = await getPlays();
+  const recentPlays = await getRecentPlays();
 
   const recentThumbnails = take(
-    uniqBy(plays, (p) => p.gameId),
+    uniqBy(recentPlays, (p) => p.gameId),
     25
   );
-
-  const recentPlays = take(plays, 25);
 
   return (
     <>
       <RecentThumbnails plays={recentThumbnails} />
-      <RecentPlaysTable plays={recentPlays} />
+      <RecentPlaysTable plays={take(recentPlays, 25)} />
     </>
   );
 }

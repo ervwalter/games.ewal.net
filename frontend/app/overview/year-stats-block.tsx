@@ -1,15 +1,15 @@
-import dayjs from "dayjs";
 import { PlayStats } from "lib/models";
 
 type YearStatsBlockProps = {
   stats: PlayStats;
+  year: number;
 };
 
-export const YearStatsBlock = ({ stats }: YearStatsBlockProps) => {
+export const YearStatsBlock = ({ stats, year }: YearStatsBlockProps) => {
   return (
     <>
       <div>
-        <small>{dayjs().year()} YEAR TO DATE</small>
+        <small>{year} YEAR TO DATE</small>
       </div>
       <div>
         <b>{stats.numberOfPlays}</b> plays

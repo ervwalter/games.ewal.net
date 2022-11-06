@@ -91,7 +91,7 @@ export interface Game extends GameBase {
   wishListPriority: number;
   collectingOnly: boolean;
   userComment: string;
-  expansions?: Game[];
+  ownedExpansions?: Game[];
   allExpansions?: Game[];
   ownedExpansionCount?: number;
 }
@@ -106,7 +106,6 @@ export interface PlayStats {
   quarters: number;
   dimes: number;
   nickles: number;
-  hIndex: number;
 }
 
 export interface CollectionStats {
@@ -148,4 +147,11 @@ export interface TopTenItem {
   designers: string[];
   rating?: number;
   numPlays: number;
+}
+
+export interface Stats {
+  collection: CollectionStats;
+  playsAllTime: PlayStats;
+  playsThisYear: PlayStats;
+  thisYear: number;
 }
