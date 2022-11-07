@@ -2,6 +2,8 @@ import { orderBy } from "lodash";
 import { get } from "./fetch";
 import { Game, Play, Stats, TopTenItem } from "./models";
 
+const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 export async function getPlays() {
   let plays = await get<Play[]>("https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json", {
     cache: "no-store",
