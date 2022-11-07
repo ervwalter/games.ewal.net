@@ -8,20 +8,12 @@ type RecentPlaysProps = {
 };
 
 export const RecentPlaysList = ({ plays }: RecentPlaysProps) => {
-  // const { width } = useViewportSize();
-
-  // if (width === 0) {
-  //   return null;
-  // } else if (width >= 1024) {
   return (
     <>
       <RecentPlaysNarrow plays={plays} />
       <RecentPlaysWide plays={plays} />
     </>
   );
-  // } else {
-  //   return <div>Narrow</div>;
-  // }
 };
 
 const RecentPlaysNarrow = ({ plays }: RecentPlaysProps) => {
@@ -64,36 +56,26 @@ const RecentPlaysWide = ({ plays }: RecentPlaysProps) => {
         </thead>
         <tbody className="divide-y divide-gray-200">
           {plays.map((play) => (
-            <TableRow play={play} key={play.playId} />
+            <tr className="even:bg-gray-50" key={play.playId}>
+              <td className="whitespace-nowrap py-3 pl-0 pr-2">{dayjs(play.playDate).format("ddd, MMM D")}</td>
+              <td className="py-3 px-2">
+                <a
+                  href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-hover link-primary link ">
+                  {play.name}
+                </a>
+              </td>
+              <td className="py-3 px-2">
+                <Players players={play.players} />
+              </td>
+              <td className="py-3 px-2">{play.location}</td>
+            </tr>
           ))}
         </tbody>
       </table>
     </div>
-  );
-};
-
-type TableRowProps = {
-  play: Play;
-};
-
-const TableRow = ({ play }: TableRowProps) => {
-  return (
-    <tr className="even:bg-gray-50">
-      <td className="whitespace-nowrap py-3 pl-0 pr-2">{dayjs(play.playDate).format("ddd, MMM D")}</td>
-      <td className="py-3 px-2">
-        <a
-          href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="link-hover link-primary link ">
-          {play.name}
-        </a>
-      </td>
-      <td className="py-3 px-2">
-        <Players players={play.players} />
-      </td>
-      <td className="py-3 px-2">{play.location}</td>
-    </tr>
   );
 };
 

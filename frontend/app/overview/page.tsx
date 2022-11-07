@@ -23,12 +23,12 @@ export default async function Overview() {
         </a>
         , and this page chronicles my addiction.
       </div>
-      <h2 className="text-xl font-medium">Overview</h2>
+      <h2 className="text-xl font-semibold">Overview</h2>
       <Suspense fallback={<OverviewTableSkeleton />}>
         {/* @ts-expect-error: typescript isn't updated yet to allow async server components */}
         <OverviewTable />
       </Suspense>
-      <h2 className="text-xl font-medium">Recent Plays</h2>
+      <h2 className="text-xl font-semibold">Recent Plays</h2>
       <Suspense fallback={<RecentPlaysSectionSkeleton />}>
         {/* @ts-expect-error: typescript isn't updated yet to allow async server components */}
         <RecentPlaysSection />

@@ -11,27 +11,29 @@ export const CollectionStatsBlock = ({ stats }: CollectionStatsBlockProps) => {
         <small>COLLECTION</small>
       </div>
       <div>
-        <b>{stats.numberOfGames}</b> games
-        <span className="hidden lg:inline"> owned</span>
+        <b className="font-semibold">{stats.numberOfGames}</b> games
+        <span className="md:hidden lg:inline"> owned</span>
       </div>
       <div>
-        <b>{stats.numberOfExpansions}</b> expansions
-        <span className="hidden lg:inline"> owned</span>
+        <b className="font-semibold">{stats.numberOfExpansions}</b> expansions
+        <span className="md:hidden lg:inline"> owned</span>
       </div>
       <div>
-        <b>{stats.numberOfPreviouslyOwned}</b> prev
-        <span className="hidden lg:inline">iously</span> owned
-        <span className="hidden lg:inline"> games</span>
+        <b className="font-semibold">{stats.numberOfPreviouslyOwned}</b> prev
+        <span className="md:hidden lg:inline">iously</span> owned
+        <span className="md:hidden lg:inline"> games</span>
       </div>
       <div>
-        <b>{stats.yetToBePlayed}</b> <span className="lg:hidden">unplayed</span>
-        <span className="hidden lg:inline">games yet to be played</span>
+        <b className="font-semibold">{stats.yetToBePlayed}</b>{" "}
+        <span className="hidden md:inline lg:hidden">unplayed</span>
+        <span className="md:hidden lg:inline">games yet to be played</span>
       </div>
       <div>
-        <b>{stats.top100Games}</b> <span className="hidden lg:inline">games from the </span> top 100
+        <b className="font-semibold">{stats.top100Games}</b>{" "}
+        <span className="md:hidden lg:inline">games from the </span> top 100
       </div>
       <div>
-        <b>{stats.averageRating.toFixed(1)}</b> average rating
+        <b className="font-semibold">{stats.averageRating.toFixed(1)}</b> average rating
       </div>
     </>
   );
