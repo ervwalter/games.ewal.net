@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import { RequireOnlyOne } from "lib/utility-types";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { IconType } from "react-icons";
 import { AiFillHome } from "react-icons/ai";
 import { ImBooks } from "react-icons/im";
@@ -41,6 +41,7 @@ const navigation: NavItem[] = [
 
 export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const handleClose = useCallback(() => setSidebarOpen(false), []);
 
   return (
     <>
@@ -90,7 +91,7 @@ export default function Sidebar() {
                   <Blurb />
                   <nav className="mt-5 space-y-1 px-2">
                     {navigation.map((item) => (
-                      <NavItem item={item} key={item.name} />
+                      <NavItem item={item} key={item.name} onClick={handleClose} />
                     ))}
                   </nav>
                 </div>
@@ -109,7 +110,7 @@ export default function Sidebar() {
             <Blurb />
             <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
               {navigation.map((item) => (
-                <NavItem item={item} key={item.name} />
+                <NavItem item={item} key={item.name} onClick={handleClose} />
               ))}
             </nav>
           </div>
@@ -145,13 +146,13 @@ function Blurb() {
   return <div className="px-4 text-sm text-gray-400">Chronicles of a board game addict...</div>;
 }
 
-function NavItem({ item }: { item: NavItem }) {
+function NavItem({ item, onClick }: { item: NavItem; onClick: () => void }) {
   const segment = useSelectedLayoutSegment();
   if (item.segment) {
     const active = item.segment == segment;
-    return <NavItemInternal active={active} item={item} href={`/${item.segment}`} />;
+    return <NavItemInternal active={active} item={item} href={`/${item.segment}`} onClick={onClick} />;
   } else if (item.href) {
-    return <NavItemInternal active={false} item={item} href={item.href} />;
+    return <NavItemInternal active={false} item={item} href={item.href} onClick={onClick} />;
   } else {
     return null as never;
   }
@@ -161,11 +162,13 @@ interface NavItemInternalProps {
   href: string;
   item: NavItemBase;
   active: boolean;
+  onClick: () => void;
 }
 
-function NavItemInternal({ item, href, active }: NavItemInternalProps) {
+function NavItemInternal({ item, href, active, onClick }: NavItemInternalProps) {
   return (
     <Link
+      onClick={onClick}
       href={href}
       className={clsx(
         active ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
