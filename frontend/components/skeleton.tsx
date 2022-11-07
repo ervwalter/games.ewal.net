@@ -20,6 +20,10 @@ export function SkeletonWrapper({ className = "", animate = true, children }: Sk
 }
 
 export function SkeletonRow({ className = "" }: SkeletonProps) {
+  return <div className={clsx("my-[0.35em] h-[0.8em] rounded-md bg-gray-200", className)}>&nbsp;</div>;
+}
+
+export function SkeletonText({ className = "" }: SkeletonProps) {
   return <div className={clsx("mt-[0.7em] h-[0.8em] rounded-md bg-gray-200", className)}>&nbsp;</div>;
 }
 

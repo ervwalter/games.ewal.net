@@ -88,7 +88,7 @@ export default function Sidebar() {
                 </Transition.Child>
                 <div className="h-0 flex-1 space-y-3 overflow-y-auto pt-5 pb-4">
                   <Header />
-                  <Blurb />
+                  <Tagline />
                   <nav className="mt-5 space-y-1 px-2">
                     {navigation.map((item) => (
                       <NavItem item={item} key={item.name} onClick={handleClose} />
@@ -107,7 +107,7 @@ export default function Sidebar() {
         <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
           <div className="flex flex-1 flex-col space-y-3 overflow-y-auto pt-5 pb-4">
             <Header />
-            <Blurb />
+            <Tagline />
             <nav className="mt-5 flex-1 space-y-1 bg-white px-2">
               {navigation.map((item) => (
                 <NavItem item={item} key={item.name} onClick={handleClose} />
@@ -142,7 +142,7 @@ function Header() {
   );
 }
 
-function Blurb() {
+function Tagline() {
   return <div className="px-4 text-sm text-gray-400">Chronicles of a board game addict...</div>;
 }
 
