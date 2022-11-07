@@ -10,6 +10,15 @@ module.exports = {
       colors: {
         blue: "#268bd2",
       },
+      animation: {
+        "delayed-fade-in": "fade-in 75ms ease-in 300ms 1 normal forwards",
+      },
+      keyframes: {
+        "fade-in": {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+      },
     },
   },
   plugins: [require("daisyui")],

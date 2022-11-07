@@ -13,7 +13,7 @@ type SkeletonProps = {
 
 export function SkeletonWrapper({ className = "", animate = true, children }: SkeletonWrapperProps) {
   return (
-    <div role="status" className={clsx(animate && "animate-pulse", className)}>
+    <div role="status" className={clsx(animate && "animate-pulse", className, "animate-delayed-fade-in opacity-0")}>
       {children}
     </div>
   );

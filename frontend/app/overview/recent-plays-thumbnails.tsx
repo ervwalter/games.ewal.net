@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { Play } from "lib/models";
 
-interface RecentThumbnailsProps {
+interface RecentPlaysThumbnailsProps {
   plays: Play[];
 }
 
-export const RecentThumbnails = ({ plays }: RecentThumbnailsProps) => {
+export const RecentPlaysThumbnails = ({ plays }: RecentPlaysThumbnailsProps) => {
   return (
     <div className="hidden max-h-[110px] flex-row flex-wrap space-x-1 overflow-hidden md:flex">
       {plays.map((play) => (

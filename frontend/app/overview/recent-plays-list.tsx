@@ -3,25 +3,56 @@ import dayjs from "dayjs";
 import { Play, Player } from "lib/models";
 import { orderBy, remove } from "lodash";
 
-type RecentPlaysTableProps = {
+type RecentPlaysProps = {
   plays: Play[];
 };
 
-export const RecentPlaysTable = ({ plays }: RecentPlaysTableProps) => {
+export const RecentPlaysList = ({ plays }: RecentPlaysProps) => {
   // const { width } = useViewportSize();
 
   // if (width === 0) {
   //   return null;
   // } else if (width >= 1024) {
-  return <RecentPlaysTableWide plays={plays} />;
+  return (
+    <>
+      <RecentPlaysNarrow plays={plays} />
+      <RecentPlaysWide plays={plays} />
+    </>
+  );
   // } else {
   //   return <div>Narrow</div>;
   // }
 };
 
-export const RecentPlaysTableWide = ({ plays }: RecentPlaysTableProps) => {
+const RecentPlaysNarrow = ({ plays }: RecentPlaysProps) => {
   return (
-    <div>
+    <div className="-mx-4 border-t border-gray-100 md:hidden">
+      {plays.map((play) => (
+        <div className="border-b border-gray-100 px-4 py-2 even:bg-gray-50" key={play.playId}>
+          <div className="flex flex-row">
+            <div className="flex-1">
+              <a
+                href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-hover link-primary link ">
+                {play.name}
+              </a>
+            </div>
+            <div className="flex-none">{dayjs(play.playDate).format("MMM D")}</div>
+          </div>
+          <div>
+            <Players players={play.players} /> - @{play.location}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const RecentPlaysWide = ({ plays }: RecentPlaysProps) => {
+  return (
+    <div className="hidden md:block">
       <table className="min-w-full divide-y divide-gray-300 md:min-w-fit">
         <thead>
           <tr>
@@ -86,13 +117,13 @@ const Players = ({ players }: PlayersProps) => {
 
   const playerCount = players.length;
   return (
-    <div className="">
+    <div className="inline-block">
       {players.map((player, index) => (
         <span className="" key={player.name}>
           <span
             className={clsx(
               {
-                "after:not-italic after:opacity-80 after:content-['🏅']": player.win,
+                "font-semibold after:not-italic after:opacity-80 after:content-['🏅']": player.win,
               },
               { italic: player.new }
             )}
