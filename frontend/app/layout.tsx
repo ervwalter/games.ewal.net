@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>Board Games</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="theme-color" content="#f9fafb" />
+        <meta name="theme-color" content="#ffffff" />
 
         <meta name="description" content="I like board games" />
         <link rel="shortcut icon" href="/favicon.png" />
