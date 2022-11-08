@@ -28,33 +28,7 @@ export interface Player {
   win: boolean;
 }
 
-export interface GameImage {
-  gameId: string;
-  name: string;
-  image: string;
-  thumbnail: string;
-}
-
-export interface GameBase {
-  gameId: string;
-  name: string;
-  image: string;
-  thumbnail: string;
-  rating?: number;
-}
-
-export interface PlayedGame extends GameBase {
-  gameId: string;
-  name: string;
-  image: string;
-  thumbnail: string;
-  numPlays?: number;
-  duration?: number;
-  lastPlayDate: string;
-  rating?: number;
-}
-
-export interface Game extends GameBase {
+export interface Game {
   gameId: string;
   name: string;
   sortableName: string;
@@ -117,22 +91,6 @@ export interface CollectionStats {
   wantToBuy: number;
   averageRating: number;
   top100Games: number;
-}
-
-export interface MonthStat {
-  month: string;
-  numberOfPlays: number;
-  hoursPlayed: number;
-}
-
-export interface DayOfWeekStat {
-  day: string;
-  numberOfPlays: number;
-}
-
-export interface PlayerCountStat {
-  playerCount: number;
-  numberOfPlays: number;
 }
 
 export interface TopTenItem {

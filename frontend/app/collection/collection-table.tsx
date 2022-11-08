@@ -1,5 +1,6 @@
 "use client";
 
+import PlayCount from "components/play-count";
 import { Game } from "lib/models";
 import { orderBy } from "lodash";
 import React, { useCallback, useMemo, useState } from "react";
@@ -10,7 +11,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
 
   const games = useMemo(
     () => orderBy(collection, [sortColumn, "name"], [sortDirection, "asc"]),
-    [sortColumn, sortDirection]
+    [collection, sortColumn, sortDirection]
   );
 
   const handleSortByName = useCallback(
@@ -27,7 +28,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
 
   return (
     <div className="-mx-4 md:mx-0">
-      <table className="min-w-full divide-y divide-gray-200 md:min-w-fit">
+      <table className="min-w-full divide-y divide-gray-300 md:min-w-fit">
         <thead>
           <tr>
             <th
@@ -100,19 +101,6 @@ const Expansions = React.memo(function Expansions({ game }: { game: Game }) {
         </div>
       </div>
     );
-  }
-});
-
-const PlayCount = React.memo(function PlayCount({ plays }: { plays?: number }) {
-  if (plays && plays > 0) {
-    return (
-      <span className="whitespace-nowrap">
-        <span className="hidden lg:inline">Played </span>
-        <b className="font-semibold">{plays}</b> time{plays > 1 ? "s" : ""}
-      </span>
-    );
-  } else {
-    return <span>—</span>;
   }
 });
 

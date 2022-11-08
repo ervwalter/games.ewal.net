@@ -9,6 +9,7 @@ export async function getPlays() {
     cache: "no-store",
   });
   plays = orderBy(plays, ["playDate", "playId"], ["desc", "desc"]);
+  await delay(3000);
   return plays;
 }
 

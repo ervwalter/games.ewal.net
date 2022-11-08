@@ -13,6 +13,9 @@ module.exports = {
       colors: {
         blue: "#268bd2",
         dim: "#00000008",
+        nickels: "#fefff5",
+        dimes: "#f5fff8",
+        quarters: "#f5fcff",
       },
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
