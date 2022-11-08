@@ -1,32 +1,13 @@
-import { SkeletonImage, SkeletonRow, SkeletonWrapper } from "components/skeleton";
+import { SkeletonRow, SkeletonWrapper } from "components/skeleton";
+import { ThumbnailListSkeleton } from "components/thumbnail-list";
 
 export default function RecentPlaysSectionSkeleton() {
   return (
     <>
-      <RecentPlaysThumbnailsSkeleton />
+      <ThumbnailListSkeleton singleRow={true} />
       <RecentPlaysListNarrowSkeleton />
       <RecentPlaysListWideSkeleton />
     </>
-  );
-}
-
-function RecentPlaysThumbnailsSkeleton() {
-  return (
-    <SkeletonWrapper className="hidden max-h-[110px] flex-row flex-wrap space-x-1 overflow-hidden md:flex">
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-      <SkeletonImage className="h-[110px] w-[90px]" />
-    </SkeletonWrapper>
   );
 }
 

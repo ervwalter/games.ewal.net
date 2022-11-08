@@ -68,6 +68,7 @@ const CollectionRow = React.memo(function CollectionRow({ game }: { game: Game }
           className="link-hover link-primary link ">
           {game.name}
         </a>
+        <Expansions game={game} />
       </td>
       <td className="py-2 px-2 text-left">
         <PlayCount plays={game.numPlays} />
@@ -77,6 +78,29 @@ const CollectionRow = React.memo(function CollectionRow({ game }: { game: Game }
       </td>
     </tr>
   );
+});
+
+const Expansions = React.memo(function Expansions({ game }: { game: Game }) {
+  if (!game.ownedExpansions || game.ownedExpansions.length == 0) {
+    return null;
+  } else {
+    const maxIndex = game.ownedExpansions.length - 1;
+    return (
+      <div className="group relative hidden pl-2 lg:inline-block">
+        <span className="cursor-default border-b border-dotted border-gray-400 text-sm text-gray-400">
+          {game.ownedExpansions.length} expansions
+        </span>
+        <div className="invisible absolute bottom-0 left-full z-20 ml-2 whitespace-nowrap rounded-md border border-gray-200 bg-white p-4 text-gray-600 opacity-0 shadow-md transition-opacity duration-300 group-hover:visible group-hover:opacity-100">
+          {orderBy(game.ownedExpansions, "sortableShortName").map((expansion, index) => (
+            <div className="" key={expansion.gameId}>
+              {expansion.shortName}
+              {index < maxIndex ? "," : ""}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 });
 
 const PlayCount = React.memo(function PlayCount({ plays }: { plays?: number }) {

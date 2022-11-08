@@ -1,7 +1,7 @@
+import { ThumbnailList } from "components/thumbnail-list";
 import { getRecentPlays } from "lib/games-data";
 import { take, uniqBy } from "lodash";
 import { RecentPlaysList } from "./recent-plays-list";
-import { RecentPlaysThumbnails } from "./recent-plays-thumbnails";
 
 export default async function RecentPlaysSection() {
   const recentPlays = await getRecentPlays();
@@ -13,7 +13,7 @@ export default async function RecentPlaysSection() {
 
   return (
     <>
-      <RecentPlaysThumbnails plays={recentThumbnails} />
+      <ThumbnailList thumbnails={recentThumbnails} singleRow={true} />
       <RecentPlaysList plays={take(recentPlays, 25)} />
     </>
   );
