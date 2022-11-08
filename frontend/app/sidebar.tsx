@@ -117,11 +117,11 @@ export default function Sidebar() {
         </div>
       </div>
       <div className="flex flex-1 flex-col">
-        <div className="sticky top-0 z-10 border-b border-gray-200 bg-gray-50 pl-1 md:hidden">
+        <div className="border-b border-gray-200 bg-gray-50 md:hidden">
           <div className="flex flex-row items-center">
             <button
               type="button"
-              className="border-r border-gray-100 px-4 py-3 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="border-r border-gray-100 p-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
               onClick={() => setSidebarOpen(true)}>
               <span className="sr-only">Open sidebar</span>
               <RiMenuLine className="h-6 w-6" aria-hidden="true" />
