@@ -61,7 +61,7 @@ namespace GamesCacheUpdater
 				var retries = 0;
 				try
 				{
-					while (data == null && retries < 60)
+					while (data == null && retries < 8)
 					{
 						retries++;
 						var request = WebRequest.CreateHttp(url);
@@ -73,7 +73,7 @@ namespace GamesCacheUpdater
 							{
 								if (response.StatusCode == HttpStatusCode.Accepted)
 								{
-									Debug.WriteLine("Download isn't ready.  Trying again in a moment...");
+									_log.LogInformation("Download isn't ready.  Trying again in a moment...");
 
 									//
 									// this whole section of playing with the semaphore inside the try/finally 
@@ -105,22 +105,21 @@ namespace GamesCacheUpdater
 						}
 						catch (WebException ex)
 						{
-							Debug.WriteLine("DEBUG: WebException: {0}", ex.Message);
+							_log.LogInformation("DEBUG: WebException: {0}", ex.Message);
 							var response = ex.Response as HttpWebResponse;
 							if (response != null)
 							{
-								Debug.WriteLine("DEBUG: StatusCode: {0}", response.StatusCode);
+								_log.LogInformation("DEBUG: StatusCode: {0}", response.StatusCode);
 								if (response.StatusCode == HttpStatusCode.TooManyRequests)
 								{
-									Debug.WriteLine("Too many requests, waiting for a bit...");
+									_log.LogInformation("Too many requests, waiting for a bit...");
 
-									// pause for normal 3x time 
-									ResetMinimumTimeTracker();
-									WaitForMinimumTimeToPass();
-									ResetMinimumTimeTracker();
-									WaitForMinimumTimeToPass();
-									ResetMinimumTimeTracker();
-									WaitForMinimumTimeToPass();
+									// exponential backoff
+									for (var i = 0; i < Math.Pow(2, retries); i++)
+									{
+										ResetMinimumTimeTracker();
+										WaitForMinimumTimeToPass();
+									}
 
 									continue;
 								}
