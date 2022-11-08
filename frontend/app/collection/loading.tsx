@@ -11,7 +11,7 @@ export default function Loading() {
           <table className="min-w-full divide-y divide-gray-300 md:min-w-fit md:max-w-full">
             <thead>
               <tr>
-                <th className="w-full py-2 pr-2 pl-4 text-left font-semibold text-gray-900 md:w-[550px] md:pl-0">
+                <th className="w-full py-2 pr-2 pl-4 text-left font-semibold text-gray-900 md:w-[575px] md:pl-0">
                   Name
                 </th>
                 <th className="w-[8em] py-2 px-2 text-left font-semibold text-gray-900">
