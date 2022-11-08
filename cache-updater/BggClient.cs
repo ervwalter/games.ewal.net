@@ -19,7 +19,7 @@ namespace GamesCacheUpdater
     {
         private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
         private static DateTimeOffset _lastDownloadCompleted = DateTimeOffset.MinValue;
-        private static readonly TimeSpan MinimumTimeBetweenDownloads = new TimeSpan(0, 0, 0, 10, 100); // 10.1 second between BGG requests to prevent them from blocking us
+        private static readonly TimeSpan MinimumTimeBetweenDownloads = new TimeSpan(0, 0, 0, 5, 100); // 5.1 second between BGG requests to prevent them from blocking us
 
         private const string LoginUrl = "https://boardgamegeek.com/login/api/v1";
         private const string BaseUrl = "https://boardgamegeek.com/xmlapi2/";
@@ -67,54 +67,70 @@ namespace GamesCacheUpdater
                         var request = WebRequest.CreateHttp(url);
                         request.CookieContainer = _cookies;
                         request.Timeout = 15000;
-                        using (var response = (HttpWebResponse)(await request.GetResponseAsync()))
-                        {
-                            if (response.StatusCode == HttpStatusCode.TooManyRequests)
-                            {
-                                Debug.WriteLine("Too many requests, waiting for a bit...");
+						try
+						{
+							using (var response = (HttpWebResponse)(await request.GetResponseAsync()))
+							{
+								if (response.StatusCode == HttpStatusCode.Accepted)
+								{
+									Debug.WriteLine("Download isn't ready.  Trying again in a moment...");
 
-								// pause for normal 3x time 
-                                ResetMinimumTimeTracker();
-                                WaitForMinimumTimeToPass();
-                                ResetMinimumTimeTracker();
-                                WaitForMinimumTimeToPass();
-                                ResetMinimumTimeTracker();
-                                WaitForMinimumTimeToPass();
+									//
+									// this whole section of playing with the semaphore inside the try/finally 
+									// seems dangerous, but I'm doing it anyway...
+									//
 
-                                continue;
-                            }
-                            else if (response.StatusCode == HttpStatusCode.Accepted)
-                            {
-                                Debug.WriteLine("Download isn't ready.  Trying again in a moment...");
+									// log the end of our last attempt
+									ResetMinimumTimeTracker();
 
-                                //
-                                // this whole section of playing with the semaphore inside the try/finally 
-                                // seems dangerous, but I'm doing it anyway...
-                                //
+									// let other queued up requests happen...
+									_semaphore.Release();
 
-                                // log the end of our last attempt
-                                ResetMinimumTimeTracker();
+									// very small delay to really make sure other requests get the lock
+									Thread.Sleep(50);
 
-                                // let other queued up requests happen...
-                                _semaphore.Release();
+									// get back in line for the lock before continuing
+									_semaphore.Wait();
 
-                                // very small delay to really make sure other requests get the lock
-                                Thread.Sleep(50);
+									// do the real delay now that we have the lock again
+									WaitForMinimumTimeToPass();
 
-                                // get back in line for the lock before continuing
-                                _semaphore.Wait();
+									continue;
+								}
+								using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+								{
+									data = XDocument.Parse(await reader.ReadToEndAsync());
+								}
+							}
+						}
+						catch (WebException ex)
+						{
+							var response = ex.Response as HttpWebResponse;
+							if (response != null)
+							{
+								if (response.StatusCode == HttpStatusCode.TooManyRequests)
+								{
+									Debug.WriteLine("Too many requests, waiting for a bit...");
 
-                                // do the real delay now that we have the lock again
-                                WaitForMinimumTimeToPass();
+									// pause for normal 3x time 
+									ResetMinimumTimeTracker();
+									WaitForMinimumTimeToPass();
+									ResetMinimumTimeTracker();
+									WaitForMinimumTimeToPass();
+									ResetMinimumTimeTracker();
+									WaitForMinimumTimeToPass();
 
-                                continue;
-                            }
-                            using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-                            {
-                                data = XDocument.Parse(await reader.ReadToEndAsync());
-                            }
-                        }
-                    }
+									continue;
+								}
+								else {
+									throw;
+								}
+							}
+							else {
+								throw;
+							}
+						}
+					}
                 }
                 finally
                 {
