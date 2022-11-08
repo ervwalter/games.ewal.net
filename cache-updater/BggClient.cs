@@ -38,11 +38,11 @@ namespace GamesCacheUpdater
 			_lastDownloadCompleted = DateTimeOffset.Now;
 		}
 
-		private static void WaitForMinimumTimeToPass()
+		private static void WaitForMinimumTimeToPass(int? multiplier = 1)
 		{
 			var now = DateTimeOffset.Now;
 			var timeSinceLastDownload = now - _lastDownloadCompleted;
-			if (timeSinceLastDownload < MinimumTimeBetweenDownloads)
+			if (timeSinceLastDownload < (MinimumTimeBetweenDownloads * multiplier))
 			{
 				var requiredDelay = MinimumTimeBetweenDownloads - timeSinceLastDownload;
 				Debug.WriteLine("Pausing {0} ms", requiredDelay.TotalMilliseconds);
@@ -80,13 +80,9 @@ namespace GamesCacheUpdater
 									// seems dangerous, but I'm doing it anyway...
 									//
 
-									// exponential backoff
-									for (var i = 0; i < Math.Pow(2, retries); i++)
-									{
-										ResetMinimumTimeTracker();
-										WaitForMinimumTimeToPass();
-									}
-									
+									ResetMinimumTimeTracker();
+									WaitForMinimumTimeToPass(retries * 2);
+
 									continue;
 								}
 								using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
@@ -106,12 +102,8 @@ namespace GamesCacheUpdater
 								{
 									_log.LogInformation("Too many requests, waiting for a bit...");
 
-									// exponential backoff
-									for (var i = 0; i < Math.Pow(2, retries); i++)
-									{
-										ResetMinimumTimeTracker();
-										WaitForMinimumTimeToPass();
-									}
+									ResetMinimumTimeTracker();
+									WaitForMinimumTimeToPass(retries * 2);
 
 									continue;
 								}
@@ -125,7 +117,8 @@ namespace GamesCacheUpdater
 								throw;
 							}
 						}
-						catch (Exception ex) {
+						catch (Exception ex)
+						{
 							Debug.WriteLine("DEBUG: Exception: {0}", ex.ToString());
 							throw;
 						}
