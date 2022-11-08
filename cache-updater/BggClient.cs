@@ -19,7 +19,7 @@ namespace GamesCacheUpdater
     {
         private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
         private static DateTimeOffset _lastDownloadCompleted = DateTimeOffset.MinValue;
-        private static readonly TimeSpan MinimumTimeBetweenDownloads = new TimeSpan(0, 0, 0, 5, 100); // 5.1 second between BGG requests to prevent them from blocking us
+        private static readonly TimeSpan MinimumTimeBetweenDownloads = new TimeSpan(0, 0, 0, 10, 100); // 10.1 second between BGG requests to prevent them from blocking us
 
         private const string LoginUrl = "https://boardgamegeek.com/login/api/v1";
         private const string BaseUrl = "https://boardgamegeek.com/xmlapi2/";
