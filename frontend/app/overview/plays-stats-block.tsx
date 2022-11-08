@@ -1,4 +1,4 @@
-import { PlayStats } from "lib/models";
+import { PlayStats } from "lib/games-interfaces";
 
 type PlaysStatsBlockProps = {
   stats: PlayStats;

@@ -1,4 +1,4 @@
-import { CollectionStats } from "lib/models";
+import { CollectionStats } from "lib/games-interfaces";
 
 type CollectionStatsBlockProps = {
   stats: CollectionStats;

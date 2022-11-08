@@ -1,7 +1,7 @@
 "use client";
 
 import PlayCount from "components/play-count";
-import { Game } from "lib/models";
+import { Game } from "lib/games-interfaces";
 import { orderBy } from "lodash";
 import React, { useCallback, useMemo, useState } from "react";
 

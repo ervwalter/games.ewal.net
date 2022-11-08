@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { Play, Player } from "lib/models";
+import { Play, Player } from "lib/games-interfaces";
 import { orderBy, remove } from "lodash";
 
 type RecentPlaysProps = {

@@ -1,7 +1,6 @@
 import { Blurb } from "components/blurb";
 import PlayCount from "components/play-count";
-import { getPlays } from "lib/games-data";
-import { duration } from "lib/plays";
+import { duration, getPlays } from "lib/games-data";
 import { groupBy, orderBy, sumBy } from "lodash";
 import { Title } from "./title";
 

@@ -70,6 +70,20 @@ export interface Game {
   ownedExpansionCount?: number;
 }
 
+export interface TopTenItem {
+  rank?: number;
+  gameId: string;
+  name: string;
+  description?: string;
+  image: string;
+  thumbnail: string;
+  yearPublished: number;
+  mechanics: string[];
+  designers: string[];
+  rating?: number;
+  numPlays: number;
+}
+
 export interface PlayStats {
   numberOfPlays: number;
   uniqueGames: number;
@@ -91,20 +105,6 @@ export interface CollectionStats {
   wantToBuy: number;
   averageRating: number;
   top100Games: number;
-}
-
-export interface TopTenItem {
-  rank?: number;
-  gameId: string;
-  name: string;
-  description?: string;
-  image: string;
-  thumbnail: string;
-  yearPublished: number;
-  mechanics: string[];
-  designers: string[];
-  rating?: number;
-  numPlays: number;
 }
 
 export interface Stats {
