@@ -80,21 +80,13 @@ namespace GamesCacheUpdater
 									// seems dangerous, but I'm doing it anyway...
 									//
 
-									// log the end of our last attempt
-									ResetMinimumTimeTracker();
-
-									// let other queued up requests happen...
-									_semaphore.Release();
-
-									// very small delay to really make sure other requests get the lock
-									Thread.Sleep(50);
-
-									// get back in line for the lock before continuing
-									_semaphore.Wait();
-
-									// do the real delay now that we have the lock again
-									WaitForMinimumTimeToPass();
-
+									// exponential backoff
+									for (var i = 0; i < Math.Pow(2, retries); i++)
+									{
+										ResetMinimumTimeTracker();
+										WaitForMinimumTimeToPass();
+									}
+									
 									continue;
 								}
 								using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
