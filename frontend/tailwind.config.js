@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,6 +12,10 @@ module.exports = {
     extend: {
       colors: {
         blue: "#268bd2",
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)", ...fontFamily.sans],
+        glyph: ["var(--font-glyphicons)"],
       },
       animation: {
         "delayed-fade-in": "fade-in 75ms ease-in 300ms 1 normal forwards",

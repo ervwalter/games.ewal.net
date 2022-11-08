@@ -1,12 +1,15 @@
+import { Inter } from "@next/font/google";
+import localFont from "@next/font/local";
+import clsx from "clsx";
 import "./global.css";
 import Sidebar from "./sidebar";
 
-// const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const glyphicons = localFont({ variable: "--font-glyphicons", src: "../fonts/glyphicons-halflings-regular.woff2" });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // <html lang="en" className={clsx(inter.className, "h-full")}>
-    <html lang="en" className="h-full md:overflow-y-scroll">
+    <html lang="en" className={clsx(inter.variable, glyphicons.variable, "h-full md:overflow-y-scroll")}>
       <head>
         <title>Board Games</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />

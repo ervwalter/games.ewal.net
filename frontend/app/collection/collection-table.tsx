@@ -3,7 +3,6 @@
 import { Game } from "lib/models";
 import { orderBy } from "lodash";
 import React, { useCallback, useMemo, useState } from "react";
-import { FaRegStar, FaStar } from "react-icons/fa";
 
 export default function CollectionTable({ collection }: { collection: Game[] }) {
   const [sortColumn, setSortColumn] = useState("name");
@@ -42,7 +41,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
               <span className="hidden md:inline">Times </span>Played
             </th>
             <th
-              className="w-0 cursor-pointer py-2 pl-2 pr-4 text-left font-semibold text-gray-900 hover:underline md:pr-2"
+              className="cursor-pointer py-2 pl-2 pr-4 text-center font-semibold text-gray-900 hover:underline md:pr-2"
               onClick={() => handleSortByName("rating")}>
               <span className="hidden md:inline">My </span>Rating
             </th>
@@ -73,7 +72,7 @@ const CollectionRow = React.memo(function CollectionRow({ game }: { game: Game }
       <td className="py-2 px-2 text-left">
         <PlayCount plays={game.numPlays} />
       </td>
-      <td className="py-2 pl-2 pr-4 text-center md:pr-2 md:text-left">
+      <td className="py-2 pl-2 pr-4 text-center md:pr-2">
         <Rating rating={game.rating} />
       </td>
     </tr>
@@ -95,35 +94,20 @@ const PlayCount = React.memo(function PlayCount({ plays }: { plays?: number }) {
 
 const Rating = React.memo(function Rating({ rating }: { rating?: number }) {
   if (rating && rating > 0) {
+    //
     return (
       <>
-        <span className="md:hidden">{rating}</span>
+        <div className="font-semibold md:hidden">{rating}</div>
         <span className="relative hidden md:block" title={`Rating: ${rating}`}>
           <span className="flex flex-row text-gray-300">
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
-            <FaRegStar className="h-4 w-4 flex-none" />
+            {/* using an icon font here since a individual svg elements for each star makes the page way to slow to render */}
+            <i className="top-[1px] inline-block font-glyph font-normal not-italic leading-[1] antialiased before:content-['\e006\e006\e006\e006\e006\e006\e006\e006\e006\e006']" />
           </span>
           <span
             className="absolute top-0 left-0 z-10 flex h-full w-full flex-row overflow-hidden text-yellow-500 opacity-70"
             style={{ width: `${rating * 10}%` }}>
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
-            <FaStar className="h-4 w-4 flex-none" />
+            {/* using an icon font here since a individual svg elements for each star makes the page way to slow to render */}
+            <i className="top-[1px] inline-block font-glyph font-normal not-italic leading-[1] antialiased before:content-['\e006\e006\e006\e006\e006\e006\e006\e006\e006\e006']" />
           </span>
         </span>
       </>
