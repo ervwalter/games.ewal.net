@@ -32,71 +32,18 @@ function RecentPlaysThumbnailsSkeleton() {
 
 function RecentPlaysListNarrowSkeleton() {
   return (
-    <SkeletonWrapper className="md:hidden">
-      {/* Row */}
-      <div className="flex flex-row gap-8">
-        <SkeletonRow className="w-24 flex-1" />
-        <SkeletonRow className="w-16 flex-none" />
-      </div>
-      <div className="pb-5">
-        <SkeletonRow className="w-60" />
-      </div>
-      {/* Row */}
-      <div className="flex flex-row gap-8">
-        <SkeletonRow className="w-24 flex-1" />
-        <SkeletonRow className="w-16 flex-none" />
-      </div>
-      <div className="pb-5">
-        <SkeletonRow className="w-60" />
-      </div>
-      {/* Row */}
-      <div className="flex flex-row gap-8">
-        <SkeletonRow className="w-24 flex-1" />
-        <SkeletonRow className="w-16 flex-none" />
-      </div>
-      <div className="pb-5">
-        <SkeletonRow className="w-60" />
-      </div>
-      {/* Row */}
-      <div className="flex flex-row gap-8">
-        <SkeletonRow className="w-24 flex-1" />
-        <SkeletonRow className="w-16 flex-none" />
-      </div>
-      <div className="pb-5">
-        <SkeletonRow className="w-60" />
-      </div>
-      {/* Row */}
-      <div className="flex flex-row gap-8">
-        <SkeletonRow className="w-24 flex-1" />
-        <SkeletonRow className="w-16 flex-none" />
-      </div>
-      <div className="pb-5">
-        <SkeletonRow className="w-60" />
-      </div>
-      {/* Row */}
-      <div className="flex flex-row gap-8">
-        <SkeletonRow className="w-24 flex-1" />
-        <SkeletonRow className="w-16 flex-none" />
-      </div>
-      <div className="pb-5">
-        <SkeletonRow className="w-60" />
-      </div>
-      {/* Row */}
-      <div className="flex flex-row gap-8">
-        <SkeletonRow className="w-24 flex-1" />
-        <SkeletonRow className="w-16 flex-none" />
-      </div>
-      <div className="pb-5">
-        <SkeletonRow className="w-60" />
-      </div>
-      {/* Row */}
-      <div className="flex flex-row gap-8">
-        <SkeletonRow className="w-24 flex-1" />
-        <SkeletonRow className="w-16 flex-none" />
-      </div>
-      <div className="pb-5">
-        <SkeletonRow className="w-60" />
-      </div>
+    <SkeletonWrapper className="-mx-4 border-t border-gray-100 md:hidden">
+      {[...Array(25)].map((_, index) => (
+        <div className="border-b border-gray-100 px-4 py-2 even:bg-gray-50" key={index}>
+          <div className="flex flex-row gap-8">
+            <SkeletonRow className="w-24 flex-1" />
+            <SkeletonRow className="w-16 flex-none" />
+          </div>
+          <div>
+            <SkeletonRow className="w-60" />
+          </div>
+        </div>
+      ))}
     </SkeletonWrapper>
   );
 }
@@ -104,58 +51,34 @@ function RecentPlaysListNarrowSkeleton() {
 function RecentPlaysListWideSkeleton() {
   return (
     <SkeletonWrapper className="hidden md:block">
-      <div className="grid w-full max-w-2xl grid-cols-[1fr_3fr_2fr_1fr] gap-y-4 gap-x-4">
-        {/* Header */}
-        <SkeletonRow className="w-12" />
-        <SkeletonRow className="w-12" />
-        <SkeletonRow className="w-12" />
-        <SkeletonRow className="w-12" />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        {/* Row */}
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-        <SkeletonRow />
-      </div>
+      <table className="min-w-full divide-y divide-gray-300 md:min-w-fit">
+        <thead>
+          <tr>
+            <th className="w-[50px] py-3 px-2 text-left font-semibold text-gray-900">Date</th>
+            <th className="w-[350px] py-3 px-2 text-left font-semibold text-gray-900">Game</th>
+            <th className="w-[350px] py-3 px-2 text-left font-semibold text-gray-900">Players</th>
+            <th className="w-[70px] py-3 px-2 text-left font-semibold text-gray-900">Location</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {[...Array(25)].map((_, index) => (
+            <tr className="even:bg-gray-50" key={index}>
+              <td className="whitespace-nowrap py-3 px-2">
+                <SkeletonRow />
+              </td>
+              <td className="py-3 px-2">
+                <SkeletonRow />
+              </td>
+              <td className="py-3 px-2">
+                <SkeletonRow />
+              </td>
+              <td className="py-3 px-2">
+                <SkeletonRow />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </SkeletonWrapper>
   );
 }
