@@ -10,7 +10,7 @@ namespace GamesCacheUpdater
     public static class UpdateGamesCacheFunction
     {
         [FunctionName("UpdateGamesCache")]
-        public static async Task Run([TimerTrigger("0 */30 * * * *")]TimerInfo myTimer, ILogger log, ExecutionContext context)
+        public static async Task Run([TimerTrigger("0 */15 * * * *")]TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(context.FunctionAppDirectory)
