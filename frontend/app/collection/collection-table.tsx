@@ -31,7 +31,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
         <thead>
           <tr>
             <th
-              className="cursor-pointer py-2 pr-2 pl-4 text-left font-semibold text-gray-900 hover:underline md:pl-2"
+              className="cursor-pointer py-2 pr-2 pl-4 text-left font-semibold text-gray-900 hover:underline md:pl-0"
               onClick={() => handleSortByName("name")}>
               Name
             </th>
@@ -41,7 +41,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
               <span className="hidden md:inline">Times </span>Played
             </th>
             <th
-              className="cursor-pointer py-2 pl-2 pr-4 text-center font-semibold text-gray-900 hover:underline md:pr-2"
+              className="cursor-pointer py-2 pl-2 pr-4 text-center font-semibold text-gray-900 hover:underline md:pr-2 md:text-left"
               onClick={() => handleSortByName("rating")}>
               <span className="hidden md:inline">My </span>Rating
             </th>
@@ -60,7 +60,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
 const CollectionRow = React.memo(function CollectionRow({ game }: { game: Game }) {
   return (
     <tr className="even:bg-gray-50">
-      <td className="py-2 pl-4 pr-2 md:pl-2">
+      <td className="py-2 pl-4 pr-2 md:pl-0">
         <a
           href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}
           target="_blank"
@@ -72,7 +72,7 @@ const CollectionRow = React.memo(function CollectionRow({ game }: { game: Game }
       <td className="py-2 px-2 text-left">
         <PlayCount plays={game.numPlays} />
       </td>
-      <td className="py-2 pl-2 pr-4 text-center md:pr-2">
+      <td className="py-2 pl-2 pr-4 text-center md:pr-2 md:text-left">
         <Rating rating={game.rating} />
       </td>
     </tr>
@@ -104,7 +104,7 @@ const Rating = React.memo(function Rating({ rating }: { rating?: number }) {
             <i className="top-[1px] inline-block font-glyph font-normal not-italic leading-[1] antialiased before:content-['\e006\e006\e006\e006\e006\e006\e006\e006\e006\e006']" />
           </span>
           <span
-            className="absolute top-0 left-0 z-10 flex h-full w-full flex-row overflow-hidden text-yellow-500 opacity-70"
+            className="absolute top-0 left-0 z-10 flex h-full w-full flex-row overflow-hidden text-orange-300"
             style={{ width: `${rating * 10}%` }}>
             {/* using an icon font here since a individual svg elements for each star makes the page way to slow to render */}
             <i className="top-[1px] inline-block font-glyph font-normal not-italic leading-[1] antialiased before:content-['\e006\e006\e006\e006\e006\e006\e006\e006\e006\e006']" />

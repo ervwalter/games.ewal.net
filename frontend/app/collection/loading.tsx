@@ -11,7 +11,7 @@ export default function Loading() {
           <table className="min-w-full divide-y divide-gray-300 md:min-w-fit md:max-w-full">
             <thead>
               <tr>
-                <th className="w-full py-2 pr-2 pl-4 text-left font-semibold text-gray-900 md:w-[550px] md:pl-2">
+                <th className="w-full py-2 pr-2 pl-4 text-left font-semibold text-gray-900 md:w-[550px] md:pl-0">
                   Name
                 </th>
                 <th className="w-[8em] py-2 px-2 text-left font-semibold text-gray-900">
@@ -25,7 +25,7 @@ export default function Loading() {
             <tbody className="divide-y divide-gray-200">
               {[...Array(25)].map((_, index) => (
                 <tr className="even:bg-gray-50" key={index}>
-                  <td className="py-2 pl-4 pr-2 md:pl-2">
+                  <td className="py-2 pl-4 pr-2 md:pl-0">
                     <SkeletonRow />
                   </td>
                   <td className="py-2 px-2 text-center md:text-left">

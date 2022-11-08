@@ -54,7 +54,7 @@ function RecentPlaysListWideSkeleton() {
       <table className="min-w-full divide-y divide-gray-300 md:min-w-fit">
         <thead>
           <tr>
-            <th className="w-[50px] py-3 px-2 text-left font-semibold text-gray-900">Date</th>
+            <th className="w-[50px] py-3 px-2 text-left font-semibold text-gray-900 md:pl-0">Date</th>
             <th className="w-[350px] py-3 px-2 text-left font-semibold text-gray-900">Game</th>
             <th className="w-[350px] py-3 px-2 text-left font-semibold text-gray-900">Players</th>
             <th className="w-[70px] py-3 px-2 text-left font-semibold text-gray-900">Location</th>
@@ -63,7 +63,7 @@ function RecentPlaysListWideSkeleton() {
         <tbody className="divide-y divide-gray-200">
           {[...Array(25)].map((_, index) => (
             <tr className="even:bg-gray-50" key={index}>
-              <td className="whitespace-nowrap py-3 px-2">
+              <td className="whitespace-nowrap py-3 px-2 md:pl-0">
                 <SkeletonRow />
               </td>
               <td className="py-3 px-2">

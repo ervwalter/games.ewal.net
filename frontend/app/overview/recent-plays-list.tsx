@@ -48,16 +48,16 @@ const RecentPlaysWide = ({ plays }: RecentPlaysProps) => {
       <table className="min-w-full divide-y divide-gray-300 md:min-w-fit">
         <thead>
           <tr>
-            <th className="py-3 px-2 text-left font-semibold text-gray-900">Date</th>
+            <th className="py-3 px-2 text-left font-semibold text-gray-900 md:pl-0">Date</th>
             <th className="py-3 px-2 text-left font-semibold text-gray-900">Game</th>
             <th className="py-3 px-2 text-left font-semibold text-gray-900">Players</th>
-            <th className="py-3 px-2 text-left font-semibold text-gray-900">Location</th>
+            <th className="py-3 px-2 text-left font-semibold text-gray-900 md:pr-0">Location</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
           {plays.map((play) => (
             <tr className="even:bg-gray-50" key={play.playId}>
-              <td className="whitespace-nowrap py-3 px-2">{dayjs(play.playDate).format("ddd, MMM D")}</td>
+              <td className="whitespace-nowrap py-3 px-2 md:pl-0">{dayjs(play.playDate).format("ddd, MMM D")}</td>
               <td className="py-3 px-2">
                 <a
                   href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}
