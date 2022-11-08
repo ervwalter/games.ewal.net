@@ -16,7 +16,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
-        glyph: ["var(--font-glyphicons)"],
+        icons: ["var(--font-icons)"],
       },
       animation: {
         "delayed-fade-in": "fade-in 75ms ease-in 300ms 1 normal forwards",

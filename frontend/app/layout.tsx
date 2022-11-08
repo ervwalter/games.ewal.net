@@ -5,7 +5,7 @@ import "./global.css";
 import Sidebar from "./sidebar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const glyphicons = localFont({ variable: "--font-glyphicons", src: "../fonts/glyphicons-halflings-regular.woff2" });
+const glyphicons = localFont({ variable: "--font-icons", src: "../fonts/icons.woff" });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
