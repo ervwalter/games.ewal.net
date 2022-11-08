@@ -20,7 +20,7 @@ const RecentPlaysNarrow = ({ plays }: RecentPlaysProps) => {
   return (
     <div className="-mx-4 border-t border-gray-200 md:hidden">
       {plays.map((play) => (
-        <div className="border-b border-gray-200 px-4 py-2 even:bg-dim" key={play.playId}>
+        <div className="border-b border-gray-200 px-4 py-2 odd:bg-gray-100 odd:bg-opacity-50" key={play.playId}>
           <div className="flex flex-row">
             <div className="flex-1">
               <a
@@ -56,7 +56,7 @@ const RecentPlaysWide = ({ plays }: RecentPlaysProps) => {
         </thead>
         <tbody className="divide-y divide-gray-200">
           {plays.map((play) => (
-            <tr className="even:bg-dim" key={play.playId}>
+            <tr className="even:bg-gray-100 even:bg-opacity-50" key={play.playId}>
               <td className="whitespace-nowrap py-3 px-2 md:pl-0">{dayjs(play.playDate).format("ddd, MMM D")}</td>
               <td className="py-3 px-2">
                 <a

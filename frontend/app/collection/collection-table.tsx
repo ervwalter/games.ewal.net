@@ -61,7 +61,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
 
 const CollectionRow = React.memo(function CollectionRow({ game }: { game: Game }) {
   return (
-    <tr className="even:bg-dim">
+    <tr className="even:bg-gray-100 even:bg-opacity-50">
       <td className="py-2 pl-4 pr-2 md:pl-0">
         <a
           href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}

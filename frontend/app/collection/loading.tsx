@@ -5,7 +5,7 @@ export default function Loading() {
   return (
     <div className="flex flex-1 flex-col space-y-4">
       <Blurb />
-      <h2 className="text-xl font-semibold">Game Collection</h2>
+      <h2 className="text-2xl font-semibold">Game Collection</h2>
       <div className="-mx-4 md:mx-0">
         <SkeletonWrapper>
           <table className="min-w-full divide-y divide-gray-300 md:min-w-fit md:max-w-full">
@@ -24,7 +24,7 @@ export default function Loading() {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {[...Array(25)].map((_, index) => (
-                <tr className="even:bg-dim" key={index}>
+                <tr className="even:bg-gray-100 even:bg-opacity-75" key={index}>
                   <td className="py-2 pl-4 pr-2 md:pl-0">
                     <SkeletonRow />
                   </td>

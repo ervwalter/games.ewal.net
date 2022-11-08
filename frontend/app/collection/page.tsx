@@ -8,7 +8,7 @@ export default async function Collection() {
   return (
     <div className="flex flex-1 flex-col space-y-4">
       <Blurb />
-      <h2 className="text-xl font-semibold">Game Collection</h2>
+      <h2 className="text-2xl font-semibold">Game Collection</h2>
       <CollectionTable collection={owned} />
     </div>
   );

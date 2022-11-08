@@ -11,8 +11,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blue: "#268bd2",
-        dim: "#00000008",
+        primary: "#268bd2",
         nickels: "#fefff5",
         dimes: "#f5fff8",
         quarters: "#f5fcff",
