@@ -59,7 +59,6 @@ namespace GamesCacheUpdater
                 Debug.WriteLine("Downloading " + url);
                 XDocument data = null;
                 var retries = 0;
-
                 try
                 {
                     while (data == null && retries < 60)
@@ -70,7 +69,21 @@ namespace GamesCacheUpdater
                         request.Timeout = 15000;
                         using (var response = (HttpWebResponse)(await request.GetResponseAsync()))
                         {
-                            if (response.StatusCode == HttpStatusCode.Accepted)
+                            if (response.StatusCode == HttpStatusCode.TooManyRequests)
+                            {
+                                Debug.WriteLine("Too many requests, waiting for a bit...");
+
+								// pause for normal 3x time 
+                                ResetMinimumTimeTracker();
+                                WaitForMinimumTimeToPass();
+                                ResetMinimumTimeTracker();
+                                WaitForMinimumTimeToPass();
+                                ResetMinimumTimeTracker();
+                                WaitForMinimumTimeToPass();
+
+                                continue;
+                            }
+                            else if (response.StatusCode == HttpStatusCode.Accepted)
                             {
                                 Debug.WriteLine("Download isn't ready.  Trying again in a moment...");
 
