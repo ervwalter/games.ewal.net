@@ -27,7 +27,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
 
   return (
     <div className="-mx-4 md:mx-0">
-      <table className="min-w-full divide-y divide-gray-300 md:min-w-fit">
+      <table className="min-w-full divide-y divide-gray-200 md:min-w-fit">
         <thead>
           <tr>
             <th
@@ -59,7 +59,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
 
 const CollectionRow = React.memo(function CollectionRow({ game }: { game: Game }) {
   return (
-    <tr className="even:bg-gray-50">
+    <tr className="even:bg-dim">
       <td className="py-2 pl-4 pr-2 md:pl-0">
         <a
           href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}

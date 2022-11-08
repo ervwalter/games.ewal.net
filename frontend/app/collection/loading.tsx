@@ -24,7 +24,7 @@ export default function Loading() {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {[...Array(25)].map((_, index) => (
-                <tr className="even:bg-gray-50" key={index}>
+                <tr className="even:bg-dim" key={index}>
                   <td className="py-2 pl-4 pr-2 md:pl-0">
                     <SkeletonRow />
                   </td>

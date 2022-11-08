@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       colors: {
         blue: "#268bd2",
+        dim: "#00000008",
       },
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],

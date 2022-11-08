@@ -117,7 +117,7 @@ export default function Sidebar() {
         </div>
       </div>
       <div className="flex flex-1 flex-col">
-        <div className="sticky top-0 z-10 border-b border-gray-200 bg-white pl-1 md:hidden">
+        <div className="sticky top-0 z-10 border-b border-gray-200 bg-gray-50 pl-1 md:hidden">
           <div className="flex flex-row items-center">
             <button
               type="button"

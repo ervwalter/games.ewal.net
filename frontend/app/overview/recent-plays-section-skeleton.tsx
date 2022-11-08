@@ -34,7 +34,7 @@ function RecentPlaysListNarrowSkeleton() {
   return (
     <SkeletonWrapper className="-mx-4 border-t border-gray-100 md:hidden">
       {[...Array(25)].map((_, index) => (
-        <div className="border-b border-gray-100 px-4 py-2 even:bg-gray-50" key={index}>
+        <div className="border-b border-gray-100 px-4 py-2 even:bg-dim" key={index}>
           <div className="flex flex-row gap-8">
             <SkeletonRow className="w-24 flex-1" />
             <SkeletonRow className="w-16 flex-none" />
@@ -62,7 +62,7 @@ function RecentPlaysListWideSkeleton() {
         </thead>
         <tbody className="divide-y divide-gray-200">
           {[...Array(25)].map((_, index) => (
-            <tr className="even:bg-gray-50" key={index}>
+            <tr className="even:bg-dim" key={index}>
               <td className="whitespace-nowrap py-3 px-2 md:pl-0">
                 <SkeletonRow />
               </td>
