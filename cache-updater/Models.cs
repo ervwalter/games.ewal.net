@@ -213,6 +213,7 @@ namespace GamesCacheUpdater
 		public int WantToBuy { get; set; }
 		public decimal AverageRating { get; set; }
 		public int Top100Games { get; set; }
+		public int ToBePruned { get; set; }
 	}
 
 	public class PlayStats

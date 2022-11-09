@@ -154,9 +154,9 @@ namespace GamesCacheUpdater
 			_log.LogInformation("Processing {0} plays", _plays.Count);
 			foreach (var play in _plays)
 			{
-				if (string.IsNullOrWhiteSpace(play.Location)) {
-					play.Location = "Home";
-				}
+				// if (string.IsNullOrWhiteSpace(play.Location)) {
+				// 	play.Location = "Home";
+				// }
 				if (play.Duration.HasValue && play.Duration == 0)
 				{
 					play.Duration = null;
