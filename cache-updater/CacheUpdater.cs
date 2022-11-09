@@ -447,6 +447,10 @@ namespace GamesCacheUpdater
 					{
 						stats.Top100Games++;
 					}
+
+					if (game.Owned && game.WishList && game.WishListPriority == 5) {
+						stats.ToBePruned++;
+					}
 				}
 				else if (game.PreviousOwned)
 				{
