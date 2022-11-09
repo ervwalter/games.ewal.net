@@ -6,7 +6,7 @@ export interface Play {
   thumbnail: string;
   playDate: string;
   numPlays: number;
-  location: string;
+  location?: string;
   duration?: number;
   estimatedDuration?: number;
   incomplete: boolean;
