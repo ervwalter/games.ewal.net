@@ -1,11 +1,67 @@
 "use client";
 
+import { BarCommonProps, ResponsiveBar } from "@nivo/bar";
 import { CommonPieProps, ResponsivePie } from "@nivo/pie";
 
 type Datum = {
   id: string;
   value: number;
 };
+
+interface HorizontalBarChartProps<T extends Datum> {
+  data: T[];
+  yLabel: string;
+  colors: BarCommonProps<T>["colors"];
+  labels?: boolean;
+}
+
+export function HorizontalBarChart<T extends Datum>({
+  data,
+  yLabel,
+  colors,
+  labels = false,
+}: HorizontalBarChartProps<T>) {
+  return (
+    <ResponsiveBar
+      data={data}
+      keys={["value"]}
+      indexBy="id"
+      tooltipLabel={({ indexValue }) => indexValue as string}
+      margin={{ top: 0, right: 25, bottom: 20, left: 75 }}
+      padding={0.25}
+      groupMode="grouped"
+      layout="horizontal"
+      valueScale={{ type: "linear" }}
+      // indexScale={{ type: "band", round: true }}
+      valueFormat=" >-"
+      colors={colors}
+      borderColor={{
+        from: "color",
+        modifiers: [["brighter", 2]],
+      }}
+      borderWidth={1}
+      axisTop={null}
+      axisRight={null}
+      axisBottom={{
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        tickValues: 5,
+      }}
+      axisLeft={{
+        tickSize: 0,
+      }}
+      enableGridY={false}
+      enableLabel={labels}
+      legends={[]}
+      role="application"
+      ariaLabel={`${yLabel} bar chart`}
+      barAriaLabel={function (e) {
+        return `${e.id}: ${e.formattedValue} in ${yLabel}: ${e.indexValue}`;
+      }}
+    />
+  );
+}
 
 interface PieProps<T extends Datum> {
   data: T[];
@@ -18,10 +74,10 @@ export function Pie<T extends Datum>({ data, colors, labels = false }: PieProps<
     <ResponsivePie
       data={data}
       margin={{
-        top: 20,
-        right: 40,
-        bottom: 20,
-        left: 40,
+        top: 30,
+        right: 60,
+        bottom: 30,
+        left: 60,
       }}
       innerRadius={0.7}
       padAngle={0}
@@ -37,10 +93,10 @@ export function Pie<T extends Datum>({ data, colors, labels = false }: PieProps<
       enableArcLabels={labels}
       arcLabel="id"
       arcLabelsRadiusOffset={0.6}
-      arcLinkLabelsSkipAngle={15}
+      arcLinkLabelsSkipAngle={5}
       arcLinkLabelsColor="#ccc"
       arcLinkLabelsStraightLength={8}
-      arcLinkLabelsDiagonalLength={15}
+      arcLinkLabelsDiagonalLength={20}
       // legends={[
       //   {
       //     anchor: "right",

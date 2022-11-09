@@ -84,6 +84,9 @@ export async function getInsights() {
       playerCountsMap[play.players.length] = (playerCountsMap[play.players.length] ?? 0) + 1;
       for (const player of play.players) {
         const playerName = player.name;
+        if (playerName === "Anonymous player") {
+          continue;
+        }
         const playerDetails = getPlayerDetails(players, playerName);
         const gameDetails = getGameDetails(playerDetails, play.gameId, play.thumbnail, play.name);
 
@@ -160,8 +163,8 @@ export async function getInsights() {
       playerCount: parseInt(playerCount),
       plays,
     })),
-    ["plays", "playerCount"],
-    ["desc", "asc"]
+    ["playerCount"],
+    ["asc"]
   ).map((d) => ({ players: `${d.playerCount} player${d.playerCount > 1 ? "s" : ""}`, plays: d.plays }));
 
   return {
