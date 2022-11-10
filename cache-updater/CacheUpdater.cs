@@ -88,8 +88,11 @@ namespace GamesCacheUpdater
 		public async Task DownloadCollectionAsync()
 		{
 			_log.LogInformation("Downloading collection for {0}", _username);
-			_collection = (await _client.GetCollectionAsync(_username, false))
-				.Concat(await _client.GetCollectionAsync(_username, true))
+			// start both immediately
+			var baseGames = _client.GetCollectionAsync(_username, false);
+			var expansions = _client.GetCollectionAsync(_username, true);
+			_collection = (await baseGames)
+				.Concat(await expansions)
 				.OrderBy(g => g.Name).ToList();
 
 			_collectionById = _collection.ToLookup(g => g.GameId);
