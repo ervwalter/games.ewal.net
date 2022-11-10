@@ -16,6 +16,17 @@
     "group:allNonMajor",
     "helpers:disableTypesNodeMajor"
   ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "next"
+      ],
+      "matchPackagePrefixes": [
+        "@next"
+      ],
+      "ignoreUnstable": false
+    }
+  ],
   "timezone": "America/Chicago",
   "assignees": [
     "ervwalter"
