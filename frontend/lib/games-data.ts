@@ -6,7 +6,7 @@ const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export async function getPlays() {
   let plays = await get<Play[]>("https://ewalgamescache.blob.core.windows.net/gamescache/plays-ervwalter.json", {
-    cache: "no-store",
+    next: { revalidate: 60 },
   });
   plays = orderBy(plays, ["playDate", "playId"], ["desc", "desc"]);
   await delay(2000);
@@ -15,7 +15,7 @@ export async function getPlays() {
 
 export async function getRecentPlays() {
   let plays = await get<Play[]>("https://ewalgamescache.blob.core.windows.net/gamescache/recent-plays-ervwalter.json", {
-    cache: "no-store",
+    next: { revalidate: 60 },
   });
   plays = orderBy(plays, ["playDate", "playId"], ["desc", "desc"]);
   return plays;
@@ -23,7 +23,7 @@ export async function getRecentPlays() {
 
 export async function getCollection() {
   const games = await get<Game[]>("https://ewalgamescache.blob.core.windows.net/gamescache/collection-ervwalter.json", {
-    cache: "no-store",
+    next: { revalidate: 60 },
   });
   return games;
 }
@@ -31,19 +31,19 @@ export async function getCollection() {
 export async function getTopTen() {
   const topten = await get<TopTenItem[]>(
     "https://ewalgamescache.blob.core.windows.net/gamescache/top10-ervwalter.json",
-    { cache: "no-store" }
+    { next: { revalidate: 60 } }
   );
   return topten;
 }
 
 export async function getStats() {
   const stats = await get<Stats>("https://ewalgamescache.blob.core.windows.net/gamescache/stats-ervwalter.json", {
-    cache: "no-store",
+    next: { revalidate: 60 },
   });
   return stats;
 }
 
-export function duration(play: Play): number {
+export function durationForPlay(play: Play): number {
   if (play.duration && play.duration > 0) {
     return play.duration;
   } else if (play.estimatedDuration && play.estimatedDuration > 0) {

@@ -1,5 +1,5 @@
 import { Blurb } from "components/blurb";
-import { duration, getPlays } from "lib/games-data";
+import { durationForPlay, getPlays } from "lib/games-data";
 import { groupBy, orderBy, sumBy } from "lodash";
 import { MostPlaysTable } from "./most-plays-table";
 import { Title } from "./title";
@@ -12,7 +12,7 @@ export default async function MostPlayed() {
         gameId: group[0].gameId,
         name: group[0].name,
         numPlays: sumBy(group, "numPlays"),
-        hours: Math.round(sumBy(group, (p) => duration(p)) / 60),
+        hours: Math.round(sumBy(group, (p) => durationForPlay(p)) / 60),
       };
     })
     .filter((g) => g.numPlays >= 5);

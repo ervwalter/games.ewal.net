@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { orderBy, sumBy, toPairs } from "lodash";
-import { duration, getPlays } from "./games-data";
+import { durationForPlay, getPlays } from "./games-data";
 
 const dayNames: Record<string, string> = {
   "0": "Sun",
@@ -119,7 +119,7 @@ export async function getInsights() {
         if (player.win) {
           gameDetails.wins++;
         }
-        gameDetails.minutes += duration(play);
+        gameDetails.minutes += durationForPlay(play);
 
         if (playerName === "Erv") {
           // just for me, accumulate who else I have played this game with
@@ -135,7 +135,7 @@ export async function getInsights() {
       // at least record basic information for myself if there were no recorded players
       const gameDetails = getGameDetails(me, play.gameId, play.thumbnail, play.name);
       gameDetails.plays++;
-      gameDetails.minutes += duration(play);
+      gameDetails.minutes += durationForPlay(play);
     }
   }
 
