@@ -26,8 +26,15 @@ namespace GamesCacheUpdater
 				var updater = new CacheUpdater(log);
 				await updater.InitializeAsync(storage, username, password);
 				await updater.DownloadPlaysAsync();
-				await updater.DownloadCollectionAsync();
 				await updater.DownloadTopTenAsync();
+				try
+				{
+					await updater.DownloadCollectionAsync();
+				}
+				catch (TooManyRetriesException)
+				{
+					await updater.LoadExistingCollection();
+				}
 				await updater.LoadCachedGameDetailsAsync();
 				await updater.DownloadUpdatedGameDetailsAsync();
 				updater.ProcessPlays();
@@ -40,6 +47,6 @@ namespace GamesCacheUpdater
 			{
 				log.LogError(ex.ToString());
 			}
-
 		}
 	}
+}

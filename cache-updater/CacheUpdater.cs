@@ -43,6 +43,7 @@ namespace GamesCacheUpdater
 
 		List<CollectionItem> _collection;
 		ILookup<string, CollectionItem> _collectionById;
+		bool _collectionFromCache = false;
 
 		public CacheUpdater(ILogger log)
 		{
@@ -114,6 +115,16 @@ namespace GamesCacheUpdater
 			{
 				_games = new List<GameDetails>();
 			}
+		}
+
+		public async Task LoadExistingCollection()
+		{
+			_log.LogInformation("Loading cached collection");
+			var blob = _container.GetBlockBlobReference(CollectionFilename);
+			string json = await blob.DownloadTextAsync();
+			_collection = JsonConvert.DeserializeObject<List<CollectionItem>>(json);
+			_collectionById = _collection.ToLookup(g => g.GameId);
+			_collectionFromCache = true;
 		}
 
 		public async Task DownloadUpdatedGameDetailsAsync()
@@ -190,6 +201,11 @@ namespace GamesCacheUpdater
 
 		public void ProcessCollection()
 		{
+			if (_collectionFromCache)
+			{
+				_log.LogInformation("Skipping processing for collection since cache was used");
+				return;
+			}
 			_log.LogInformation("Processing {0} collection games", _collection.Count);
 			IEnumerable<CollectionItem> games = _collection;
 			var gamesById = _collectionById;
@@ -448,7 +464,8 @@ namespace GamesCacheUpdater
 						stats.Top100Games++;
 					}
 
-					if (game.Owned && game.WishList && game.WishListPriority == 5) {
+					if (game.Owned && game.WishList && game.WishListPriority == 5)
+					{
 						stats.ToBePruned++;
 					}
 				}
@@ -570,11 +587,14 @@ namespace GamesCacheUpdater
 			blob.Properties.ContentType = "application/json";
 			await blob.SetPropertiesAsync();
 
-			json = JsonConvert.SerializeObject(_collection);
-			blob = _container.GetBlockBlobReference(string.Format(CollectionFilename, _username));
-			await blob.UploadTextAsync(json);
-			blob.Properties.ContentType = "application/json";
-			await blob.SetPropertiesAsync();
+			if (!_collectionFromCache)
+			{
+				json = JsonConvert.SerializeObject(_collection);
+				blob = _container.GetBlockBlobReference(string.Format(CollectionFilename, _username));
+				await blob.UploadTextAsync(json);
+				blob.Properties.ContentType = "application/json";
+				await blob.SetPropertiesAsync();
+			}
 
 			json = JsonConvert.SerializeObject(_topTen);
 			blob = _container.GetBlockBlobReference(string.Format(TopTenFilename, _username));
@@ -591,4 +611,6 @@ namespace GamesCacheUpdater
 
 
 	}
+
+
 }

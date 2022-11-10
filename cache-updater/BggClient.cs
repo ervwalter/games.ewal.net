@@ -61,7 +61,7 @@ namespace GamesCacheUpdater
 				var retries = 0;
 				try
 				{
-					while (data == null && retries < 8)
+					while (data == null && retries < 5)
 					{
 						retries++;
 						var request = WebRequest.CreateHttp(url);
@@ -134,7 +134,7 @@ namespace GamesCacheUpdater
 				}
 				else
 				{
-					throw new Exception("Failed to download BGG data.");
+					throw new TooManyRetriesException();
 				}
 			}
 			finally
@@ -489,5 +489,11 @@ namespace GamesCacheUpdater
 
 
 		#endregion
+	}
+
+
+		public class TooManyRetriesException : Exception
+	{
+
 	}
 }
