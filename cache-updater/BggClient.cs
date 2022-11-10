@@ -81,6 +81,12 @@ namespace GamesCacheUpdater
 									//
 
 									ResetMinimumTimeTracker();
+									// let other queued up requests happen...
+									_semaphore.Release();
+									// very small delay to really make sure other requests get the lock
+									Thread.Sleep(50);
+									// get back in line for the lock before continuing
+									_semaphore.Wait();
 									WaitForMinimumTimeToPass(retries + 2);
 
 									continue;
@@ -98,19 +104,7 @@ namespace GamesCacheUpdater
 							if (response != null)
 							{
 								_log.LogInformation("DEBUG: StatusCode: {0}", response.StatusCode);
-								if (response.StatusCode == HttpStatusCode.TooManyRequests)
-								{
-									_log.LogInformation("Too many requests, waiting for a bit...");
-
-									ResetMinimumTimeTracker();
-									WaitForMinimumTimeToPass(retries + 2);
-
-									continue;
-								}
-								else
-								{
-									throw;
-								}
+								throw;
 							}
 							else
 							{
@@ -493,7 +487,7 @@ namespace GamesCacheUpdater
 	}
 
 
-		public class TooManyRetriesException : Exception
+	public class TooManyRetriesException : Exception
 	{
 
 	}
