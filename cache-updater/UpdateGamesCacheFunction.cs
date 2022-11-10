@@ -43,6 +43,9 @@ namespace GamesCacheUpdater
 				updater.GenerateStats();
 				await updater.SaveEverythingAsync();
 				await updater.TriggerFrontendRefresh();
+				// this is a workaround until on-demand re-validations are added to the RSC portion of Next.js
+				await Task.Delay(70000); // wait 70 seconds
+				await updater.TriggerFrontendRefresh(); // trigger again in case the first trigger above hit an unexpired page
 			}
 			catch (Exception ex)
 			{
