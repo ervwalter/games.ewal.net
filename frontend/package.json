@@ -16,6 +16,7 @@
     "@nivo/core": "0.80.0",
     "@nivo/pie": "0.80.0",
     "@tailwindcss/aspect-ratio": "0.4.2",
+    "@vercel/analytics": "0.1.4",
     "clsx": "1.2.1",
     "d3-scale-chromatic": "3.0.0",
     "daisyui": "2.38.1",

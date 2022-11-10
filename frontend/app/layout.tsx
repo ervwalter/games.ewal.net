@@ -1,6 +1,7 @@
 import { Inter } from "@next/font/google";
 import localFont from "@next/font/local";
 import clsx from "clsx";
+import { AnalyticsWrapper } from "./analytics";
 import "./global.css";
 import Sidebar from "./sidebar";
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </main>
         </div>
+        <AnalyticsWrapper />
       </body>
     </html>
   );
