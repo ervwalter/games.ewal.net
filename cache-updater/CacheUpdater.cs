@@ -45,6 +45,11 @@ namespace GamesCacheUpdater
 		List<CollectionItem> _collection;
 		ILookup<string, CollectionItem> _collectionById;
 		bool _collectionFromCache = false;
+		private bool _playsChanged;
+		private bool _recentPlaysChanged;
+		private bool _topTenChanged;
+		private bool _statsChanged;
+		private bool _collectionChanged;
 
 		public CacheUpdater(ILogger log)
 		{
@@ -99,34 +104,53 @@ namespace GamesCacheUpdater
 			_collectionById = _collection.ToLookup(g => g.GameId);
 		}
 
-		public async Task LoadCachedGameDetailsAsync()
+		private async Task<string> GetBlobString(string filename)
 		{
-			_log.LogInformation("Loading cached game details");
-			var blob = _container.GetBlockBlobReference(GameDetailsFilename);
+			var blob = _container.GetBlockBlobReference(filename);
 			if (await blob.ExistsAsync())
 			{
-				string json = await blob.DownloadTextAsync();
+				return await blob.DownloadTextAsync();
+			}
+			return null;
+		}
+
+		private async Task<T> GetExistingBlob<T>(string filename, bool createIfMissingOrInvalid) where T : new()
+		{
+			string json = await GetBlobString(filename);
+			if (json != null)
+			{
 				try
 				{
-					_games = JsonConvert.DeserializeObject<List<GameDetails>>(json);
+					return JsonConvert.DeserializeObject<T>(json);
 				}
-				catch
-				{
-					_games = new List<GameDetails>();
-				}
+				catch { }
+			}
+			// got here so it's either missing or invalid
+			if (createIfMissingOrInvalid)
+			{
+				return new T();
 			}
 			else
 			{
-				_games = new List<GameDetails>();
+				return default(T);
 			}
 		}
+
+		public async Task LoadCachedGameDetailsAsync()
+		{
+			_log.LogInformation("Loading cached game details");
+			_games = await GetExistingBlob<List<GameDetails>>(GameDetailsFilename, true);
+		}
+
 
 		public async Task LoadExistingCollection()
 		{
 			_log.LogInformation("Loading cached collection");
-			var blob = _container.GetBlockBlobReference(string.Format(CollectionFilename, _username));
-			string json = await blob.DownloadTextAsync();
-			_collection = JsonConvert.DeserializeObject<List<CollectionItem>>(json);
+			_collection = await GetExistingBlob<List<CollectionItem>>(CollectionFilename, false);
+			if (_collection == null)
+			{
+				throw new Exception("Failed to load cached collection");
+			}
 			_collectionById = _collection.ToLookup(g => g.GameId);
 			_collectionFromCache = true;
 		}
@@ -258,6 +282,11 @@ namespace GamesCacheUpdater
 						//game.Description = HttpUtility.HtmlDecode(gameDetails.Description).Trim();
 					}
 				}
+
+				// round decimals
+				game.BGGRating = game.BGGRating.SingleDecimalPlace();
+				game.AverageRating = game.AverageRating.SingleDecimalPlace();
+				game.AverageWeight = game.AverageWeight.SingleDecimalPlace();
 
 				if (!string.IsNullOrWhiteSpace(game.PrivateComment))
 				{
@@ -569,47 +598,41 @@ namespace GamesCacheUpdater
 		}
 
 
+		private async Task UploadJsonBlob(string filename, string json)
+		{
+			var blob = _container.GetBlockBlobReference(filename);
+			await blob.UploadTextAsync(json);
+			blob.Properties.ContentType = "application/json";
+			await blob.SetPropertiesAsync();
+		}
+
+		private async Task<bool> UploadDataIfChanged<T>(string filename, T data)
+		{
+			var json = JsonConvert.SerializeObject(data);
+			var previousJson = await GetBlobString(filename);
+			if (json != previousJson)
+			{
+				_log.LogInformation("Uploading {0}", filename);
+				await UploadJsonBlob(filename, json);
+				return true;
+			}
+
+			_log.LogInformation("Skipping upload for {0} as it is unchanged", filename);
+			return false;
+		}
+
 		public async Task SaveEverythingAsync()
 		{
 			_log.LogInformation("Saving results to blob storage");
-			var json = JsonConvert.SerializeObject(_games);
-			var blob = _container.GetBlockBlobReference(GameDetailsFilename);
-			await blob.UploadTextAsync(json);
-			blob.Properties.ContentType = "application/json";
-			await blob.SetPropertiesAsync();
-
-			json = JsonConvert.SerializeObject(_plays);
-			blob = _container.GetBlockBlobReference(string.Format(PlaysFilename, _username));
-			await blob.UploadTextAsync(json);
-			blob.Properties.ContentType = "application/json";
-			await blob.SetPropertiesAsync();
-
-			json = JsonConvert.SerializeObject(_plays.Take(100));
-			blob = _container.GetBlockBlobReference(string.Format(RecentPlaysFilename, _username));
-			await blob.UploadTextAsync(json);
-			blob.Properties.ContentType = "application/json";
-			await blob.SetPropertiesAsync();
-
+			await UploadDataIfChanged(GameDetailsFilename, _games);
+			_playsChanged = await UploadDataIfChanged(string.Format(PlaysFilename, _username), _plays);
+			_recentPlaysChanged = await UploadDataIfChanged(string.Format(RecentPlaysFilename, _username), _plays.Take(100));
+			_topTenChanged = await UploadDataIfChanged(string.Format(TopTenFilename, _username), _topTen);
+			_statsChanged = await UploadDataIfChanged(string.Format(StatsFilename, _username), _stats);
 			if (!_collectionFromCache)
 			{
-				json = JsonConvert.SerializeObject(_collection);
-				blob = _container.GetBlockBlobReference(string.Format(CollectionFilename, _username));
-				await blob.UploadTextAsync(json);
-				blob.Properties.ContentType = "application/json";
-				await blob.SetPropertiesAsync();
+				_collectionChanged = await UploadDataIfChanged(string.Format(CollectionFilename, _username), _collection);
 			}
-
-			json = JsonConvert.SerializeObject(_topTen);
-			blob = _container.GetBlockBlobReference(string.Format(TopTenFilename, _username));
-			await blob.UploadTextAsync(json);
-			blob.Properties.ContentType = "application/json";
-			await blob.SetPropertiesAsync();
-
-			json = JsonConvert.SerializeObject(_stats);
-			blob = _container.GetBlockBlobReference(string.Format(StatsFilename, _username));
-			await blob.UploadTextAsync(json);
-			blob.Properties.ContentType = "application/json";
-			await blob.SetPropertiesAsync();
 		}
 
 		public async Task TriggerFrontendRefresh()
@@ -617,41 +640,61 @@ namespace GamesCacheUpdater
 			_log.LogInformation("Triggering frontend refreshes");
 			var client = new HttpClient();
 			string url;
-			try
+
+			if (_statsChanged || _recentPlaysChanged)
 			{
-				url = "https://games.ewal.net/overview";
-				var data = await client.GetStringAsync(url);
-				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				try
+				{
+					url = "https://games.ewal.net/overview";
+					var data = await client.GetStringAsync(url);
+					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				}
+				catch { }
 			}
-			catch { }
-			try
+
+			if (_playsChanged)
 			{
-				url = "https://games.ewal.net/insights";
-				var data = await client.GetStringAsync(url);
-				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				try
+				{
+					url = "https://games.ewal.net/insights";
+					var data = await client.GetStringAsync(url);
+					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				}
+				catch { }
 			}
-			catch { }
-			try
+
+			if (_playsChanged)
 			{
-				url = "https://games.ewal.net/mostplayed";
-				var data = await client.GetStringAsync(url);
-				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				try
+				{
+					url = "https://games.ewal.net/mostplayed";
+					var data = await client.GetStringAsync(url);
+					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				}
+				catch { }
 			}
-			catch { }
-			try
+
+			if (_topTenChanged)
 			{
-				url = "https://games.ewal.net/topten";
-				var data = await client.GetStringAsync(url);
-				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				try
+				{
+					url = "https://games.ewal.net/topten";
+					var data = await client.GetStringAsync(url);
+					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				}
+				catch { }
 			}
-			catch { }
-			try
+
+			if (_collectionChanged)
 			{
-				url = "https://games.ewal.net/collection";
-				var data = await client.GetStringAsync(url);
-				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				try
+				{
+					url = "https://games.ewal.net/collection";
+					var data = await client.GetStringAsync(url);
+					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+				}
+				catch { }
 			}
-			catch { }
 		}
 	}
 }

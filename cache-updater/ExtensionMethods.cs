@@ -7,98 +7,111 @@ using System.Xml.Linq;
 
 namespace GamesCacheUpdater
 {
-    public static class ExtensionMethods
-    {
-        public static T As<T>(this XElement element, T defaultValue = default(T), params string[] alternateNulls)
-        {
-            if (element == null)
-            {
-                return defaultValue;
-            }
+	public static class ExtensionMethods
+	{
 
-            var value = (element.Value ?? "").Trim();
+		public static decimal? SingleDecimalPlace(this decimal? value)
+		{
+			if (value.HasValue)
+			{
+				return Math.Round(value.Value, 1);
+			}
+			else
+			{
+				return value;
+			}
+		}
+		
+		public static T As<T>(this XElement element, T defaultValue = default(T), params string[] alternateNulls)
+		{
+			if (element == null)
+			{
+				return defaultValue;
+			}
 
-            if (value == "")
-            {
-                return defaultValue;
-            }
+			var value = (element.Value ?? "").Trim();
 
-            if (alternateNulls != null && alternateNulls.Length > 0)
-            {
-                if (alternateNulls.Contains(value, StringComparer.InvariantCultureIgnoreCase))
-                {
-                    return defaultValue;
-                }
-            }
+			if (value == "")
+			{
+				return defaultValue;
+			}
 
-            if (typeof(T) == typeof(string))
-            {
-                return (T)((object)value);
-            }
+			if (alternateNulls != null && alternateNulls.Length > 0)
+			{
+				if (alternateNulls.Contains(value, StringComparer.InvariantCultureIgnoreCase))
+				{
+					return defaultValue;
+				}
+			}
 
-            try
-            {
-                return GetValue<T>(value);
-            }
-            catch
-            {
-                return defaultValue;
-            }
-        }
+			if (typeof(T) == typeof(string))
+			{
+				return (T)((object)value);
+			}
 
-        public static T AttributeAs<T>(this XElement element, string attribute, T defaultValue = default(T), params string[] alternateNulls)
-        {
-            if (element == null)
-            {
-                return defaultValue;
-            }
+			try
+			{
+				return GetValue<T>(value);
+			}
+			catch
+			{
+				return defaultValue;
+			}
+		}
 
-            var xatt = element.Attribute(attribute);
-            if (xatt == null)
-            {
-                return defaultValue;
-            }
+		public static T AttributeAs<T>(this XElement element, string attribute, T defaultValue = default(T), params string[] alternateNulls)
+		{
+			if (element == null)
+			{
+				return defaultValue;
+			}
 
-            var value = (xatt.Value ?? "").Trim();
+			var xatt = element.Attribute(attribute);
+			if (xatt == null)
+			{
+				return defaultValue;
+			}
 
-            if (alternateNulls != null && alternateNulls.Length > 0)
-            {
-                if (alternateNulls.Contains(value, StringComparer.InvariantCultureIgnoreCase))
-                {
-                    return defaultValue;
-                }
-            }
+			var value = (xatt.Value ?? "").Trim();
 
-            if (typeof(T) == typeof(string))
-            {
-                return (T)((object)value);
-            }
+			if (alternateNulls != null && alternateNulls.Length > 0)
+			{
+				if (alternateNulls.Contains(value, StringComparer.InvariantCultureIgnoreCase))
+				{
+					return defaultValue;
+				}
+			}
 
-            try
-            {
-                return GetValue<T>(value);
-            }
-            catch
-            {
-                return defaultValue;
-            }
-        }
+			if (typeof(T) == typeof(string))
+			{
+				return (T)((object)value);
+			}
 
-        private static T GetValue<T>(string value)
-        {
-            Type t = typeof(T);
-            t = Nullable.GetUnderlyingType(t) ?? t;
-            if (value == null || DBNull.Value.Equals(value))
-            {
-                return default(T);
-            }
-            return (T)Convert.ChangeType(value, t);
-        }
+			try
+			{
+				return GetValue<T>(value);
+			}
+			catch
+			{
+				return defaultValue;
+			}
+		}
 
-        public static bool AsBool(this int value)
-        {
-            return value == 1;
-        }
+		private static T GetValue<T>(string value)
+		{
+			Type t = typeof(T);
+			t = Nullable.GetUnderlyingType(t) ?? t;
+			if (value == null || DBNull.Value.Equals(value))
+			{
+				return default(T);
+			}
+			return (T)Convert.ChangeType(value, t);
+		}
 
-    }
+		public static bool AsBool(this int value)
+		{
+			return value == 1;
+		}
+
+	}
 }
