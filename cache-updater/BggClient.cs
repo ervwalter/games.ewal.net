@@ -81,7 +81,7 @@ namespace GamesCacheUpdater
 									//
 
 									ResetMinimumTimeTracker();
-									WaitForMinimumTimeToPass(retries * 2);
+									WaitForMinimumTimeToPass(retries + 2);
 
 									continue;
 								}
@@ -103,7 +103,7 @@ namespace GamesCacheUpdater
 									_log.LogInformation("Too many requests, waiting for a bit...");
 
 									ResetMinimumTimeTracker();
-									WaitForMinimumTimeToPass(retries * 2);
+									WaitForMinimumTimeToPass(retries + 2);
 
 									continue;
 								}
