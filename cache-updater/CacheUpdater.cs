@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
 
 namespace GamesCacheUpdater
 {
@@ -570,7 +571,6 @@ namespace GamesCacheUpdater
 
 		public async Task SaveEverythingAsync()
 		{
-
 			_log.LogInformation("Saving results to blob storage");
 			var json = JsonConvert.SerializeObject(_games);
 			var blob = _container.GetBlockBlobReference(GameDetailsFilename);
@@ -612,8 +612,46 @@ namespace GamesCacheUpdater
 			await blob.SetPropertiesAsync();
 		}
 
-
+		public async Task TriggerFrontendRefresh()
+		{
+			_log.LogInformation("Triggering frontend refreshes");
+			var client = new HttpClient();
+			string url;
+			try
+			{
+				url = "https://games.ewal.net/overview";
+				var data = await client.GetStringAsync(url);
+				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+			}
+			catch { }
+			try
+			{
+				url = "https://games.ewal.net/insights";
+				var data = await client.GetStringAsync(url);
+				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+			}
+			catch { }
+			try
+			{
+				url = "https://games.ewal.net/mostplayed";
+				var data = await client.GetStringAsync(url);
+				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+			}
+			catch { }
+			try
+			{
+				url = "https://games.ewal.net/topten";
+				var data = await client.GetStringAsync(url);
+				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+			}
+			catch { }
+			try
+			{
+				url = "https://games.ewal.net/collection";
+				var data = await client.GetStringAsync(url);
+				_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
+			}
+			catch { }
+		}
 	}
-
-
 }

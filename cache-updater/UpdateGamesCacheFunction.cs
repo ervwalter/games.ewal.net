@@ -42,6 +42,7 @@ namespace GamesCacheUpdater
 				updater.ProcessTopTen();
 				updater.GenerateStats();
 				await updater.SaveEverythingAsync();
+				await updater.TriggerFrontendRefresh();
 			}
 			catch (Exception ex)
 			{
