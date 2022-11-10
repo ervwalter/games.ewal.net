@@ -22,7 +22,7 @@ export function SkeletonWrapper({ className = "", animate = true, children }: Sk
 export function SkeletonPieChart({ className }: SkeletonProps) {
   return (
     <div className={clsx("text-gray-200", className)}>
-      <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M0 7.49996C0 3.52583 3.09098 0.27365 7 0.0163574V4.0354C5.30385 4.27801 4 5.73672 4 7.49996C4 9.43295 5.567 11 7.5 11C8.28618 11 9.01181 10.7407 9.5961 10.3031L12.438 13.1451C11.1188 14.3 9.39113 15 7.5 15C3.35786 15 0 11.6421 0 7.49996Z"
           fill="currentColor"
@@ -35,6 +35,26 @@ export function SkeletonPieChart({ className }: SkeletonProps) {
           d="M8 4.0354V0.0163574C10.5416 0.183645 12.7373 1.61699 13.9626 3.69166L10.2541 5.33986C9.71063 4.64791 8.91203 4.16585 8 4.0354Z"
           fill="currentColor"
         />
+      </svg>
+    </div>
+  );
+}
+
+export function SkeletonBarChart({ className }: SkeletonProps) {
+  return (
+    <div className={clsx("text-gray-200", className)}>
+      <svg viewBox="0 0 493.1 493.1" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <path
+            d="M0,475.6v-231c0-9.2,7.5-16.7,16.7-16.7h95.7c9.2,0,16.7,7.5,16.7,16.7v231c0,9.2-7.5,16.7-16.7,16.7H16.8
+			C7.5,492.4,0,484.9,0,475.6z M476.4,120.601c9.2,0,16.7,7.5,16.7,16.7v338.3c0,9.2-7.5,16.7-16.7,16.7h-95.7
+			c-9.2,0-16.7-7.5-16.7-16.7v-338.3c0-9.2,7.5-16.7,16.7-16.7H476.4z M458.6,155.201h-60v302.5h60V155.201z M311.2,17.4v458.3
+			c0,9.2-7.5,16.7-16.7,16.7h-95.7c-9.2,0-16.7-7.5-16.7-16.7V17.4c0-9.2,7.5-16.7,16.7-16.7h95.7C303.7,0.6,311.2,8.1,311.2,17.4z
+			 M216.6,77l41.8-41.8h-41.8V77z M276.6,415.8l-42,42h42V415.8z M276.6,327.5l-60,60v42.7l60-60V327.5z M276.6,239.201l-60,60v42.7
+			l60-60V239.201z M276.6,150.9l-60,60v42.7l60-60V150.9z M276.6,62.6l-60,60v42.7l60-60V62.6z"
+            fill="currentColor"
+          />
+        </g>
       </svg>
     </div>
   );

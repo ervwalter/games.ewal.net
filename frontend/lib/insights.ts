@@ -12,6 +12,33 @@ const dayNames: Record<string, string> = {
   "6": "Sat",
 };
 
+const durationBuckets = [
+  {
+    cutoff: 180,
+    name: "3+ hrs",
+  },
+  {
+    cutoff: 120,
+    name: "2-3 hrs",
+  },
+  {
+    cutoff: 90,
+    name: "90-120 min",
+  },
+  {
+    cutoff: 60,
+    name: "60-90 min",
+  },
+  {
+    cutoff: 30,
+    name: "30-60 min",
+  },
+  {
+    cutoff: 0,
+    name: "under 30 min",
+  },
+];
+
 class GameDetails {
   gameId: string;
   gameName: string;
@@ -45,22 +72,8 @@ interface PlayerStats {
   plays: number;
   uniqueGames: number;
   wins: number;
+  losses: number;
   winPercentage: number;
-}
-
-interface GameRecord {
-  gameId: string;
-  name: string;
-  thumbnail: string;
-  value: number;
-}
-
-interface GameRecords {
-  mostWins: GameRecord;
-  mostLosses: GameRecord;
-  highestWinPercentage: GameRecord;
-  lowestWinPercentage: GameRecord;
-  mostOtherPlayers: GameRecord;
 }
 
 export async function getInsights() {
@@ -69,6 +82,7 @@ export async function getInsights() {
   const locationsMap: Record<string, number> = {};
   const daysOfTheWeekMap: Record<number, number> = {};
   const playerCountsMap: Record<number, number> = {};
+  const durationBucketCountsMap: Record<number, number> = {};
 
   const players: Record<string, PlayerDetails> = {};
   const me = new PlayerDetails("Erv");
@@ -79,6 +93,16 @@ export async function getInsights() {
     daysOfTheWeekMap[dow] = (daysOfTheWeekMap[dow] ?? 0) + 1;
     if (play.location) {
       locationsMap[play.location] = (locationsMap[play.location] ?? 0) + 1;
+    }
+    const perPlayDuration =
+      play.duration && play.duration > 0 ? play.duration / (play.numPlays || 1) : play.estimatedDuration ?? 0;
+    if (perPlayDuration > 0) {
+      for (let bucket = 0; bucket < durationBuckets.length; bucket++) {
+        if (perPlayDuration >= durationBuckets[bucket].cutoff) {
+          durationBucketCountsMap[bucket] = (durationBucketCountsMap[bucket] ?? 0) + (play.numPlays || 1);
+          break;
+        }
+      }
     }
     if (play.players && play.players.length > 0) {
       playerCountsMap[play.players.length] = (playerCountsMap[play.players.length] ?? 0) + 1;
@@ -121,30 +145,20 @@ export async function getInsights() {
       const uniqueGames = Object.values(games).filter((g) => g.scoredPlays > 0).length;
       const plays = sumBy(Object.values(games), "scoredPlays");
       const wins = sumBy(Object.values(games), "wins");
+      const losses = plays - wins;
       const winPercentage = wins / plays;
       return {
         playerName,
         plays,
         uniqueGames,
         wins,
+        losses,
         winPercentage,
       };
     }),
     ["plays", "playerName"],
     ["desc", "asc"]
   );
-
-  // const myGames = Object.values(me.games).filter((g) => g.scoredPlays > 1);
-  // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  // const mostWinsGame = maxBy(myGames, (g) => g.wins)!;
-  // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  // const mostLossesGame = maxBy(myGames, (g) => g.scoredPlays - g.wins)!;
-  // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  // const highestWinPercentageGame = maxBy(myGames, (g) => g.wins / g.scoredPlays)!;
-  // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  // const lowestWinPercentageGame = maxBy(myGames, (g) => 1 - g.wins / g.scoredPlays)!;
-  // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  // const mostOtherPlayersGame = maxBy(myGames, (g) => Object.keys(g.players).length)!;
 
   const locations = orderBy(
     toPairs(locationsMap).map(([location, plays]) => ({ location, plays })),
@@ -167,10 +181,17 @@ export async function getInsights() {
     ["asc"]
   ).map((d) => ({ players: `${d.playerCount} player${d.playerCount > 1 ? "s" : ""}`, plays: d.plays }));
 
+  const durations = orderBy(
+    toPairs(durationBucketCountsMap).map(([bucket, plays]) => ({ bucket, plays })),
+    ["bucket"],
+    ["desc"]
+  ).map((d) => ({ bucket: durationBuckets[parseInt(d.bucket)].name, plays: d.plays }));
+
   return {
     locations,
     daysOfTheWeek,
     playerCounts,
+    durations,
     statsPerPlayer,
   };
 }
