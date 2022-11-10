@@ -38,7 +38,7 @@ namespace GamesCacheUpdater
 			_lastDownloadCompleted = DateTimeOffset.Now;
 		}
 
-		private static void WaitForMinimumTimeToPass(int multiplier = 1)
+		private static async Task WaitForMinimumTimeToPassAsync(int multiplier = 1)
 		{
 			var now = DateTimeOffset.Now;
 			var timeSinceLastDownload = now - _lastDownloadCompleted;
@@ -46,7 +46,7 @@ namespace GamesCacheUpdater
 			{
 				var requiredDelay = (MinimumTimeBetweenDownloads * multiplier) - timeSinceLastDownload;
 				Debug.WriteLine("Pausing {0} ms", requiredDelay.TotalMilliseconds);
-				Thread.Sleep(requiredDelay);
+				await Task.Delay(requiredDelay);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace GamesCacheUpdater
 			_semaphore.Wait();
 			try
 			{
-				WaitForMinimumTimeToPass();
+				await WaitForMinimumTimeToPassAsync();
 				Debug.WriteLine("Downloading " + url);
 				XDocument data = null;
 				var retries = 0;
@@ -84,10 +84,10 @@ namespace GamesCacheUpdater
 									// let other queued up requests happen...
 									_semaphore.Release();
 									// very small delay to really make sure other requests get the lock
-									Thread.Sleep(50);
+									await Task.Delay(50);
 									// get back in line for the lock before continuing
 									_semaphore.Wait();
-									WaitForMinimumTimeToPass(retries + 2);
+									await WaitForMinimumTimeToPassAsync(retries + 2);
 
 									continue;
 								}
@@ -145,7 +145,7 @@ namespace GamesCacheUpdater
 			_semaphore.Wait();
 			try
 			{
-				WaitForMinimumTimeToPass();
+				await WaitForMinimumTimeToPassAsync();
 				Debug.WriteLine("Logging in " + username);
 				// NameValueCollection parameters = HttpUtility.ParseQueryString("");
 				// parameters.Add("redirect", "1");
