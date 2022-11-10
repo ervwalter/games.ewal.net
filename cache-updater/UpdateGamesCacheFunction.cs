@@ -42,10 +42,10 @@ namespace GamesCacheUpdater
 				updater.ProcessTopTen();
 				updater.GenerateStats();
 				await updater.SaveEverythingAsync();
-				await updater.TriggerFrontendRefresh();
-				// this is a workaround until on-demand re-validations are added to the RSC portion of Next.js
-				await Task.Delay(70000); // wait 70 seconds
-				await updater.TriggerFrontendRefresh(); // trigger again in case the first trigger above hit an unexpired page
+				// the next 2 lines are a workaround until on-demand re-validations are added to the RSC portion of Next.js
+				log.LogInformation("Waiting to make sure pages are completely expired...");
+				await Task.Delay(70000); // wait 70 seconds to make sure all pages are expired
+				await updater.TriggerFrontendRefresh(); 
 			}
 			catch (Exception ex)
 			{
