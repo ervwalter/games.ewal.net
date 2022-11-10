@@ -134,6 +134,7 @@ namespace GamesCacheUpdater
 				}
 				else
 				{
+					_log.LogWarning("Too many retries, failing");
 					throw new TooManyRetriesException();
 				}
 			}
