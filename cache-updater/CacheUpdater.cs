@@ -120,7 +120,7 @@ namespace GamesCacheUpdater
 		public async Task LoadExistingCollection()
 		{
 			_log.LogInformation("Loading cached collection");
-			var blob = _container.GetBlockBlobReference(CollectionFilename);
+			var blob = _container.GetBlockBlobReference(string.Format(CollectionFilename, _username));
 			string json = await blob.DownloadTextAsync();
 			_collection = JsonConvert.DeserializeObject<List<CollectionItem>>(json);
 			_collectionById = _collection.ToLookup(g => g.GameId);
