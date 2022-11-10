@@ -59,16 +59,13 @@ function PlayersTableSkeleton() {
             <th className="w-[130px] py-2 pr-4 pl-4 text-left font-semibold text-gray-900 md:pl-0"> Name</th>
             <th className="cursor-pointer py-2 px-2 text-right font-semibold text-gray-900"> Plays</th>
             <th className="cursor-pointer py-2 px-2 text-right font-semibold text-gray-900">
-              {" "}
               <span className="hidden md:inline">Unique </span>Games
             </th>
             <th className="cursor-pointer py-2 px-2 text-right font-semibold text-gray-900"> Wins</th>
             <th className="hidden cursor-pointer py-2 px-2 text-right font-semibold text-gray-900 md:table-cell">
-              {" "}
               Losses
             </th>
             <th className="cursor-pointer py-2 pl-2 pr-4 text-right font-semibold text-gray-900 md:pr-2">
-              {" "}
               W<span className="hidden md:inline">in </span>%
             </th>
           </tr>

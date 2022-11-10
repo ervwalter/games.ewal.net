@@ -38,13 +38,13 @@ namespace GamesCacheUpdater
 			_lastDownloadCompleted = DateTimeOffset.Now;
 		}
 
-		private static void WaitForMinimumTimeToPass(int? multiplier = 1)
+		private static void WaitForMinimumTimeToPass(int multiplier = 1)
 		{
 			var now = DateTimeOffset.Now;
 			var timeSinceLastDownload = now - _lastDownloadCompleted;
 			if (timeSinceLastDownload < (MinimumTimeBetweenDownloads * multiplier))
 			{
-				var requiredDelay = MinimumTimeBetweenDownloads - timeSinceLastDownload;
+				var requiredDelay = (MinimumTimeBetweenDownloads * multiplier) - timeSinceLastDownload;
 				Debug.WriteLine("Pausing {0} ms", requiredDelay.TotalMilliseconds);
 				Thread.Sleep(requiredDelay);
 			}
