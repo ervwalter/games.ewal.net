@@ -20,7 +20,7 @@ specifiers:
   autoprefixer: 10.4.13
   clsx: 1.2.1
   d3-scale-chromatic: 3.0.0
-  daisyui: 2.39.0
+  daisyui: 2.39.1
   dayjs: 1.11.6
   eslint: 8.27.0
   eslint-config-next: 13.0.3
@@ -51,7 +51,7 @@ dependencies:
   '@vercel/analytics': 0.1.4_react@18.2.0
   clsx: 1.2.1
   d3-scale-chromatic: 3.0.0
-  daisyui: 2.39.0_2lwn2upnx27dqeg6hqdu7sq75m
+  daisyui: 2.39.1_2lwn2upnx27dqeg6hqdu7sq75m
   dayjs: 1.11.6
   lodash: 4.17.21
   next: 13.0.3_biqbaboplfbrettd7655fr4n2y
@@ -1088,8 +1088,8 @@ packages:
       d3-array: 2.12.1
     dev: false
 
-  /daisyui/2.39.0_2lwn2upnx27dqeg6hqdu7sq75m:
-    resolution: {integrity: sha512-r3vbDI+pafB//QFfKJMkMxLlKGjdk21O/NieG+zY+LXH4hinyAA1/2/jE1+fNR+qQbuBL8USnN4wR3grG78nHQ==}
+  /daisyui/2.39.1_2lwn2upnx27dqeg6hqdu7sq75m:
+    resolution: {integrity: sha512-J7goHjiQ6zk7irpKJ0HyElAuWF+x8iGoebQ1IfHM6BuvKoGSOcfZC/bedTultsX2Co5XARsE+qvE7BI1amUtsQ==}
     peerDependencies:
       autoprefixer: ^10.0.2
       postcss: ^8.1.6
