@@ -26,9 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="flex-1">
             <div className="max-w-6xl min-h-screen bg-gray-50 px-4 pt-6 pb-4 md:border-gray-200 md:border-r md:px-6 flex flex-col">
               <main className="flex-1">{children}</main>
-              <footer className="pt-6 ">
-                <div className="md:flex md:items-center md:justify-between ">
-                  <div className="flex justify-center space-x-6 md:order-2">
+              <footer className="pt-8 md:pt-6">
+                <div className="flex items-center">
+                  <div className="flex justify-center pr-4">
                     <a
                       href="https://github.com/ervwalter"
                       className="text-gray-400 hover:text-gray-500"
@@ -38,10 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       <ImGithub className="h-6 w-6" aria-hidden="true" />
                     </a>
                   </div>
-                  <div className="mt-4 md:order-1 md:mt-0">
-                    <p className="text-center text-base text-gray-400">
-                      &copy; {new Date().getFullYear()} Erv Walter. All rights reserved.
-                    </p>
+                  <div className="mt-0">
+                    <p className="text-center text-base text-gray-400">&copy; {new Date().getFullYear()} Erv Walter</p>
                   </div>
                 </div>
               </footer>
