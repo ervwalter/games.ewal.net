@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    "schedule:weekends",
     "group:allNonMajor",
     "helpers:disableTypesNodeMajor",
     ":separateMajorReleases",
@@ -29,6 +28,9 @@
     }
   ],
   "timezone": "America/Chicago",
+  "schedule": [
+    "before 6am on Saturday"
+  ],
   "assignees": [
     "ervwalter"
   ],
