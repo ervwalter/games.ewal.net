@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { orderBy, sumBy, toPairs } from "lodash";
+import { orderBy, sumBy, toPairs } from "lodash-es";
 import { durationForPlay, getPlays } from "./games-data";
 
 const dayNames: Record<string, string> = {

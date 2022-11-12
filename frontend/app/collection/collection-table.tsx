@@ -3,7 +3,7 @@
 import PlayCount from "components/play-count";
 import { Rating } from "components/rating";
 import { Game } from "lib/games-interfaces";
-import { orderBy } from "lodash";
+import { orderBy } from "lodash-es";
 import React, { useCallback, useMemo, useState } from "react";
 
 export default function CollectionTable({ collection }: { collection: Game[] }) {

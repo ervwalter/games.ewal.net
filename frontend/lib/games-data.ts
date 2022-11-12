@@ -1,4 +1,4 @@
-import { orderBy } from "lodash";
+import { orderBy } from "lodash-es";
 import { get } from "./fetch";
 import { Game, Play, Stats, TopTenItem } from "./games-interfaces";
 

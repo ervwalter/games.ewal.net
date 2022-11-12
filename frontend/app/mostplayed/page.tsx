@@ -1,6 +1,6 @@
 import { Blurb } from "components/blurb";
 import { durationForPlay, getPlays } from "lib/games-data";
-import { groupBy, orderBy, sumBy } from "lodash";
+import { groupBy, orderBy, sumBy } from "lodash-es";
 import { MostPlaysTable } from "./most-plays-table";
 import { Title } from "./title";
 

@@ -1,6 +1,6 @@
 import { schemeBlues, schemeGreens, schemeOranges, schemePurples } from "d3-scale-chromatic";
 import { Insights } from "lib/insights";
-import { sumBy, take } from "lodash";
+import { sumBy, take } from "lodash-es";
 import { HorizontalBarChart, PieChart } from "../../components/charts";
 
 export default function InsightsCharts({ insights }: { insights: Insights }) {

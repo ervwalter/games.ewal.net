@@ -19,16 +19,6 @@ interface NavItemBase {
   segment?: string;
 }
 
-// interface NavItemWithSegment extends NavItemBase {
-//   href?: never;
-//   segment: string;
-// }
-
-// interface NavItemWithHref extends NavItemBase {
-//   href: string;
-//   segment?: never;
-// }
-
 type NavItem = RequireOnlyOne<NavItemBase, "href" | "segment">;
 
 const navigation: NavItem[] = [

@@ -23,7 +23,7 @@
     "d3-scale-chromatic": "3.0.0",
     "daisyui": "2.39.0",
     "dayjs": "1.11.6",
-    "lodash": "4.17.21",
+    "lodash-es": "4.17.21",
     "next": "13.0.3",
     "prettier": "2.7.1",
     "prettier-plugin-tailwindcss": "0.1.13",
@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/d3-scale-chromatic": "3.0.0",
     "@types/lodash": "4.14.188",
+    "@types/lodash-es": "4.17.6",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",

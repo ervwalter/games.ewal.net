@@ -11,6 +11,7 @@ specifiers:
   '@tailwindcss/aspect-ratio': 0.4.2
   '@types/d3-scale-chromatic': 3.0.0
   '@types/lodash': 4.14.188
+  '@types/lodash-es': 4.17.6
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -24,7 +25,7 @@ specifiers:
   dayjs: 1.11.6
   eslint: 8.27.0
   eslint-config-next: 13.0.3
-  lodash: 4.17.21
+  lodash-es: 4.17.21
   next: 13.0.3
   postcss: 8.4.19
   prettier: 2.7.1
@@ -53,7 +54,7 @@ dependencies:
   d3-scale-chromatic: 3.0.0
   daisyui: 2.39.0_2lwn2upnx27dqeg6hqdu7sq75m
   dayjs: 1.11.6
-  lodash: 4.17.21
+  lodash-es: 4.17.21
   next: 13.0.3_biqbaboplfbrettd7655fr4n2y
   prettier: 2.7.1
   prettier-plugin-tailwindcss: 0.1.13_prettier@2.7.1
@@ -68,6 +69,7 @@ dependencies:
 devDependencies:
   '@types/d3-scale-chromatic': 3.0.0
   '@types/lodash': 4.14.188
+  '@types/lodash-es': 4.17.6
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -559,6 +561,12 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash-es/4.17.6:
+    resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
+    dependencies:
+      '@types/lodash': 4.14.188
     dev: true
 
   /@types/lodash/4.14.188:
@@ -1924,6 +1932,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
+
+  /lodash-es/4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}

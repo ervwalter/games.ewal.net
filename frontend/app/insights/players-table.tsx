@@ -1,7 +1,7 @@
 "use client";
 
 import { Insights } from "lib/insights";
-import { orderBy } from "lodash";
+import { orderBy } from "lodash-es";
 import { useCallback, useMemo, useState } from "react";
 
 export default function PlayersTable({ insights }: { insights: Insights }) {

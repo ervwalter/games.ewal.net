@@ -1,6 +1,6 @@
 import { ThumbnailList } from "components/thumbnail-list";
 import { getRecentPlays } from "lib/games-data";
-import { take, uniqBy } from "lodash";
+import { take, uniqBy } from "lodash-es";
 import { RecentPlaysList } from "./recent-plays-list";
 
 export default async function RecentPlaysSection() {
