@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@headlessui/react': 1.7.4
-  '@mantine/hooks': 5.7.1
+  '@mantine/hooks': 5.7.2
   '@next/font': 13.0.3
   '@nivo/bar': 0.80.0
   '@nivo/core': 0.80.0
@@ -34,20 +34,20 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   react-icons: 4.6.0
-  react-svg: 15.1.11
-  tailwindcss: 3.2.3
+  react-svg: 15.1.12
+  tailwindcss: 3.2.4
   typescript: 4.8.4
   undici: 5.12.0
 
 dependencies:
   '@headlessui/react': 1.7.4_biqbaboplfbrettd7655fr4n2y
-  '@mantine/hooks': 5.7.1_react@18.2.0
+  '@mantine/hooks': 5.7.2_react@18.2.0
   '@next/font': 13.0.3
   '@nivo/bar': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
   '@nivo/core': 0.80.0_g5kln477lwx3caqucf3exzf3du
   '@nivo/pie': 0.80.0_6zomopewppbkd5eeu2nbbcio3i
   '@nivo/tooltip': 0.80.0_wyuiu3ihipn7hpncy62nqhyrji
-  '@tailwindcss/aspect-ratio': 0.4.2_tailwindcss@3.2.3
+  '@tailwindcss/aspect-ratio': 0.4.2_tailwindcss@3.2.4
   '@typescript-eslint/parser': 5.42.1_rmayb2veg2btbq6mbmnyivgasy
   '@vercel/analytics': 0.1.4_react@18.2.0
   clsx: 1.2.1
@@ -62,7 +62,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.6.0_react@18.2.0
-  react-svg: 15.1.11_biqbaboplfbrettd7655fr4n2y
+  react-svg: 15.1.12_biqbaboplfbrettd7655fr4n2y
   typescript: 4.8.4
   undici: 5.12.0
 
@@ -78,7 +78,7 @@ devDependencies:
   eslint: 8.27.0
   eslint-config-next: 13.0.3_rmayb2veg2btbq6mbmnyivgasy
   postcss: 8.4.19
-  tailwindcss: 3.2.3_postcss@8.4.19
+  tailwindcss: 3.2.4_postcss@8.4.19
 
 packages:
 
@@ -141,8 +141,8 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
 
-  /@mantine/hooks/5.7.1_react@18.2.0:
-    resolution: {integrity: sha512-I50Xa9ddiptAv2jtxmcVwuIj9s2lFMbSCXKwFwDKzxJQwWt45Hv4el4znmGuN/FluE2D/pJhje0FAP5NhMpgNw==}
+  /@mantine/hooks/5.7.2_react@18.2.0:
+    resolution: {integrity: sha512-g+fxcnQwEeVM/5h+SAX/rDNL2s1652DGbP4xxfNg6yFqqhQzmtxQN7xsmkZ+ffx8wKhbsP5z13x6WZoxuJQh9Q==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
@@ -535,12 +535,12 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@tailwindcss/aspect-ratio/0.4.2_tailwindcss@3.2.3:
+  /@tailwindcss/aspect-ratio/0.4.2_tailwindcss@3.2.4:
     resolution: {integrity: sha512-8QPrypskfBa7QIMuKHg2TA7BqES6vhBrDLOv8Unb6FcFyd3TjKbc6lcmb9UPQHxfl24sXoJ41ux/H7qQQvfaSQ==}
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
-      tailwindcss: 3.2.3_postcss@8.4.19
+      tailwindcss: 3.2.4_postcss@8.4.19
     dev: false
 
   /@tanem/svg-injector/10.1.35:
@@ -1107,7 +1107,7 @@ packages:
       css-selector-tokenizer: 0.8.0
       postcss: 8.4.19
       postcss-js: 4.0.0_postcss@8.4.19
-      tailwindcss: 3.2.3_postcss@8.4.19
+      tailwindcss: 3.2.4_postcss@8.4.19
     transitivePeerDependencies:
       - ts-node
     dev: false
@@ -2313,8 +2313,8 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
-  /react-svg/15.1.11_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-VDBpX1XE40phachfqrZM/kc8AUmA86NJZoxIwOpjqpaCwN8avyz08UgLvLUj/QHHLKQ7Mb1W61Kmmkn+Yci1ZA==}
+  /react-svg/15.1.12_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-5aQRezSjc+pNKo6jKGFyjryOUL+0I0t16gwBlbRGYcmVKBERSZ4ZOVVU2rcwMzhSqZZuut4uPsMsvWAm5mQYdg==}
     peerDependencies:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
@@ -2531,8 +2531,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /tailwindcss/3.2.3_postcss@8.4.19:
-    resolution: {integrity: sha512-Xt9D4PK4zuuQCEB8bwK9JUCKmTgUwyac/6b0/42Vqhgl6YJkep+Wf5wq+5uXYfmrupdAD0YY2NY1hyZp1HjRrg==}
+  /tailwindcss/3.2.4_postcss@8.4.19:
+    resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     peerDependencies:
