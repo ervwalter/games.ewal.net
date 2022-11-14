@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import { orderBy, sumBy, toPairs } from "lodash-es";
-import { durationForPlay, getPlays } from "./games-data";
+import { orderBy, toPairs } from "lodash-es";
+import { getPlays } from "./games-data";
 
 const dayNames: Record<string, string> = {
   "0": "Sun",
@@ -35,28 +35,12 @@ const durationBuckets = [
   },
 ];
 
-class GameDetails {
-  gameId: string;
-  gameName: string;
-  thumbnail: string;
-  playerName: string;
+class PlayerDetails {
+  player: string;
   plays = 0;
   scoredPlays = 0;
   wins = 0;
-  minutes = 0;
-  players: Record<string, boolean> = {};
-
-  constructor(id: string, gameName: string, thumbnail: string, playerName: string) {
-    this.gameId = id;
-    this.gameName = gameName;
-    this.thumbnail = thumbnail;
-    this.playerName = playerName;
-  }
-}
-
-class PlayerDetails {
-  player: string;
-  games: Record<string, GameDetails> = {};
+  games: Record<string, boolean> = {};
 
   constructor(player: string) {
     this.player = player;
@@ -66,6 +50,7 @@ class PlayerDetails {
 interface PlayerStats {
   playerName: string;
   plays: number;
+  scoredPlays: number;
   uniqueGames: number;
   wins: number;
   losses: number;
@@ -108,45 +93,33 @@ export async function getInsights() {
           continue;
         }
         const playerDetails = getPlayerDetails(players, playerName);
-        const gameDetails = getGameDetails(playerDetails, play.gameId, play.thumbnail, play.name);
 
-        gameDetails.plays++;
+        playerDetails.games[play.gameId] = true;
+        playerDetails.plays += play.numPlays;
         if (!play.excludeFromStats) {
-          gameDetails.scoredPlays++;
+          playerDetails.scoredPlays += play.numPlays;
           if (player.win) {
-            gameDetails.wins++;
-          }
-        }
-        gameDetails.minutes += durationForPlay(play);
-
-        if (playerName === "Erv") {
-          // just for me, accumulate who else I have played this game with
-          for (const otherPlayer of play.players) {
-            if (otherPlayer.name === playerName) {
-              continue;
-            }
-            gameDetails.players[otherPlayer.name] = true;
+            playerDetails.wins += play.numPlays;
           }
         }
       }
     } else {
       // at least record basic information for myself if there were no recorded players
-      const gameDetails = getGameDetails(me, play.gameId, play.thumbnail, play.name);
-      gameDetails.plays += play.numPlays;
-      gameDetails.minutes += durationForPlay(play);
+      me.plays += play.numPlays;
+      me.games[play.gameId] = true;
     }
   }
 
   const statsPerPlayer: PlayerStats[] = orderBy(
     Object.keys(players).map((playerName) => {
-      const games = players[playerName].games;
-      const uniqueGames = Object.values(games).filter((g) => g.scoredPlays > 0).length;
-      const plays = sumBy(Object.values(games), "plays");
-      const scoredPlays = sumBy(Object.values(games), "scoredPlays");
-      const wins = sumBy(Object.values(games), "wins");
+      const player = players[playerName];
+      const uniqueGames = Object.keys(player.games).length;
+      const plays = player.plays;
+      const scoredPlays = player.scoredPlays;
+      const wins = player.wins;
       const losses = scoredPlays - wins;
       const winPercentage = wins / scoredPlays;
-      return {
+      const stats: PlayerStats = {
         playerName,
         plays,
         scoredPlays,
@@ -155,6 +128,7 @@ export async function getInsights() {
         losses,
         winPercentage,
       };
+      return stats;
     }),
     ["plays", "playerName"],
     ["desc", "asc"]
@@ -205,13 +179,4 @@ function getPlayerDetails(players: Record<string, PlayerDetails>, playerName: st
     players[playerName] = playerStats;
   }
   return playerStats;
-}
-
-function getGameDetails(playerStats: PlayerDetails, gameId: string, gameName: string, thumbnail: string) {
-  let gameStats = playerStats.games[gameId];
-  if (!gameStats) {
-    gameStats = new GameDetails(gameId, gameName, thumbnail, playerStats.player);
-    playerStats.games[gameId] = gameStats;
-  }
-  return gameStats;
 }
