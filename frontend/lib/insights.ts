@@ -30,7 +30,7 @@ const durationBuckets = [
     name: "60-90 min",
   },
   {
-    cutoff: 31,
+    cutoff: 30,
     name: "30-60 min",
   },
   {
