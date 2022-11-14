@@ -86,9 +86,9 @@ export async function getInsights() {
 
   for (const play of plays) {
     const dow = dayjs(play.playDate).day();
-    daysOfTheWeekMap[dow] = (daysOfTheWeekMap[dow] ?? 0) + 1;
+    daysOfTheWeekMap[dow] = (daysOfTheWeekMap[dow] ?? 0) + (play.numPlays || 1);
     if (play.location) {
-      locationsMap[play.location] = (locationsMap[play.location] ?? 0) + 1;
+      locationsMap[play.location] = (locationsMap[play.location] ?? 0) + play.numPlays || 1);
     }
     const perPlayDuration =
       play.duration && play.duration > 0 ? play.duration / (play.numPlays || 1) : play.estimatedDuration ?? 0;
@@ -101,7 +101,7 @@ export async function getInsights() {
       }
     }
     if (play.players && play.players.length > 0) {
-      playerCountsMap[play.players.length] = (playerCountsMap[play.players.length] ?? 0) + 1;
+      playerCountsMap[play.players.length] = (playerCountsMap[play.players.length] ?? 0) + play.numPlays || 1);
       for (const player of play.players) {
         const playerName = player.name;
         if (playerName === "Anonymous player") {
