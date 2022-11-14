@@ -87,8 +87,12 @@ export async function getInsights() {
     }
     if (play.players && play.players.length > 0) {
       playerCountsMap[play.players.length] = (playerCountsMap[play.players.length] ?? 0) + play.numPlays;
+      let containsErv = false;
       for (const player of play.players) {
         const playerName = player.name;
+        if (playerName === me.player) {
+          containsErv = true;
+        }
         if (playerName === "Anonymous player") {
           continue;
         }
@@ -102,6 +106,9 @@ export async function getInsights() {
             playerDetails.wins += play.numPlays;
           }
         }
+      }
+      if (!containsErv) {
+        console.log(play);
       }
     } else {
       // at least record basic information for myself if there were no recorded players
