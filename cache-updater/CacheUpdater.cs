@@ -527,7 +527,7 @@ namespace GamesCacheUpdater
 		private PlayStats CalculatePlayStats(List<PlayItem> plays)
 		{
 			var stats = new PlayStats();
-			stats.NumberOfPlays = plays.Count;
+			stats.NumberOfPlays = plays.Sum(p => p.NumPlays);
 			stats.UniqueGames = plays.GroupBy(p => p.GameId).Count();
 			var players = new HashSet<string>();
 			var locations = new HashSet<string>();
