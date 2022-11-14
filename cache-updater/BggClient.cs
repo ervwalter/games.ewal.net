@@ -310,7 +310,7 @@ namespace GamesCacheUpdater
 								   GameId = play.Element("item").AttributeAs<string>("objectid"),
 								   Name = play.Element("item").AttributeAs<string>("name"),
 								   PlayDate = ParseDate(play.AttributeAs<string>("date")),
-								   NumPlays = Math.Min(play.AttributeAs<int>("quantity"), 1),
+								   NumPlays = Math.Max(play.AttributeAs<int>("quantity"), 1),
 								   Duration = play.AttributeAs<int>("length"),
 								   Incomplete = play.AttributeAs<int>("incomplete").AsBool(),
 								   ExcludeFromStats = play.AttributeAs<int>("nowinstats").AsBool(),
