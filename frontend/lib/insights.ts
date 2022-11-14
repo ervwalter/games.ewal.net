@@ -73,7 +73,7 @@ interface PlayerStats {
 }
 
 export async function getInsights() {
-  const plays = (await getPlays()).filter((p) => !p.excludeFromStats);
+  const plays = await getPlays();
 
   const locationsMap: Record<string, number> = {};
   const daysOfTheWeekMap: Record<number, number> = {};
@@ -86,22 +86,22 @@ export async function getInsights() {
 
   for (const play of plays) {
     const dow = dayjs(play.playDate).day();
-    daysOfTheWeekMap[dow] = (daysOfTheWeekMap[dow] ?? 0) + (play.numPlays || 1);
+    daysOfTheWeekMap[dow] = (daysOfTheWeekMap[dow] ?? 0) + play.numPlays;
     if (play.location) {
-      locationsMap[play.location] = (locationsMap[play.location] ?? 0) + (play.numPlays || 1);
+      locationsMap[play.location] = (locationsMap[play.location] ?? 0) + play.numPlays;
     }
     const perPlayDuration =
-      play.duration && play.duration > 0 ? play.duration / (play.numPlays || 1) : play.estimatedDuration ?? 0;
+      play.duration && play.duration > 0 ? play.duration / play.numPlays : play.estimatedDuration ?? 0;
     if (perPlayDuration > 0) {
       for (let bucket = 0; bucket < durationBuckets.length; bucket++) {
         if (perPlayDuration >= durationBuckets[bucket].cutoff) {
-          durationBucketCountsMap[bucket] = (durationBucketCountsMap[bucket] ?? 0) + (play.numPlays || 1);
+          durationBucketCountsMap[bucket] = (durationBucketCountsMap[bucket] ?? 0) + play.numPlays;
           break;
         }
       }
     }
     if (play.players && play.players.length > 0) {
-      playerCountsMap[play.players.length] = (playerCountsMap[play.players.length] ?? 0) + (play.numPlays || 1);
+      playerCountsMap[play.players.length] = (playerCountsMap[play.players.length] ?? 0) + play.numPlays;
       for (const player of play.players) {
         const playerName = player.name;
         if (playerName === "Anonymous player") {
@@ -111,9 +111,11 @@ export async function getInsights() {
         const gameDetails = getGameDetails(playerDetails, play.gameId, play.thumbnail, play.name);
 
         gameDetails.plays++;
-        gameDetails.scoredPlays++;
-        if (player.win) {
-          gameDetails.wins++;
+        if (!play.excludeFromStats) {
+          gameDetails.scoredPlays++;
+          if (player.win) {
+            gameDetails.wins++;
+          }
         }
         gameDetails.minutes += durationForPlay(play);
 
@@ -130,7 +132,7 @@ export async function getInsights() {
     } else {
       // at least record basic information for myself if there were no recorded players
       const gameDetails = getGameDetails(me, play.gameId, play.thumbnail, play.name);
-      gameDetails.plays++;
+      gameDetails.plays += play.numPlays;
       gameDetails.minutes += durationForPlay(play);
     }
   }
@@ -139,13 +141,15 @@ export async function getInsights() {
     Object.keys(players).map((playerName) => {
       const games = players[playerName].games;
       const uniqueGames = Object.values(games).filter((g) => g.scoredPlays > 0).length;
-      const plays = sumBy(Object.values(games), "scoredPlays");
+      const plays = sumBy(Object.values(games), "plays");
+      const scoredPlays = sumBy(Object.values(games), "scoredPlays");
       const wins = sumBy(Object.values(games), "wins");
-      const losses = plays - wins;
-      const winPercentage = wins / plays;
+      const losses = scoredPlays - wins;
+      const winPercentage = wins / scoredPlays;
       return {
         playerName,
         plays,
+        scoredPlays,
         uniqueGames,
         wins,
         losses,
