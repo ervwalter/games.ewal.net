@@ -108,7 +108,9 @@ export async function getInsights() {
         }
       }
       if (!containsErv) {
-        console.log(play);
+        // logged play doesn't include me for some reason, at least record basic information for myself anyway
+        me.plays += play.numPlays;
+        me.games[play.gameId] = true;
       }
     } else {
       // at least record basic information for myself if there were no recorded players
