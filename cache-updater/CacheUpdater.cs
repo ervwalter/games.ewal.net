@@ -431,16 +431,18 @@ namespace GamesCacheUpdater
 					{
 						var collectionEntry = _collectionById[game.GameId].First();
 						game.Name = collectionEntry.Name;
+						game.Thumbnail = collectionEntry.Thumbnail;
+						game.Image = collectionEntry.Image;
 					}
 					else
 					{
 						game.Name = gameDetails.Name;
+						game.Thumbnail = gameDetails.Thumbnail;
+						game.Image = gameDetails.Image;
 					}
 					game.Designers = gameDetails.Designers;
-					game.Image = gameDetails.Image;
 					game.Mechanics = gameDetails.Mechanics;
 					game.NumPlays = gameDetails.NumPlays;
-					game.Thumbnail = gameDetails.Thumbnail;
 					game.YearPublished = gameDetails.YearPublished;
 					game.Rating = gameDetails.Rating;
 					if (game.Rating == null || game.Rating < 0)
