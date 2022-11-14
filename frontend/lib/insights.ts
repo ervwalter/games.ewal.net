@@ -22,15 +22,15 @@ const durationBuckets = [
     name: "2-3 hrs",
   },
   {
-    cutoff: 90,
+    cutoff: 91,
     name: "90-120 min",
   },
   {
-    cutoff: 60,
+    cutoff: 61,
     name: "60-90 min",
   },
   {
-    cutoff: 30,
+    cutoff: 31,
     name: "30-60 min",
   },
   {
