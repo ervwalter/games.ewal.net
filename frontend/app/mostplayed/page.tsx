@@ -11,12 +11,13 @@ export default async function MostPlayed() {
       return {
         gameId: group[0].gameId,
         name: group[0].name,
+        sortableName: group[0].sortableName,
         numPlays: sumBy(group, "numPlays"),
         hours: Math.round(sumBy(group, (p) => durationForPlay(p)) / 60),
       };
     })
     .filter((g) => g.numPlays >= 5);
-  games = orderBy(games, "numPlays", "desc");
+  games = orderBy(games, ["numPlays", "sortableName"], ["desc", "asc"]);
   let nickels = 0;
   let dimes = 0;
   let quarters = 0;

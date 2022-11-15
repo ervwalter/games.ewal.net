@@ -26,6 +26,9 @@ namespace GamesCacheUpdater
 		private const string CollectionFilename = "collection-{0}.json";
 		private const string StatsFilename = "stats-{0}.json";
 
+		private static readonly string[] Articles = "the,a,an,het,een,de,das,ein,der,le,la,il,el".Split(',');
+		private static readonly Regex RemoveArticles = new Regex("^(" + string.Join("|", Articles.Select(a => a + @"\ ")) + ")");
+
 		private ILogger _log;
 		private string _username;
 		private string _password;
@@ -223,6 +226,8 @@ namespace GamesCacheUpdater
 						play.EstimatedDuration = game.PlayingTime;
 					}
 				}
+				play.SortableName = RemoveArticles.Replace(play.Name.Trim().ToLower(), "");
+
 			}
 			_plays = _plays.OrderByDescending(p => p.PlayDate).ThenByDescending(p => p.PlayId).ToList();
 		}
@@ -251,15 +256,13 @@ namespace GamesCacheUpdater
 				}
 			}
 
-			var articles = "the,a,an,het,een,de,das,ein,der,le,la,il,el".Split(',');
-			Regex removeArticles = new Regex("^(" + string.Join("|", articles.Select(a => a + @"\ ")) + ")");
 			Regex descriptionRegEx = new Regex(@"%Description:(.*\w+.*)$");
 			Regex playingTimeRegEx = new Regex(@"%PlayingTime:(.*\w+.*)$");
 			Regex expansionCommentExpression = new Regex(@"%Expands:(.*\w+.*)\[(\d+)\]", RegexOptions.Compiled);
 
 			foreach (var game in games)
 			{
-				game.SortableName = removeArticles.Replace(game.Name.Trim().ToLower(), "");
+				game.SortableName = RemoveArticles.Replace(game.Name.Trim().ToLower(), "");
 				if (game.MinPlayingTime.HasValue && game.MaxPlayingTime.HasValue)
 				{
 					game.PlayingTime = (game.MinPlayingTime + game.MaxPlayingTime) / 2;
@@ -393,7 +396,7 @@ namespace GamesCacheUpdater
 						{
 							expansion.ShortName = expansion.Name.Trim();
 						}
-						expansion.SortableShortName = removeArticles.Replace(expansion.ShortName.ToLower(), "");
+						expansion.SortableShortName = RemoveArticles.Replace(expansion.ShortName.ToLower(), "");
 					}
 					game.OwnedExpansions = game.AllExpansions.Where(g => g.Owned).ToList();
 				}

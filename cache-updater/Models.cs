@@ -113,6 +113,7 @@ namespace GamesCacheUpdater
 		public string PlayId { get; set; }
 		public string GameId { get; set; }
 		public string Name { get; set; }
+		public string SortableName { get; set; }
 		public string Image { get; set; }
 		public string Thumbnail { get; set; }
 		public DateTime? PlayDate { get; set; }

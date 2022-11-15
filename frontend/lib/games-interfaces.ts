@@ -2,6 +2,7 @@ export interface Play {
   playId: string;
   gameId: string;
   name: string;
+  sortableName: string;
   image: string;
   thumbnail: string;
   playDate: string;

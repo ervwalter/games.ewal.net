@@ -7,19 +7,19 @@ import { orderBy } from "lodash-es";
 import React, { useCallback, useMemo, useState } from "react";
 
 export default function CollectionTable({ collection }: { collection: Game[] }) {
-  const [sortColumn, setSortColumn] = useState("name");
+  const [sortColumn, setSortColumn] = useState("sortableName");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   const games = useMemo(
-    () => orderBy(collection, [sortColumn, "name"], [sortDirection, "asc"]),
+    () => orderBy(collection, [sortColumn, "sortableName"], [sortDirection, "asc"]),
     [collection, sortColumn, sortDirection]
   );
 
-  const handleSortByName = useCallback(
+  const handleSort = useCallback(
     (column: string) => {
       if (sortColumn != column) {
         setSortColumn(column);
-        setSortDirection(column === "name" ? "asc" : "desc");
+        setSortDirection(column === "sortableName" ? "asc" : "desc");
       } else {
         setSortDirection((dir) => (dir === "asc" ? "desc" : "asc"));
       }
@@ -34,17 +34,17 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
           <tr>
             <th
               className="cursor-pointer py-2 pr-2 pl-4 text-left font-semibold text-gray-900 hover:underline md:pl-0"
-              onClick={() => handleSortByName("name")}>
+              onClick={() => handleSort("sortableName")}>
               Name
             </th>
             <th
               className="cursor-pointer py-2 px-2 text-left font-semibold text-gray-900 hover:underline"
-              onClick={() => handleSortByName("numPlays")}>
+              onClick={() => handleSort("numPlays")}>
               <span className="hidden md:inline">Times </span>Played
             </th>
             <th
               className="cursor-pointer py-2 pl-2 pr-4 text-center font-semibold text-gray-900 hover:underline md:pr-2 md:text-left"
-              onClick={() => handleSortByName("rating")}>
+              onClick={() => handleSort("rating")}>
               <span className="hidden md:inline">My </span>Rating
             </th>
           </tr>
