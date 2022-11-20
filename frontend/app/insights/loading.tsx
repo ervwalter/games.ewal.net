@@ -70,7 +70,7 @@ function PlayersTableSkeleton() {
             </th>
             <th className="cursor-pointer py-2 pl-2 pr-4 text-right font-semibold text-gray-900 md:pr-2">
               W<span className="hidden md:inline">in Chance</span>
-              <span className="md:hidden">C</span>%
+              <span className="md:hidden">C%</span>
             </th>
           </tr>
         </thead>

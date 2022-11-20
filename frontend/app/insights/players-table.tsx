@@ -65,7 +65,7 @@ export default function PlayersTable({ insights }: { insights: Insights }) {
               className="cursor-pointer py-2 pl-2 pr-4 text-right font-semibold text-gray-900 hover:underline md:pr-2"
               onClick={() => handleSortByName("expectedWinPercentage")}>
               W<span className="hidden md:inline">in Chance</span>
-              <span className="md:hidden">C</span>%
+              <span className="md:hidden">C%</span>
             </th>
           </tr>
         </thead>
