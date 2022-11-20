@@ -21,7 +21,7 @@ namespace GamesCacheUpdater
 					.AddEnvironmentVariables()
 					.Build();
 				var buildDate = Assembly.GetExecutingAssembly().GetBuildDate();
-				log.LogInformation($"Updating Cache at {DateTime.Now} with build from {buildDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture)}");
+				log.LogInformation($"Updating Cache at {DateTime.Now} with build from {buildDate}");
 				var username = config["bgg_username"];
 				var password = config["bgg_password"];
 				var storage = config["cache_storage"];
