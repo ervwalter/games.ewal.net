@@ -215,6 +215,7 @@ namespace GamesCacheUpdater
 						play.EstimatedDuration = game.PlayingTime;
 					}
 					play.Rating = game.Rating;
+					play.CooperativeGame = game.Mechanics.Contains("Cooperative Game");
 				}
 				else if (_gamesById.ContainsKey(play.GameId))
 				{
@@ -225,6 +226,7 @@ namespace GamesCacheUpdater
 					{
 						play.EstimatedDuration = game.PlayingTime;
 					}
+					play.CooperativeGame = game.Mechanics.Contains("Cooperative Game");
 				}
 				play.SortableName = RemoveArticles.Replace(play.Name.Trim().ToLower(), "");
 

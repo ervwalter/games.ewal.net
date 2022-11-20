@@ -126,6 +126,7 @@ namespace GamesCacheUpdater
 		public List<Player> Players { get; set; }
 		public string Comments { get; set; }
 		public decimal? Rating { get; set; }
+		public bool CooperativeGame { get; set; }
 	}
 
 	public class Player
