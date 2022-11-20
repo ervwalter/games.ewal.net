@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { orderBy, toPairs } from "lodash-es";
 import { getPlays } from "./games-data";
+import { Play } from "./games-interfaces";
 
 const dayNames: Record<string, string> = {
   "0": "Sun",
@@ -35,11 +36,14 @@ const durationBuckets = [
   },
 ];
 
-class PlayerDetails {
+class PlayerData {
   player: string;
   plays = 0;
   scoredPlays = 0;
   wins = 0;
+  winChanceAccumulator = 0;
+  expectedWinChanceWins = 0;
+  expectedWinChanceAttempts = 0;
   games: Record<string, boolean> = {};
 
   constructor(player: string) {
@@ -47,7 +51,7 @@ class PlayerDetails {
   }
 }
 
-interface PlayerStats {
+export interface PlayerStats {
   playerName: string;
   plays: number;
   scoredPlays: number;
@@ -55,6 +59,7 @@ interface PlayerStats {
   wins: number;
   losses: number;
   winPercentage: number;
+  expectedWinPercentage: number;
 }
 
 export async function getInsights() {
@@ -65,8 +70,8 @@ export async function getInsights() {
   const playerCountsMap: Record<number, number> = {};
   const durationBucketCountsMap: Record<number, number> = {};
 
-  const players: Record<string, PlayerDetails> = {};
-  const me = new PlayerDetails("Erv");
+  const players: Record<string, PlayerData> = {};
+  const me = new PlayerData("Erv");
   players["Erv"] = me;
 
   for (const play of plays) {
@@ -96,15 +101,21 @@ export async function getInsights() {
         if (playerName === "Anonymous player") {
           continue;
         }
-        const playerDetails = getPlayerDetails(players, playerName);
+        const playerData = getPlayerData(players, playerName);
 
-        playerDetails.games[play.gameId] = true;
-        playerDetails.plays += play.numPlays;
+        playerData.games[play.gameId] = true;
+        playerData.plays += play.numPlays;
         if (!play.excludeFromStats) {
-          playerDetails.scoredPlays += play.numPlays;
+          playerData.scoredPlays += play.numPlays;
           if (player.win) {
-            playerDetails.wins += play.numPlays;
+            playerData.wins += play.numPlays;
           }
+
+          // track expected win rate
+          const competitorCount = effectiveCompetitorsCount(play);
+          playerData.expectedWinChanceWins += play.numPlays;
+          playerData.expectedWinChanceAttempts += competitorCount * play.numPlays;
+          playerData.winChanceAccumulator += (1 / competitorCount) * play.numPlays;
         }
       }
       if (!containsErv) {
@@ -128,6 +139,8 @@ export async function getInsights() {
       const wins = player.wins;
       const losses = scoredPlays - wins;
       const winPercentage = wins / scoredPlays;
+      // const expectedWinPercentage = player.expectedWinChanceWins / player.expectedWinChanceAttempts;
+      const expectedWinPercentage = player.winChanceAccumulator / scoredPlays;
       const stats: PlayerStats = {
         playerName,
         plays,
@@ -136,6 +149,7 @@ export async function getInsights() {
         wins,
         losses,
         winPercentage,
+        expectedWinPercentage,
       };
       return stats;
     }),
@@ -181,11 +195,47 @@ export async function getInsights() {
 
 export type Insights = Awaited<ReturnType<typeof getInsights>>;
 
-function getPlayerDetails(players: Record<string, PlayerDetails>, playerName: string) {
+function getPlayerData(players: Record<string, PlayerData>, playerName: string) {
   let playerStats = players[playerName];
   if (!playerStats) {
-    playerStats = new PlayerDetails(playerName);
+    playerStats = new PlayerData(playerName);
     players[playerName] = playerStats;
   }
   return playerStats;
+}
+
+const teamRegex = /^Team:\ (.+)$/i;
+
+function effectiveCompetitorsCount(play: Play) {
+  // first check if it is probably cooperative
+  const winners = play.players.filter((p) => p.win).length;
+  const probablyCooperative = winners === 0 || winners === play.players.length; // if everyone won or everyone lost it was probably cooperative
+  // if this is a cooperative game, the number of the competitors is 2 (the players + the game)
+  if (probablyCooperative || play.cooperativeGame) {
+    return 2;
+  }
+
+  // now check if it is a teams game
+  let isProbablyTeams = true; // start with the assumption of teams
+  const teams: Record<string, true> = {};
+  for (const player of play.players) {
+    if (!player.color) {
+      isProbablyTeams = false;
+      break;
+    }
+    const match = player.color.match(teamRegex);
+    if (!match) {
+      isProbablyTeams = false;
+      break;
+    }
+    teams[match[1]] = true;
+  }
+
+  if (isProbablyTeams) {
+    // return the number of teams
+    return Object.keys(teams).length;
+  } else {
+    // return the number of players
+    return play.players.length;
+  }
 }

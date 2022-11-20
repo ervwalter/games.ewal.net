@@ -56,17 +56,21 @@ function PlayersTableSkeleton() {
       <table className="min-w-full divide-y divide-gray-300 md:min-w-fit">
         <thead>
           <tr>
-            <th className="w-[130px] py-2 pr-4 pl-4 text-left font-semibold text-gray-900 md:pl-0"> Name</th>
+            <th className="w-[140px] py-2 pr-4 pl-4 text-left font-semibold text-gray-900 md:pl-0"> Name</th>
             <th className="cursor-pointer py-2 px-2 text-right font-semibold text-gray-900"> Plays</th>
-            <th className="cursor-pointer py-2 px-2 text-right font-semibold text-gray-900">
-              <span className="hidden md:inline">Unique </span>Games
+            <th className="hidden cursor-pointer py-2 px-2 text-right font-semibold text-gray-900 md:table-cell">
+              Games
             </th>
             <th className="cursor-pointer py-2 px-2 text-right font-semibold text-gray-900"> Wins</th>
             <th className="hidden cursor-pointer py-2 px-2 text-right font-semibold text-gray-900 md:table-cell">
               Losses
             </th>
-            <th className="cursor-pointer py-2 pl-2 pr-4 text-right font-semibold text-gray-900 md:pr-2">
+            <th className="cursor-pointer py-2 px-2 text-right font-semibold text-gray-900">
               W<span className="hidden md:inline">in </span>%
+            </th>
+            <th className="cursor-pointer py-2 pl-2 pr-4 text-right font-semibold text-gray-900 md:pr-2">
+              W<span className="hidden md:inline">in Chance</span>
+              <span className="md:hidden">C</span>%
             </th>
           </tr>
         </thead>
@@ -79,13 +83,16 @@ function PlayersTableSkeleton() {
               <td className="py-2 px-2 text-right">
                 <SkeletonRow />
               </td>
-              <td className="py-2 px-2 text-right">
+              <td className="hidden md:table-cell py-2 px-2 text-right">
                 <SkeletonRow />
               </td>
               <td className="py-2 px-2 text-right">
                 <SkeletonRow />
               </td>
               <td className="hidden py-2 px-2 text-right md:table-cell">
+                <SkeletonRow />
+              </td>
+              <td className="py-2 px-1 text-right">
                 <SkeletonRow />
               </td>
               <td className="py-2 pl-2 pr-4 text-right md:pr-2 ">

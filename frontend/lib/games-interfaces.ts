@@ -15,6 +15,7 @@ export interface Play {
   players: Player[];
   comments: string;
   rating?: number;
+  cooperativeGame: boolean;
 }
 
 export interface Player {
