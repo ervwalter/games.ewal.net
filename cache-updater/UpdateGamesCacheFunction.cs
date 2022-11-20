@@ -4,6 +4,7 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace GamesCacheUpdater
 {
@@ -19,7 +20,8 @@ namespace GamesCacheUpdater
 					.AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
 					.AddEnvironmentVariables()
 					.Build();
-				log.LogInformation($"Updating Cache at {DateTime.Now}");
+				var buildDate = Assembly.GetExecutingAssembly().GetBuildDate();
+				log.LogInformation($"Updating Cache at {DateTime.Now} with build from {buildDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture)}");
 				var username = config["bgg_username"];
 				var password = config["bgg_password"];
 				var storage = config["cache_storage"];
@@ -45,7 +47,7 @@ namespace GamesCacheUpdater
 				// the next 2 lines are a workaround until on-demand re-validations are added to the RSC portion of Next.js
 				log.LogInformation("Waiting to make sure frontend ISR cache is completely expired...");
 				await Task.Delay(70000); // wait 70 seconds to make sure all pages are expired
-				await updater.TriggerFrontendRefresh(); 
+				await updater.TriggerFrontendRefresh();
 			}
 			catch (Exception ex)
 			{

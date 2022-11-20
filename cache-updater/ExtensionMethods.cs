@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -21,7 +23,7 @@ namespace GamesCacheUpdater
 				return value;
 			}
 		}
-		
+
 		public static T As<T>(this XElement element, T defaultValue = default(T), params string[] alternateNulls)
 		{
 			if (element == null)
@@ -111,6 +113,28 @@ namespace GamesCacheUpdater
 		public static bool AsBool(this int value)
 		{
 			return value == 1;
+		}
+
+		public static DateTime GetBuildDate(this Assembly assembly)
+		{
+			const string BuildVersionMetadataPrefix = "+build";
+
+			var attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+			if (attribute?.InformationalVersion != null)
+			{
+				var value = attribute.InformationalVersion;
+				var index = value.IndexOf(BuildVersionMetadataPrefix);
+				if (index > 0)
+				{
+					value = value.Substring(index + BuildVersionMetadataPrefix.Length);
+					if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
+					{
+						return result;
+					}
+				}
+			}
+
+			return default;
 		}
 
 	}
