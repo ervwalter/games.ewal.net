@@ -39,8 +39,8 @@ namespace GamesCacheUpdater
 				}
 				await updater.LoadCachedGameDetailsAsync();
 				await updater.DownloadUpdatedGameDetailsAsync();
-				updater.ProcessPlays();
 				updater.ProcessCollection();
+				updater.ProcessPlays();
 				updater.ProcessTopTen();
 				updater.GenerateStats();
 				await updater.SaveEverythingAsync();

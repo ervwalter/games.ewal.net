@@ -237,7 +237,7 @@ namespace GamesCacheUpdater
 						play.CooperativeGame = game.Mechanics.Contains("Cooperative Game", StringComparer.InvariantCultureIgnoreCase);
 					}
 					else {
-						_log.LogInformation($"Missing mechanics for ${play.GameId}");
+						_log.LogInformation($"Missing mechanics for {play.GameId}");
 					}
 				}
 				play.SortableName = RemoveArticles.Replace(play.Name.Trim().ToLower(), "");
