@@ -10,7 +10,12 @@ export default function PlayersTable({ insights }: { insights: Insights }) {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
   const players = useMemo(
-    () => orderBy(insights.statsPerPlayer, [sortColumn, "playerName"], [sortDirection, "asc"]),
+    () =>
+      orderBy(
+        insights.statsPerPlayer.filter((p) => p.scoredPlays >= 5),
+        [sortColumn, "playerName"],
+        [sortDirection, "asc"]
+      ),
     [insights.statsPerPlayer, sortColumn, sortDirection]
   );
 
