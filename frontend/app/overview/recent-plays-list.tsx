@@ -34,7 +34,7 @@ const RecentPlaysNarrow = ({ plays }: RecentPlaysProps) => {
             <div className="flex-none">{dayjs(play.playDate).format("MMM D")}</div>
           </div>
           <div>
-            <Players players={play.players} />- @${play.location || "Home"}
+            <Players players={play.players} />- @{play.location || "Home"}
           </div>
         </div>
       ))}
