@@ -5,14 +5,6 @@ import OverviewTableSkeleton from "./overview-table-skeleton";
 import RecentPlaysSection from "./recent-plays-section";
 import RecentPlaysSectionSkeleton from "./recent-plays-section-skeleton";
 
-// // workaround until fetch() works with large requests
-// export const dynamic = "auto",
-//   dynamicParams = true,
-//   revalidate = 60,
-//   fetchCache = "auto",
-//   runtime = "nodejs",
-//   preferredRegion = "auto";
-
 export default async function Overview() {
   return (
     <div className="flex flex-1 flex-col space-y-4">
