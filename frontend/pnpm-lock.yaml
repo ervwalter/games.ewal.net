@@ -34,7 +34,7 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   react-icons: 4.7.1
-  react-svg: 15.1.21
+  react-svg: 16.0.0
   tailwindcss: 3.2.4
   turbo: 1.7.0
   typescript: 4.9.4
@@ -63,7 +63,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
-  react-svg: 15.1.21_biqbaboplfbrettd7655fr4n2y
+  react-svg: 16.0.0_biqbaboplfbrettd7655fr4n2y
   typescript: 4.9.4
   undici: 5.16.0
 
@@ -557,8 +557,8 @@ packages:
       tailwindcss: 3.2.4_postcss@8.4.21
     dev: false
 
-  /@tanem/svg-injector/10.1.42:
-    resolution: {integrity: sha512-/XfJ3Qmqai0/zDR3jKaxxnUFMXzEDhGlH02BKs0ad91iCWv0Tiuyw1s/JjY4Rb8f53uEEaMm9fSSSDheqlNWtw==}
+  /@tanem/svg-injector/10.1.45:
+    resolution: {integrity: sha512-HOmdNqYIP808rxzxc6dCP8MZOQQ1zKscoNo5BkjZKgYGSm/ObNCW6r+IPTP30kVHET7y0HAzrDwnP0WYFyr3Tg==}
     dependencies:
       '@babel/runtime': 7.20.7
       content-type: 1.0.4
@@ -2451,14 +2451,14 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
-  /react-svg/15.1.21_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-ISMX8ICoLNivt1+OPY24V0WmBYPSEuVU1EzgVhyXj7mSGs+aQosGFevatrfxx+1zh28iyvWRDma1YbpylGEwbw==}
+  /react-svg/16.0.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-Zh3Y7c8h2ufe7hk5YEebs4yH3mlZDlUbHrhYR1nZHCbJR9j7KaHYB8rcWEDiCh2WTstFJUEJtbPvjrHrJpEZhg==}
     peerDependencies:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.20.7
-      '@tanem/svg-injector': 10.1.42
+      '@tanem/svg-injector': 10.1.45
       '@types/prop-types': 15.7.5
       prop-types: 15.8.1
       react: 18.2.0
