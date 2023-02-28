@@ -1,11 +1,17 @@
 import { Blurb } from "components/blurb";
+import { Metadata } from "next";
 import { Suspense } from "react";
 import OverviewTable from "./overview-table";
 import OverviewTableSkeleton from "./overview-table-skeleton";
 import RecentPlaysSection from "./recent-plays-section";
 import RecentPlaysSectionSkeleton from "./recent-plays-section-skeleton";
 
+export const metadata: Metadata = {
+  title: "Board Games",
+};
+
 export default async function Overview() {
+  console.log("/overview rendering");
   return (
     <div className="flex flex-1 flex-col space-y-4">
       <Blurb />

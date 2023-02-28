@@ -1,10 +1,16 @@
 import { Blurb } from "components/blurb";
 import { durationForPlay, getPlays } from "lib/games-data";
 import { groupBy, orderBy, sumBy } from "lodash-es";
+import { Metadata } from "next";
 import { MostPlaysTable } from "./most-plays-table";
 import { Title } from "./title";
 
+export const metadata: Metadata = {
+  title: "Most Played - Board Games",
+};
+
 export default async function MostPlayed() {
+  console.log("/mostplayed rendering");
   const plays = await getPlays();
   let games = Object.values(groupBy(plays, (p) => p.gameId))
     .map((group) => {
