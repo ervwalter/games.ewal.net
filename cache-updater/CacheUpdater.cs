@@ -219,7 +219,8 @@ namespace GamesCacheUpdater
 					{
 						play.CooperativeGame = game.Mechanics.Contains("Cooperative Game", StringComparer.InvariantCultureIgnoreCase);
 					}
-					else {
+					else
+					{
 						_log.LogInformation($"Missing mechanics for ${play.GameId}");
 					}
 				}
@@ -236,7 +237,8 @@ namespace GamesCacheUpdater
 					{
 						play.CooperativeGame = game.Mechanics.Contains("Cooperative Game", StringComparer.InvariantCultureIgnoreCase);
 					}
-					else {
+					else
+					{
 						_log.LogInformation($"Missing mechanics for {play.GameId}");
 					}
 				}
@@ -660,55 +662,32 @@ namespace GamesCacheUpdater
 			var client = new HttpClient();
 			string url;
 
-			if (_statsChanged || _recentPlaysChanged)
+			var changes = new List<string>();
+			if (_statsChanged)
 			{
-				try
-				{
-					url = "https://games.ewal.net/overview";
-					var data = await client.GetStringAsync(url);
-					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
-				}
-				catch { }
+				changes.Add("stats");
 			}
-
+			if (_recentPlaysChanged)
+			{
+				changes.Add("recentplays");
+			}
 			if (_playsChanged)
 			{
-				try
-				{
-					url = "https://games.ewal.net/insights";
-					var data = await client.GetStringAsync(url);
-					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
-				}
-				catch { }
+				changes.Add("plays");
 			}
-
-			if (_playsChanged)
-			{
-				try
-				{
-					url = "https://games.ewal.net/mostplayed";
-					var data = await client.GetStringAsync(url);
-					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
-				}
-				catch { }
-			}
-
 			if (_topTenChanged)
 			{
-				try
-				{
-					url = "https://games.ewal.net/topten";
-					var data = await client.GetStringAsync(url);
-					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
-				}
-				catch { }
+				changes.Add("topten");
 			}
-
 			if (_collectionChanged)
+			{
+				changes.Add("collection");
+			}
+			if (changes.Count > 0)
 			{
 				try
 				{
-					url = "https://games.ewal.net/collection";
+					url = $"https://games.ewal.net/api/revalidate?changes={string.Join(",", changes)}";
 					var data = await client.GetStringAsync(url);
 					_log.LogInformation("Got {0} bytes from {1}", data.Length, url);
 				}
