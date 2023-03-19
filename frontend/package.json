@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "1.7.13",
-    "@mantine/hooks": "5.10.5",
+    "@mantine/hooks": "6.0.2",
     "@next/font": "13.2.4",
     "@nivo/bar": "0.80.0",
     "@nivo/core": "0.80.0",
