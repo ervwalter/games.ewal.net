@@ -32,7 +32,7 @@
     "react-dom": "18.2.0",
     "react-icons": "4.8.0",
     "react-svg": "16.1.6",
-    "typescript": "4.9.5",
+    "typescript": "5.0.4",
     "undici": "5.21.0"
   },
   "devDependencies": {
