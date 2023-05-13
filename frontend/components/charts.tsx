@@ -1,21 +1,21 @@
 "use client";
 
-import { BarCommonProps, ResponsiveBar } from "@nivo/bar";
-import { CommonPieProps, ResponsivePie } from "@nivo/pie";
+import { BarCommonProps, BarDatum, ResponsiveBar } from "@nivo/bar";
+import { CommonPieProps, MayHaveLabel, ResponsivePie } from "@nivo/pie";
 
-type Datum = {
+interface PieDatum extends MayHaveLabel {
   id: string;
   value: number;
-};
+}
 
-interface HorizontalBarChartProps<T extends Datum> {
+interface HorizontalBarChartProps<T extends BarDatum> {
   data: T[];
   axisLabel: string;
   colors: BarCommonProps<T>["colors"];
   showLabels?: boolean;
 }
 
-export function HorizontalBarChart<T extends Datum>({
+export function HorizontalBarChart<T extends BarDatum>({
   data,
   axisLabel,
   colors,
@@ -65,13 +65,13 @@ export function HorizontalBarChart<T extends Datum>({
   );
 }
 
-interface PieProps<T extends Datum> {
+interface PieProps<T extends PieDatum> {
   data: T[];
   colors: CommonPieProps<T>["colors"];
   showLabels?: boolean;
 }
 
-export function PieChart<T extends Datum>({ data, colors, showLabels = false }: PieProps<T>) {
+export function PieChart<T extends PieDatum>({ data, colors, showLabels = false }: PieProps<T>) {
   return (
     <ResponsivePie
       data={data}
