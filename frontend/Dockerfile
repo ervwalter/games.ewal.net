@@ -1,7 +1,7 @@
 FROM node:16 as dependencies
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7
 RUN pnpm install --frozen-lockfile
 
 FROM node:lts as builder
