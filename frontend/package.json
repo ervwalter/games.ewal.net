@@ -21,7 +21,7 @@
     "@vercel/analytics": "1.0.1",
     "clsx": "1.2.1",
     "d3-scale-chromatic": "3.0.0",
-    "daisyui": "2.51.6",
+    "daisyui": "4.12.10",
     "dayjs": "1.11.7",
     "lodash-es": "4.17.21",
     "next": "13.4.4",
