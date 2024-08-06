@@ -1,4 +1,4 @@
-FROM node:lts as dependencies
+FROM node:16 as dependencies
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm
