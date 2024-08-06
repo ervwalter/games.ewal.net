@@ -330,6 +330,7 @@ namespace GamesCacheUpdater
 			url.SetQueryParam("id", string.Join(",", gameIds), true);
 
 			_log.LogInformation(string.Format("...downloading details for {0} games", gameIds.Count()));
+			_log.LogInformation(url.ToString());
 			try
 			{
 				var data = await DownloadDataAsync(url.ToString());
