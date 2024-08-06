@@ -180,7 +180,7 @@ namespace GamesCacheUpdater
 
 			_log.LogInformation("Getting updated details for {0} new games and {1} out-of-date games", newCount, updateNeeded.Count - newCount);
 			_gamesById = _games.ToDictionary(g => g.GameId);
-			foreach (var ids in updateNeeded.Batch(50))
+			foreach (var ids in updateNeeded.Batch(25))
 			{
 				var games = await _client.GetGamesAsync(ids);
 				foreach (var game in games)
