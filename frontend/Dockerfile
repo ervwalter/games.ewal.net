@@ -8,7 +8,7 @@ FROM node:lts as builder
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
-RUN npm install -g pnpm
+RUN npm install -g pnpm@7
 RUN pnpm build
 
 FROM node:lts as runner
