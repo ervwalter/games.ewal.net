@@ -176,11 +176,11 @@ namespace GamesCacheUpdater
 			var cutoff = DateTimeOffset.UtcNow.AddHours(-6);
 			var random = new Random();
 			var outdated = _games.Where(g => g.Timestamp.AddHours(-1 * random.NextDouble()) < cutoff);
-			updateNeeded.UnionWith(outdated.Select(g => g.GameId).Take(100)); // don't update more than 100 outdated games per run
+			updateNeeded.UnionWith(outdated.Select(g => g.GameId).Take(50)); // don't update more than 100 outdated games per run
 
 			_log.LogInformation("Getting updated details for {0} new games and {1} out-of-date games", newCount, updateNeeded.Count - newCount);
 			_gamesById = _games.ToDictionary(g => g.GameId);
-			foreach (var ids in updateNeeded.Batch(25))
+			foreach (var ids in updateNeeded.Batch(20))
 			{
 				var games = await _client.GetGamesAsync(ids);
 				foreach (var game in games)
