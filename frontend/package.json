@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "1.7.14",
+    "@headlessui/react": "2.1.8",
     "@mantine/hooks": "6.0.11",
     "@next/font": "13.4.4",
     "@nivo/bar": "0.83.0",
