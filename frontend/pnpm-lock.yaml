@@ -16,7 +16,7 @@ overrides:
   '@nivo/scales>react': 19.0.0
   '@nivo/tooltip>react': 19.0.0
 
-packageExtensionsChecksum: sha256-EMuD2o4iAh9W7tDMWPAN0uqBq25ClPsoeP3ZDl5e8l0=
+packageExtensionsChecksum: df6c9cf42a88560a78c3c314f6389ca4
 
 importers:
 
