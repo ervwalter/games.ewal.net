@@ -3,7 +3,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { clsx } from "clsx";
 import { RequireOnlyOne } from "lib/utility-types";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Fragment, useState } from "react";
 import { IconType } from "react-icons";
@@ -143,16 +143,16 @@ function NavItem({ item, onClick }: { item: NavItem; onClick: () => void }) {
   const segment = useSelectedLayoutSegment();
   if (item.segment) {
     const active = item.segment == segment;
-    return <NavItemInternal active={active} item={item} href={`/${item.segment}`} onClick={onClick} />;
+    return <NavItemInternal active={active} item={item} href={{ pathname: `/${item.segment}` }} onClick={onClick} />;
   } else if (item.href) {
-    return <NavItemInternal active={false} item={item} href={item.href} onClick={onClick} />;
+    return <NavItemInternal active={false} item={item} href={{ pathname: item.href }} onClick={onClick} />;
   } else {
-    return null as never;
+    return null;
   }
 }
 
 interface NavItemInternalProps {
-  href: string;
+  href: LinkProps<string>["href"];
   item: NavItemBase;
   active: boolean;
   onClick: () => void;
