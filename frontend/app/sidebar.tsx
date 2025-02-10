@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import { RequireOnlyOne } from "lib/utility-types";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useState } from "react";
 import { IconType } from "react-icons";
 import { AiFillHome } from "react-icons/ai";
 import { ImBooks } from "react-icons/im";
@@ -31,7 +31,7 @@ const navigation: NavItem[] = [
 
 export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const handleClose = useCallback(() => setSidebarOpen(false), []);
+  const handleClose = () => setSidebarOpen(false);
 
   return (
     <>

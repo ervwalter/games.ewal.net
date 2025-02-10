@@ -3,33 +3,26 @@
 import clsx from "clsx";
 import { Insights, PlayerStats } from "lib/insights";
 import { orderBy } from "lodash-es";
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 export default function PlayersTable({ insights }: { insights: Insights }) {
   const [sortColumn, setSortColumn] = useState("plays");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
-  const players = useMemo(
-    () =>
-      orderBy(
-        insights.statsPerPlayer.filter((p) => p.scoredPlays >= 5),
-        [sortColumn, "playerName"],
-        [sortDirection, "asc"]
-      ),
-    [insights.statsPerPlayer, sortColumn, sortDirection]
+  const players = orderBy(
+    insights.statsPerPlayer.filter((p) => p.scoredPlays >= 5),
+    [sortColumn, "playerName"],
+    [sortDirection, "asc"]
   );
 
-  const handleSortByName = useCallback(
-    (column: keyof PlayerStats) => {
-      if (sortColumn != column) {
-        setSortColumn(column);
-        setSortDirection(column === "playerName" ? "asc" : "desc");
-      } else {
-        setSortDirection((dir) => (dir === "asc" ? "desc" : "asc"));
-      }
-    },
-    [sortColumn]
-  );
+  const handleSortByName = (column: keyof PlayerStats) => {
+    if (sortColumn != column) {
+      setSortColumn(column);
+      setSortDirection(column === "playerName" ? "asc" : "desc");
+    } else {
+      setSortDirection((dir) => (dir === "asc" ? "desc" : "asc"));
+    }
+  };
 
   return (
     <div className="-mx-4 md:mx-0">
