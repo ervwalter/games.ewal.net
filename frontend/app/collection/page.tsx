@@ -6,6 +6,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import CollectionTable from "./collection-table";
 import CollectionError from "./error";
 import CollectionLoading from "./loading";
+import { use } from "react";
 
 export const runtime = 'edge';
 export const preferredRegion = 'auto';
@@ -15,9 +16,15 @@ export const metadata: Metadata = {
   title: "Collection",
 };
 
-export default async function Collection() {
+// Create a promise for data fetching
+async function getCollectionData() {
   const collection = await getCollection();
-  const owned = collection.filter((g) => g.owned);
+  return collection.filter((g) => g.owned);
+}
+
+export default function Collection() {
+  // Use the new 'use' hook for data fetching
+  const owned = use(getCollectionData());
 
   return (
     <div className="flex flex-1 flex-col space-y-4">

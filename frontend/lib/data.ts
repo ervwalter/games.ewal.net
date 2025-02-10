@@ -27,6 +27,9 @@ async function fetchFromCache<T>(
       next: { 
         revalidate,
         tags
+      },
+      headers: {
+        'Cache-Control': 's-maxage=60, stale-while-revalidate'
       }
     });
 

@@ -20,8 +20,15 @@ const nextConfig = {
       '@mantine/hooks',
       'react-icons',
       'lodash-es'
-    ]
-  }
+    ],
+    serverActions: {
+      bodySizeLimit: '2mb'
+    },
+  },
+  // Production optimizations
+  compiler: process.env.NODE_ENV === 'production' ? {
+    removeConsole: true,
+  } : undefined,
 }
 
-module.exports = nextConfig;
+module.exports = nextConfig
