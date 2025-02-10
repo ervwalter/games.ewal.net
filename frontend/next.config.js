@@ -10,8 +10,18 @@ const nextConfig = {
     ];
   },
   experimental: {
-    esmExternals: 'loose',
+    turbo: {
+      rules: {
+        "*.tsx": ["use client"],
+      }
+    },
+    optimizePackageImports: [
+      '@headlessui/react',
+      '@mantine/hooks',
+      'react-icons',
+      'lodash-es'
+    ]
   }
-};
+}
 
 module.exports = nextConfig;

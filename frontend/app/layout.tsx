@@ -1,23 +1,51 @@
-import { Inter } from "@next/font/google";
-import localFont from "@next/font/local";
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import clsx from "clsx";
 import { ImGithub } from "react-icons/im";
+import { Analytics } from "@vercel/analytics/react";
 import "./global.css";
 import Sidebar from "./sidebar";
+import { Metadata, Viewport } from "next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const glyphicons = localFont({ variable: "--font-icons", src: "../fonts/icons.woff" });
+const glyphicons = localFont({ 
+  src: [
+    {
+      path: "../fonts/icons.woff",
+      weight: "400",
+      style: "normal",
+    }
+  ],
+  variable: "--font-icons",
+  preload: true,
+  display: "block",
+  fallback: ["sans-serif"]
+});
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Board Games',
+    default: 'Board Games'
+  },
+  description: "I like board games",
+  icons: {
+    icon: '/favicon.png'
+  }
+};
+
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={clsx(inter.variable, glyphicons.variable, "h-full")}>
       <head>
-        <title>Board Games</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="theme-color" content="#ffffff" />
-
-        <meta name="description" content="I like board games" />
-        <link rel="shortcut icon" href="/favicon.png" />
       </head>
       <body className="h-full">
         <Sidebar />
@@ -45,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </div>
+        <Analytics />
       </body>
     </html>
   );

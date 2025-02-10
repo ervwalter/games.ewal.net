@@ -1,16 +1,23 @@
 import { Blurb } from "components/blurb";
-import { durationForPlay, getPlays } from "lib/games-data";
+import { durationForPlay, getPlays } from "lib/data";
 import { groupBy, orderBy, sumBy } from "lodash-es";
 import { Metadata } from "next";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { MostPlaysTable } from "./most-plays-table";
 import { Title } from "./title";
+import MostPlayedError from "./error";
+import MostPlayedLoading from "./loading";
+
+export const runtime = 'edge';
+export const preferredRegion = 'auto';
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Most Played - Board Games",
+  title: "Most Played",
 };
 
 export default async function MostPlayed() {
-  console.log("/mostplayed rendering");
   const plays = await getPlays();
   let games = Object.values(groupBy(plays, (p) => p.gameId))
     .map((group) => {
@@ -24,6 +31,7 @@ export default async function MostPlayed() {
     })
     .filter((g) => g.numPlays >= 5);
   games = orderBy(games, ["numPlays", "sortableName"], ["desc", "asc"]);
+  
   let nickels = 0;
   let dimes = 0;
   let quarters = 0;
@@ -33,15 +41,19 @@ export default async function MostPlayed() {
     } else if (game.numPlays >= 10) {
       dimes++;
     } else {
-      nickels++; // we filters to only game with at least 5 plays are in the array
+      nickels++; // we filtered to only games with at least 5 plays
     }
   }
 
   return (
     <div className="flex flex-1 flex-col space-y-4">
       <Blurb />
-      <Title nickels={nickels} dimes={dimes} quarters={quarters}></Title>
-      <MostPlaysTable games={games} />
+      <Title nickels={nickels} dimes={dimes} quarters={quarters} />
+      <ErrorBoundary FallbackComponent={MostPlayedError}>
+        <Suspense fallback={<MostPlayedLoading />}>
+          <MostPlaysTable games={games} />
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }
