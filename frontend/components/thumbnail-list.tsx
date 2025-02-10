@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import clsx from "clsx";
 import { SkeletonImage, SkeletonWrapper } from "./skeleton";
 import { Thumbnail, ThumbnailLink } from "./thumbnail";

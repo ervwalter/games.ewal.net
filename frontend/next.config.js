@@ -1,34 +1,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async redirects() {
-    return [
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
       {
-        source: "/",
-        destination: "/overview",
-        permanent: false,
+        protocol: 'https',
+        hostname: 'cf.geekdo-images.com',
+        port: '',
+        pathname: '/images/**',
       },
-    ];
+    ],
   },
   experimental: {
-    turbo: {
-      rules: {
-        "*.tsx": ["use client"],
-      }
-    },
-    optimizePackageImports: [
-      '@headlessui/react',
-      '@mantine/hooks',
-      'react-icons',
-      'lodash-es'
-    ],
-    serverActions: {
-      bodySizeLimit: '2mb'
-    },
+    typedRoutes: true,
   },
-  // Production optimizations
-  compiler: process.env.NODE_ENV === 'production' ? {
-    removeConsole: true,
-  } : undefined,
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    })
+    return config
+  },
+  output: 'standalone',
 }
 
-module.exports = nextConfig
+export default nextConfig

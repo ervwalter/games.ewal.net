@@ -1,12 +1,11 @@
 import { Blurb } from "components/blurb";
 import { getCollection } from "lib/data";
 import { Metadata } from "next";
-import { Suspense } from "react";
+import { Suspense, use } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import CollectionTable from "./collection-table";
 import CollectionError from "./error";
 import CollectionLoading from "./loading";
-import { use } from "react";
 
 export const runtime = 'edge';
 export const preferredRegion = 'auto';
@@ -14,6 +13,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Collection",
+  description: "My board game collection",
 };
 
 // Create a promise for data fetching
