@@ -1,10 +1,16 @@
-name: Build and Publish Docker Image
+name: Build and Publish Frontend Docker Image
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/docker-publish-frontend.yml'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/docker-publish-frontend.yml'
 
 env:
   REGISTRY: ghcr.io
