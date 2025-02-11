@@ -1,0 +1,49 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":rebaseStalePrs",
+    ":disableRateLimiting",
+    "helpers:disableTypesNodeMajor",
+    ":separateMajorReleases",
+    ":combinePatchMinorReleases",
+    ":ignoreUnstable"
+  ],
+  "timezone": "America/Chicago",
+  "assignees": [
+    "ervwalter"
+  ],
+  "gitAuthor": "Erv Walter <erv@ewal.net>",
+  "labels": [
+    "dependencies"
+  ],
+  "packageRules": [
+    {
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "minimumReleaseAge": "1 day",
+      "automerge": true,
+      "automergeType": "branch",
+      "extends": [
+        "schedule:weekends"
+      ],
+      "matchPackageNames": [
+        "*"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "next"
+      ],
+      "matchPackagePrefixes": [
+        "@next"
+      ],
+      "ignoreUnstable": false
+    }
+  ]
+}
