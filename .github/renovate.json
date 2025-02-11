@@ -38,10 +38,8 @@
     },
     {
       "matchPackageNames": [
-        "next"
-      ],
-      "matchPackagePrefixes": [
-        "@next"
+        "next",
+        "@next{/,}**"
       ],
       "ignoreUnstable": false
     }
