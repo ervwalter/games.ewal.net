@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import clsx from "clsx";
 import { ImGithub } from "react-icons/im";
-import { Analytics } from "@vercel/analytics/react";
 import "./global.css";
 import Sidebar from "./sidebar";
 import { Metadata, Viewport } from "next";
