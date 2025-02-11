@@ -1,4 +1,4 @@
-import { unstable_cache } from 'next/cache';
+import { unstable_cache as cache } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { Game, Play, Stats, TopTenItem } from './games-interfaces';
 import { getInsights as getInsightsOriginal } from "./insights";
@@ -47,7 +47,7 @@ async function fetchFromCache<T>(
   }
 }
 
-export const getPlays = unstable_cache(
+export const getPlays = cache(
   async () => {
     const plays = await fetchFromCache<Play[]>('plays-ervwalter.json', [CACHE_TAGS.plays]);
     return plays.sort((a, b) => {
@@ -60,7 +60,7 @@ export const getPlays = unstable_cache(
   { revalidate: 60, tags: [CACHE_TAGS.plays] }
 );
 
-export const getRecentPlays = unstable_cache(
+export const getRecentPlays = cache(
   async () => {
     const plays = await getPlays();
     return plays.slice(0, 100);
@@ -69,7 +69,7 @@ export const getRecentPlays = unstable_cache(
   { revalidate: 60, tags: [CACHE_TAGS.plays] }
 );
 
-export const getCollection = unstable_cache(
+export const getCollection = cache(
   async () => {
     const collection = await fetchFromCache<Game[]>('collection-ervwalter.json', [CACHE_TAGS.collection]);
     return collection.sort((a, b) => a.sortableName.localeCompare(b.sortableName));
@@ -78,7 +78,7 @@ export const getCollection = unstable_cache(
   { revalidate: 60, tags: [CACHE_TAGS.collection] }
 );
 
-export const getTopTen = unstable_cache(
+export const getTopTen = cache(
   async () => {
     const topten = await fetchFromCache<TopTenItem[]>('top10-ervwalter.json', [CACHE_TAGS.topTen]);
     return topten;
@@ -87,7 +87,7 @@ export const getTopTen = unstable_cache(
   { revalidate: 60, tags: [CACHE_TAGS.topTen] }
 );
 
-export const getStats = unstable_cache(
+export const getStats = cache(
   async () => {
     return fetchFromCache<Stats>('stats-ervwalter.json', [CACHE_TAGS.stats]);
   },
@@ -95,7 +95,7 @@ export const getStats = unstable_cache(
   { revalidate: 60, tags: [CACHE_TAGS.stats] }
 );
 
-export const getInsights = unstable_cache(
+export const getInsights = cache(
   async () => {
     return await getInsightsOriginal();
   },

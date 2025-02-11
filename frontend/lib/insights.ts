@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { orderBy, toPairs } from "lodash-es";
-import { getPlays } from "./games-data";
+import { getPlays } from "./data";
 import { Play } from "./games-interfaces";
 
 const dayNames: Record<string, string> = {
