@@ -7,7 +7,6 @@ import { TopTenList } from "./topten-list";
 import TopTenError from "./error";
 import TopTenLoading from "./loading";
 
-export const runtime = 'edge';
 export const preferredRegion = 'auto';
 export const dynamic = 'force-dynamic';
 

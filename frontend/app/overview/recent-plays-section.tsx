@@ -4,7 +4,7 @@ import { take, uniqBy } from "lodash-es";
 import { RecentPlaysList } from "./recent-plays-list";
 
 export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
+export const revalidate = 60;
 
 export default async function RecentPlaysSection() {
   const recentPlays = await getRecentPlays();

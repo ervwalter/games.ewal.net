@@ -8,13 +8,11 @@ import PlayersTable from "./players-table";
 import InsightsError from "./error";
 import InsightsLoading from "./loading";
 
-export const runtime = 'edge';
-export const preferredRegion = 'auto';
-export const dynamic = 'force-dynamic';
-
 export const metadata: Metadata = {
   title: "Insights",
 };
+
+export const dynamic = 'force-dynamic';
 
 export default async function InsightsPage() {
   const insights = await getInsights();

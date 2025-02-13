@@ -8,7 +8,6 @@ import RecentPlaysLoading from "./recent-plays-loading";
 import { ErrorBoundary } from "react-error-boundary";
 import RecentPlaysError from "./recent-plays-error";
 
-export const runtime = 'edge';
 export const preferredRegion = 'auto';
 export const dynamic = 'force-dynamic';
 

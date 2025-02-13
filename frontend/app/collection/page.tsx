@@ -7,8 +7,6 @@ import CollectionTable from "./collection-table";
 import CollectionError from "./error";
 import CollectionLoading from "./loading";
 
-export const runtime = 'edge';
-export const preferredRegion = 'auto';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
