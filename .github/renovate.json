@@ -14,7 +14,6 @@
   "assignees": ["ervwalter"],
   "gitAuthor": "Erv Walter <erv@ewal.net>",
   "labels": ["dependencies"],
-  "rangeStrategy": "pin",
   "packageRules": [
     {
       "groupName": "all non-major dependencies",
@@ -29,6 +28,10 @@
     {
       "matchPackageNames": ["next", "@next{/,}**"],
       "ignoreUnstable": false
+    },
+    {
+      "matchManagers": ["npm"],
+      "rangeStrategy": "pin"
     }
   ]
 }
