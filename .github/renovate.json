@@ -11,36 +11,23 @@
     ":ignoreUnstable"
   ],
   "timezone": "America/Chicago",
-  "assignees": [
-    "ervwalter"
-  ],
+  "assignees": ["ervwalter"],
   "gitAuthor": "Erv Walter <erv@ewal.net>",
-  "labels": [
-    "dependencies"
-  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "pin",
   "packageRules": [
     {
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
+      "matchUpdateTypes": ["minor", "patch"],
       "minimumReleaseAge": "1 day",
       "automerge": true,
-      "automergeType": "branch",
-      "extends": [
-        "schedule:weekends"
-      ],
-      "matchPackageNames": [
-        "*"
-      ]
+      "automergeType": "pr",
+      "extends": ["schedule:weekends"],
+      "matchPackageNames": ["*"]
     },
     {
-      "matchPackageNames": [
-        "next",
-        "@next{/,}**"
-      ],
+      "matchPackageNames": ["next", "@next{/,}**"],
       "ignoreUnstable": false
     }
   ]
