@@ -17,15 +17,15 @@
     "@nivo/pie": "0.88.0",
     "@nivo/tooltip": "0.88.0",
     "@tailwindcss/aspect-ratio": "0.4.2",
-    "@typescript-eslint/parser": "8.25.0",
+    "@typescript-eslint/parser": "8.26.0",
     "clsx": "2.1.1",
     "d3-scale-chromatic": "3.1.0",
     "daisyui": "4.12.24",
     "dayjs": "1.11.13",
     "lodash-es": "4.17.21",
-    "next": "15.2.0",
+    "next": "15.2.1",
     "next-plausible": "3.12.4",
-    "prettier": "3.5.2",
+    "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "0.6.11",
     "prop-types": "15.8.1",
     "react": "19.0.0",
@@ -37,17 +37,17 @@
     "undici": "7.4.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "15.2.0",
+    "@next/eslint-plugin-next": "15.2.1",
     "@types/d3-scale-chromatic": "3.1.0",
     "@types/lodash": "4.17.16",
     "@types/lodash-es": "4.17.12",
-    "@types/node": "22.13.8",
+    "@types/node": "22.13.9",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
-    "@typescript-eslint/eslint-plugin": "8.25.0",
+    "@typescript-eslint/eslint-plugin": "8.26.0",
     "autoprefixer": "10.4.20",
     "eslint": "9.21.0",
-    "eslint-config-next": "15.2.0",
+    "eslint-config-next": "15.2.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.4",
     "globals": "16.0.0",
@@ -94,5 +94,5 @@
       "prettier-plugin-tailwindcss"
     ]
   },
-  "packageManager": "pnpm@9.15.6+sha512.139cab068fdf0b751268179ac5f909b5be72afb4a75c513d1905d151befc8977b593d3cf8671ed83d4d6637c5c94b98ffbce108125de4a5a27a31233601a99de"
+  "packageManager": "pnpm@9.15.7+sha512.ed98f9c748442673c46964b70345bd2282c9b305e8eae539b34ab31d6ef24ef8dd59d8b55f27466f705500b009d9c113471cf87e544f3d5036b297330c26e996"
 }
