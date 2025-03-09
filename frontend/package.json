@@ -20,7 +20,7 @@
     "@typescript-eslint/parser": "8.26.0",
     "clsx": "2.1.1",
     "d3-scale-chromatic": "3.1.0",
-    "daisyui": "4.12.24",
+    "daisyui": "5.0.0",
     "dayjs": "1.11.13",
     "lodash-es": "4.17.21",
     "next": "15.2.1",
