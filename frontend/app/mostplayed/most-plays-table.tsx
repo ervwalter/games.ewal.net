@@ -34,7 +34,7 @@ export function MostPlaysTable({ games }: { games: PlayedGame[] }) {
                   href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link-hover link-primary link ">
+                  className="text-primary hover:text-primary-focus hover:underline">
                   {game.name}
                 </a>
               </td>

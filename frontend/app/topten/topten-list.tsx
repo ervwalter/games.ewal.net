@@ -30,7 +30,7 @@ export function TopTenList({ topten }: { topten: TopTenItem[] }) {
                     href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="link-hover link-primary link font-semibold">
+                    className="text-primary hover:text-primary-focus hover:underline font-semibold">
                     {game.name}
                   </a>
                   <span className="hidden md:inline"> ({game.yearPublished})</span>

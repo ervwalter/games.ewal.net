@@ -20,7 +20,6 @@
     "@typescript-eslint/parser": "8.26.0",
     "clsx": "2.1.1",
     "d3-scale-chromatic": "3.1.0",
-    "daisyui": "5.0.0",
     "dayjs": "1.11.13",
     "lodash-es": "4.17.21",
     "next": "15.2.1",
@@ -94,5 +93,23 @@
       "prettier-plugin-tailwindcss"
     ]
   },
-  "packageManager": "pnpm@9.15.7+sha512.ed98f9c748442673c46964b70345bd2282c9b305e8eae539b34ab31d6ef24ef8dd59d8b55f27466f705500b009d9c113471cf87e544f3d5036b297330c26e996"
+  "packageManager": "pnpm@9.15.7+sha512.ed98f9c748442673c46964b70345bd2282c9b305e8eae539b34ab31d6ef24ef8dd59d8b55f27466f705500b009d9c113471cf87e544f3d5036b297330c26e996",
+  "overrides": {
+    "@nivo/bar": {
+      "react": "19.0.0",
+      "react-dom": "19.0.0"
+    },
+    "@nivo/core": {
+      "react": "19.0.0",
+      "react-dom": "19.0.0"
+    },
+    "@nivo/pie": {
+      "react": "19.0.0",
+      "react-dom": "19.0.0"
+    },
+    "@nivo/tooltip": {
+      "react": "19.0.0",
+      "react-dom": "19.0.0"
+    }
+  }
 }

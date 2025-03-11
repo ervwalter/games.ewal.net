@@ -27,7 +27,7 @@ const RecentPlaysNarrow = ({ plays }: RecentPlaysProps) => {
                 href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link-hover link-primary link ">
+                className="text-primary hover:text-primary-focus hover:underline">
                 {play.name}
               </a>
             </div>
@@ -63,7 +63,7 @@ const RecentPlaysWide = ({ plays }: RecentPlaysProps) => {
                   href={`https://boardgamegeek.com/boardgame/${play.gameId}/`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link-hover link-primary link ">
+                  className="text-primary hover:text-primary-focus hover:underline">
                   {play.name}
                 </a>
               </td>

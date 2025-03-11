@@ -41,7 +41,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
                 className="cursor-pointer py-2 px-2 text-left font-semibold text-gray-900 hover:underline"
                 onClick={() => handleSort("numPlays")}>
                 <span className="inline-flex items-center">
-                  <span className="hidden md:inline">Times </span>Played
+                  <span className="hidden md:inline">Times&nbsp;</span>Played
                   {sortColumn === "numPlays" && <SortIndicator direction={sortDirection} />}
                 </span>
               </th>
@@ -49,7 +49,7 @@ export default function CollectionTable({ collection }: { collection: Game[] }) 
                 className="cursor-pointer py-2 pl-2 pr-4 text-center font-semibold text-gray-900 hover:underline md:pr-2 md:text-left"
                 onClick={() => handleSort("rating")}>
                 <span className="inline-flex items-center">
-                  <span className="hidden md:inline">My </span>Rating
+                  <span className="hidden md:inline">My&nbsp;</span>Rating
                   {sortColumn === "rating" && <SortIndicator direction={sortDirection} />}
                 </span>
               </th>
@@ -75,7 +75,7 @@ function CollectionRow({ game }: { game: Game }) {
           href={`https://boardgamegeek.com/boardgame/${game.gameId}/`}
           target="_blank"
           rel="noopener noreferrer"
-          className="link-hover link-primary link ">
+          className="text-primary hover:text-primary-focus hover:underline">
           {game.name}
         </a>
         <Expansions game={game} />
