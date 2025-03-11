@@ -54,18 +54,23 @@
     "tailwindcss": "3.4.17",
     "turbo": "2.4.4"
   },
+  "prettier": {
+    "tabWidth": 2,
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
+  "packageManager": "pnpm@10.6.2",
   "pnpm": {
     "overrides": {
-      "@nivo/annotations>react": "19.0.0",
-      "@nivo/arcs>react": "19.0.0",
-      "@nivo/axes>react": "19.0.0",
       "@nivo/bar>react": "19.0.0",
-      "@nivo/colors>react": "19.0.0",
+      "@nivo/bar>react-dom": "19.0.0",
       "@nivo/core>react": "19.0.0",
-      "@nivo/legends>react": "19.0.0",
+      "@nivo/core>react-dom": "19.0.0",
       "@nivo/pie>react": "19.0.0",
-      "@nivo/scales>react": "19.0.0",
-      "@nivo/tooltip>react": "19.0.0"
+      "@nivo/pie>react-dom": "19.0.0",
+      "@nivo/tooltip>react": "19.0.0",
+      "@nivo/tooltip>react-dom": "19.0.0"
     },
     "peerDependencyRules": {
       "allowedVersions": {
@@ -86,30 +91,5 @@
       "react-dom": "19.0.0"
     },
     "save-prefix": ""
-  },
-  "prettier": {
-    "tabWidth": 2,
-    "plugins": [
-      "prettier-plugin-tailwindcss"
-    ]
-  },
-  "packageManager": "pnpm@9.15.7+sha512.ed98f9c748442673c46964b70345bd2282c9b305e8eae539b34ab31d6ef24ef8dd59d8b55f27466f705500b009d9c113471cf87e544f3d5036b297330c26e996",
-  "overrides": {
-    "@nivo/bar": {
-      "react": "19.0.0",
-      "react-dom": "19.0.0"
-    },
-    "@nivo/core": {
-      "react": "19.0.0",
-      "react-dom": "19.0.0"
-    },
-    "@nivo/pie": {
-      "react": "19.0.0",
-      "react-dom": "19.0.0"
-    },
-    "@nivo/tooltip": {
-      "react": "19.0.0",
-      "react-dom": "19.0.0"
-    }
   }
 }

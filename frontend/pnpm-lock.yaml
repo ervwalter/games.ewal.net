@@ -5,18 +5,16 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@nivo/annotations>react': 19.0.0
-  '@nivo/arcs>react': 19.0.0
-  '@nivo/axes>react': 19.0.0
   '@nivo/bar>react': 19.0.0
-  '@nivo/colors>react': 19.0.0
+  '@nivo/bar>react-dom': 19.0.0
   '@nivo/core>react': 19.0.0
-  '@nivo/legends>react': 19.0.0
+  '@nivo/core>react-dom': 19.0.0
   '@nivo/pie>react': 19.0.0
-  '@nivo/scales>react': 19.0.0
+  '@nivo/pie>react-dom': 19.0.0
   '@nivo/tooltip>react': 19.0.0
+  '@nivo/tooltip>react-dom': 19.0.0
 
-packageExtensionsChecksum: df6c9cf42a88560a78c3c314f6389ca4
+packageExtensionsChecksum: sha256-EMuD2o4iAh9W7tDMWPAN0uqBq25ClPsoeP3ZDl5e8l0=
 
 importers:
 
@@ -52,9 +50,6 @@ importers:
       d3-scale-chromatic:
         specifier: 3.1.0
         version: 3.1.0
-      daisyui:
-        specifier: 5.0.0
-        version: 5.0.0
       dayjs:
         specifier: 1.11.13
         version: 1.11.13
@@ -438,17 +433,17 @@ packages:
   '@nivo/annotations@0.88.0':
     resolution: {integrity: sha512-NXE+1oIUn+EGWMQpnpeRMLgi2wyuzhGDoJQY4OUHissCUiNotid2oNQ/PXJwN0toiu+/j9SyhzI32xr70OPi7Q==}
     peerDependencies:
-      react: 19.0.0
+      react: '>= 16.14.0 < 19.0.0'
 
   '@nivo/arcs@0.88.0':
     resolution: {integrity: sha512-q7MHxT71s/KKlDDtSJS4L9+/JIa5HPZZrDr3ZFECLnvp0TC1qzyFMtVevN2CsXopSTj8poN4uFXPWxYVXOq8vg==}
     peerDependencies:
-      react: 19.0.0
+      react: '>= 16.14.0 < 19.0.0'
 
   '@nivo/axes@0.88.0':
     resolution: {integrity: sha512-jF7aIxzTNayV5cI1J/b9Q1FfpMBxTXGk3OwSigXMSfYWlliskDn2u0qGRLiYhuXFdQAWIp4oXsO1GcAQ0eRVdg==}
     peerDependencies:
-      react: 19.0.0
+      react: '>= 16.14.0 < 19.0.0'
 
   '@nivo/bar@0.88.0':
     resolution: {integrity: sha512-wckwuHWeCikxGvvdRfGL+dVFsUD9uHk1r9s7bWUfOD+p8BWhxtYqfXpHolEfgGg3UyPaHtpGA7P4zgE5vgo7gQ==}
@@ -458,7 +453,7 @@ packages:
   '@nivo/colors@0.88.0':
     resolution: {integrity: sha512-IZ+leYIqAlo7dyLHmsQwujanfRgXyoQ5H7PU3RWLEn1PP0zxDKLgEjFEDADpDauuslh2Tx0L81GNkWR6QSP0Mw==}
     peerDependencies:
-      react: 19.0.0
+      react: '>= 16.14.0 < 19.0.0'
 
   '@nivo/core@0.88.0':
     resolution: {integrity: sha512-XjUkA5MmwjLP38bdrJwn36Gj7T5SYMKD55LYQp/1nIJPdxqJ38dUfE4XyBDfIEgfP6yrHOihw3C63cUdnUBoiw==}
@@ -468,7 +463,7 @@ packages:
   '@nivo/legends@0.88.0':
     resolution: {integrity: sha512-d4DF9pHbD8LmGJlp/Gp1cF4e8y2wfQTcw3jVhbZj9zkb7ZWB7JfeF60VHRfbXNux9bjQ9U78/SssQqueVDPEmg==}
     peerDependencies:
-      react: 19.0.0
+      react: '>= 16.14.0 < 19.0.0'
 
   '@nivo/pie@0.88.0':
     resolution: {integrity: sha512-BE6dFWlGne1SnaEkFHNbg0sZBiwtcIqBFwmMRJ0F11SiKOzVeJyq3KiyY1I2ySSCx5VR1V8/MNBXzXFu3vJMAQ==}
@@ -958,9 +953,6 @@ packages:
   d3-time@3.1.0:
     resolution: {integrity: sha512-VqKjzBLejbSMT4IgbmVgDjpkYrNWUYJnbCGo874u7MMKIWsILRX+OpX/gTk8MqjpT1A/c6HY2dCA77ZN0lkQ2Q==}
     engines: {node: '>=12'}
-
-  daisyui@5.0.0:
-    resolution: {integrity: sha512-U0K9Bac3Bi3zZGm6ojrw12F0vBHTpEgf46zv/BYxLe07hF0Xnx7emIQliwaRBgJuYhY0BhwQ6wSnq5cJXHA2yA==}
 
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
@@ -3126,8 +3118,6 @@ snapshots:
   d3-time@3.1.0:
     dependencies:
       d3-array: 3.2.4
-
-  daisyui@5.0.0: {}
 
   damerau-levenshtein@1.0.8: {}
 
