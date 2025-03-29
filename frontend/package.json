@@ -27,8 +27,8 @@
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "0.6.11",
     "prop-types": "15.8.1",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-error-boundary": "5.0.0",
     "react-icons": "5.5.0",
     "react-svg": "16.3.0",
@@ -63,14 +63,14 @@
   "packageManager": "pnpm@10.7.0",
   "pnpm": {
     "overrides": {
-      "@nivo/bar>react": "19.0.0",
-      "@nivo/bar>react-dom": "19.0.0",
-      "@nivo/core>react": "19.0.0",
-      "@nivo/core>react-dom": "19.0.0",
-      "@nivo/pie>react": "19.0.0",
-      "@nivo/pie>react-dom": "19.0.0",
-      "@nivo/tooltip>react": "19.0.0",
-      "@nivo/tooltip>react-dom": "19.0.0"
+      "@nivo/bar>react": "19.1.0",
+      "@nivo/bar>react-dom": "19.1.0",
+      "@nivo/core>react": "19.1.0",
+      "@nivo/core>react-dom": "19.1.0",
+      "@nivo/pie>react": "19.1.0",
+      "@nivo/pie>react-dom": "19.1.0",
+      "@nivo/tooltip>react": "19.1.0",
+      "@nivo/tooltip>react-dom": "19.1.0"
     },
     "peerDependencyRules": {
       "allowedVersions": {
