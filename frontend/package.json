@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "2.2.0",
+    "@headlessui/react": "2.2.1",
     "@mantine/hooks": "7.17.3",
     "@nivo/bar": "0.88.0",
     "@nivo/core": "0.88.0",
