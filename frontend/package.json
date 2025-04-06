@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "2.2.0",
+    "@headlessui/react": "2.2.1",
     "@mantine/hooks": "7.17.3",
     "@nivo/bar": "0.88.0",
     "@nivo/core": "0.88.0",
@@ -32,7 +32,7 @@
     "react-error-boundary": "5.0.0",
     "react-icons": "5.5.0",
     "react-svg": "16.3.0",
-    "typescript": "5.8.2",
+    "typescript": "5.8.3",
     "undici": "7.7.0"
   },
   "devDependencies": {
@@ -45,7 +45,7 @@
     "@types/react-dom": "19.1.1",
     "@typescript-eslint/eslint-plugin": "8.29.0",
     "autoprefixer": "10.4.21",
-    "eslint": "9.23.0",
+    "eslint": "9.24.0",
     "eslint-config-next": "15.2.4",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
