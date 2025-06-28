@@ -22,9 +22,9 @@
     "d3-scale-chromatic": "3.1.0",
     "dayjs": "1.11.13",
     "lodash-es": "4.17.21",
-    "next": "15.4.0-canary.97",
+    "next": "15.4.0-canary.100",
     "next-plausible": "3.12.4",
-    "prettier": "3.6.1",
+    "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "0.6.13",
     "prop-types": "15.8.1",
     "react": "19.1.0",
@@ -33,10 +33,10 @@
     "react-icons": "5.5.0",
     "react-svg": "16.3.0",
     "typescript": "5.8.3",
-    "undici": "7.10.0"
+    "undici": "7.11.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "15.4.0-canary.97",
+    "@next/eslint-plugin-next": "15.4.0-canary.100",
     "@types/d3-scale-chromatic": "3.1.0",
     "@types/lodash": "4.17.19",
     "@types/lodash-es": "4.17.12",
@@ -60,7 +60,7 @@
       "prettier-plugin-tailwindcss"
     ]
   },
-  "packageManager": "pnpm@10.12.3",
+  "packageManager": "pnpm@10.12.4",
   "pnpm": {
     "overrides": {
       "@nivo/bar>react": "19.1.0",
