@@ -22,7 +22,7 @@
     "d3-scale-chromatic": "3.1.0",
     "dayjs": "1.11.13",
     "lodash-es": "4.17.21",
-    "next": "15.4.0-canary.126",
+    "next": "15.4.0-canary.127",
     "next-plausible": "3.12.4",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "0.6.14",
@@ -36,7 +36,7 @@
     "undici": "7.11.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "15.4.0-canary.126",
+    "@next/eslint-plugin-next": "15.4.0-canary.127",
     "@types/d3-scale-chromatic": "3.1.0",
     "@types/lodash": "4.17.20",
     "@types/lodash-es": "4.17.12",
@@ -45,7 +45,7 @@
     "@types/react-dom": "19.1.6",
     "@typescript-eslint/eslint-plugin": "8.36.0",
     "autoprefixer": "10.4.21",
-    "eslint": "9.30.1",
+    "eslint": "9.31.0",
     "eslint-config-next": "15.3.5",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
