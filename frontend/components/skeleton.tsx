@@ -70,7 +70,7 @@ export function SkeletonText({ className = "" }: SkeletonProps) {
 
 export function SkeletonImage({ className = "" }: SkeletonProps) {
   return (
-    <div className={clsx(className, "flex items-center justify-center rounded bg-gray-300")}>
+    <div className={clsx(className, "flex items-center justify-center rounded-sm bg-gray-300")}>
       <svg
         className="h-12 w-12 text-gray-200"
         xmlns="http://www.w3.org/2000/svg"

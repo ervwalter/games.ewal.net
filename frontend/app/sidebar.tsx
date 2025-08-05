@@ -69,7 +69,7 @@ export default function Sidebar() {
                   <div className="absolute top-0 right-0 -mr-12 pt-2">
                     <button
                       type="button"
-                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                      className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-white"
                       onClick={() => setSidebarOpen(false)}>
                       <span className="sr-only">Close sidebar</span>
                       <RiCloseLine className="h-6 w-6 text-white" aria-hidden="true" />
@@ -87,7 +87,7 @@ export default function Sidebar() {
                 </div>
               </Dialog.Panel>
             </Transition.Child>
-            <div className="w-14 flex-shrink-0">{/* Force sidebar to shrink to fit close icon */}</div>
+            <div className="w-14 shrink-0">{/* Force sidebar to shrink to fit close icon */}</div>
           </div>
         </Dialog>
       </Transition.Root>
@@ -111,7 +111,7 @@ export default function Sidebar() {
           <div className="flex flex-row items-center">
             <button
               type="button"
-              className="border-r border-gray-100 p-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="border-r border-gray-100 p-4 text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-indigo-500"
               onClick={() => setSidebarOpen(true)}>
               <span className="sr-only">Open sidebar</span>
               <RiMenuLine className="h-6 w-6" aria-hidden="true" />
@@ -126,7 +126,7 @@ export default function Sidebar() {
 
 function Header() {
   return (
-    <div className="flex flex-shrink-0 items-center px-4 text-2xl">
+    <div className="flex shrink-0 items-center px-4 text-2xl">
       {"//"}&nbsp;
       <a href="https://www.ewal.net" className="text-primary">
         Ewal.net
@@ -170,7 +170,7 @@ function NavItemInternal({ item, href, active, onClick }: NavItemInternalProps) 
       <item.icon
         className={clsx(
           active ? "text-gray-500" : "text-gray-400 group-hover:text-gray-500",
-          "mr-4 h-6 w-6 flex-shrink-0"
+          "mr-4 h-6 w-6 shrink-0"
         )}
         aria-hidden="true"
       />

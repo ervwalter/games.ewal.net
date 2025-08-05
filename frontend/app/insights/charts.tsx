@@ -14,19 +14,19 @@ export default function InsightsCharts({ insights }: { insights: Insights }) {
     <div className="flex flex-row flex-wrap items-center justify-start gap-4">
       <div className="flex w-full max-w-[350px] flex-col  ">
         <div className="text-center font-semibold">Plays by Location</div>
-        <div className="aspect-w-2 aspect-h-1">
+        <div className="aspect-[2/1] w-full">
           <PieChart colors={locationColors.slice(1)} data={getData(insights.locations, 8, "location")}></PieChart>
         </div>
       </div>
       <div className="flex w-full max-w-[350px] flex-col  ">
         <div className="text-center font-semibold">Plays by Day of Week</div>
-        <div className="aspect-w-2 aspect-h-1">
+        <div className="aspect-[2/1] w-full">
           <PieChart colors={dayColors.slice(1)} data={getData(insights.daysOfTheWeek, 8, "day")}></PieChart>
         </div>
       </div>
       <div className="flex w-full max-w-[350px] flex-col  ">
         <div className="text-center font-semibold">Plays by Player Count</div>
-        <div className="aspect-w-2 aspect-h-1">
+        <div className="aspect-[2/1] w-full">
           <PieChart
             colors={playerCountColors.slice(2)}
             data={getData(insights.playerCounts, 6, "players", "6+ players")}></PieChart>
@@ -34,7 +34,7 @@ export default function InsightsCharts({ insights }: { insights: Insights }) {
       </div>
       <div className="flex w-full max-w-[350px] flex-col  ">
         <div className="text-center font-semibold">Plays by Duration</div>
-        <div className="aspect-w-2 aspect-h-1">
+        <div className="aspect-[2/1] w-full">
           <PieChart colors={durationsColors.slice(2)} data={getData(insights.durations, 8, "bucket")}></PieChart>
         </div>
       </div>

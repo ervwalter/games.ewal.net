@@ -19,7 +19,7 @@ export default function RecentPlaysError({ error, resetErrorBoundary }: Fallback
         </p>
         <button
           onClick={resetErrorBoundary}
-          className="rounded bg-yellow-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500">
+          className="rounded bg-yellow-600 px-3 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-yellow-500">
           Try again
         </button>
       </div>
