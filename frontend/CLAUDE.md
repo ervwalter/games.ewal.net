@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-- **Development server**: `pnpm dev` (starts Next.js dev server)
-- **Build**: `pnpm build` (creates production build)  
-- **Lint**: `pnpm lint` (runs ESLint with Next.js config)
-- **Start production**: `pnpm start` (serves production build)
+- **Development server**: `npm run dev` (starts Next.js dev server)
+- **Build**: `npm run build` (creates production build)  
+- **Lint**: `npm run lint` (runs ESLint with Next.js config)
+- **Start production**: `npm start` (serves production build)
 
-The project uses pnpm as the package manager (version 10.14.0).
+The project uses npm as the package manager.
 
 ## Architecture Overview
 
