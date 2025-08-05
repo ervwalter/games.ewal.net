@@ -1,6 +1,6 @@
 using MoreLinq;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -17,7 +17,7 @@ using System.Net.Http;
 
 namespace GamesCacheUpdater
 {
-	public class CacheUpdater
+	public class CacheUpdater : IDisposable
 	{
 		private const string GameDetailsFilename = "game-details.json";
 		private const string PlaysFilename = "plays-{0}.json";
@@ -33,9 +33,8 @@ namespace GamesCacheUpdater
 		private string _username;
 		private string _password;
 		private BggClient _client;
-		CloudStorageAccount _storage;
-		CloudBlobClient _blob;
-		CloudBlobContainer _container;
+		BlobServiceClient _blobServiceClient;
+		BlobContainerClient _container;
 
 		List<GameDetails> _games;
 		Dictionary<string, GameDetails> _gamesById;
@@ -61,10 +60,9 @@ namespace GamesCacheUpdater
 
 		public async Task InitializeAsync(string storageConnectionString, string username, string password)
 		{
-			_storage = CloudStorageAccount.Parse(storageConnectionString);
-			_log.LogInformation("Connecting to Azure Storage using {0}", _storage.Credentials.AccountName);
-			_blob = _storage.CreateCloudBlobClient();
-			_container = _blob.GetContainerReference("gamescache");
+			_blobServiceClient = new BlobServiceClient(storageConnectionString);
+			_log.LogInformation("Connecting to Azure Storage using {0}", _blobServiceClient.AccountName);
+			_container = _blobServiceClient.GetBlobContainerClient("gamescache");
 			await _container.CreateIfNotExistsAsync();
 
 			_username = username;
@@ -109,10 +107,11 @@ namespace GamesCacheUpdater
 
 		private async Task<string> GetBlobString(string filename)
 		{
-			var blob = _container.GetBlockBlobReference(filename);
-			if (await blob.ExistsAsync())
+			var blobClient = _container.GetBlobClient(filename);
+			if (await blobClient.ExistsAsync())
 			{
-				return await blob.DownloadTextAsync();
+				var response = await blobClient.DownloadContentAsync();
+				return response.Value.Content.ToString();
 			}
 			return null;
 		}
@@ -619,10 +618,9 @@ namespace GamesCacheUpdater
 
 		private async Task UploadJsonBlob(string filename, string json)
 		{
-			var blob = _container.GetBlockBlobReference(filename);
-			await blob.UploadTextAsync(json);
-			blob.Properties.ContentType = "application/json";
-			await blob.SetPropertiesAsync();
+			var blobClient = _container.GetBlobClient(filename);
+			var blobHttpHeaders = new BlobHttpHeaders { ContentType = "application/json" };
+			await blobClient.UploadAsync(BinaryData.FromString(json), new BlobUploadOptions { HttpHeaders = blobHttpHeaders });
 		}
 
 		private async Task<bool> UploadDataIfChanged<T>(string filename, T data)
@@ -714,6 +712,11 @@ namespace GamesCacheUpdater
 				}
 				catch { }
 			}
+		}
+
+		public void Dispose()
+		{
+			_client?.Dispose();
 		}
 	}
 }

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ using Newtonsoft.Json;
 
 namespace GamesCacheUpdater
 {
-	internal class BggClient
+	internal class BggClient : IDisposable
 	{
 		private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 		private static DateTimeOffset _lastDownloadCompleted = DateTimeOffset.MinValue;
@@ -26,11 +27,21 @@ namespace GamesCacheUpdater
 		private const string LegacyBaseUrl = "https://boardgamegeek.com/xmlapi/";
 
 		private CookieContainer _cookies = new CookieContainer();
+		private HttpClient _httpClient;
 		private ILogger _log;
 
 		public BggClient(ILogger log)
 		{
 			_log = log;
+			var handler = new HttpClientHandler()
+			{
+				CookieContainer = _cookies,
+				UseCookies = true
+			};
+			_httpClient = new HttpClient(handler)
+			{
+				Timeout = TimeSpan.FromMilliseconds(15000)
+			};
 		}
 
 		private static void ResetMinimumTimeTracker()
@@ -64,12 +75,9 @@ namespace GamesCacheUpdater
 					while (data == null && retries < 5)
 					{
 						retries++;
-						var request = WebRequest.CreateHttp(url);
-						request.CookieContainer = _cookies;
-						request.Timeout = 15000;
 						try
 						{
-							using (var response = (HttpWebResponse)(await request.GetResponseAsync()))
+							using (var response = await _httpClient.GetAsync(url))
 							{
 								if (response.StatusCode == HttpStatusCode.Accepted)
 								{
@@ -91,25 +99,15 @@ namespace GamesCacheUpdater
 
 									continue;
 								}
-								using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-								{
-									data = XDocument.Parse(await reader.ReadToEndAsync());
-								}
+								response.EnsureSuccessStatusCode();
+								var content = await response.Content.ReadAsStringAsync();
+								data = XDocument.Parse(content);
 							}
 						}
-						catch (WebException ex)
+						catch (HttpRequestException ex)
 						{
-							_log.LogInformation("DEBUG: WebException: {0}", ex.Message);
-							var response = ex.Response as HttpWebResponse;
-							if (response != null)
-							{
-								_log.LogInformation("DEBUG: StatusCode: {0}", response.StatusCode);
-								throw;
-							}
-							else
-							{
-								throw;
-							}
+							_log.LogInformation("DEBUG: HttpRequestException: {0}", ex.Message);
+							throw;
 						}
 						catch (Exception ex)
 						{
@@ -152,49 +150,32 @@ namespace GamesCacheUpdater
 				// parameters.Add("username", username);
 				// parameters.Add("password", password);
 				var payload = JsonConvert.SerializeObject(new { credentials = new { username = username, password = password } });
-				// var data = Encoding.ASCII.GetBytes(parameters.ToString());
-				var data = Encoding.ASCII.GetBytes(payload);
-				var request = WebRequest.CreateHttp(LoginUrl);
-				request.CookieContainer = _cookies;
-				request.Timeout = 15000;
-				request.Method = "POST";
-				// request.ContentType = "application/x-www-form-urlencoded";
-				request.ContentType = "application/json";
-				request.ContentLength = data.Length;
-				//request.AllowAutoRedirect = false;
-				using (var postStream = await request.GetRequestStreamAsync())
+				var content = new StringContent(payload, Encoding.UTF8, "application/json");
+				
+				HttpResponseMessage response = null;
+				try
 				{
-					postStream.Write(data, 0, data.Length);
-					postStream.Flush();
-					HttpWebResponse response = null;
 					try
 					{
-						try
-						{
-							response = (HttpWebResponse)(await request.GetResponseAsync());
-						}
-						catch (WebException ex)
-						{
-							response = (HttpWebResponse)ex.Response;
-							if (response.StatusCode != HttpStatusCode.Redirect && response.StatusCode != HttpStatusCode.MovedPermanently)
-							{
-								throw (ex);
-							}
-						}
-
-						var usernameCookie = _cookies.GetCookies(new Uri("https://boardgamegeek.com"))["bggusername"];
-						if (usernameCookie == null || usernameCookie.Value == null || usernameCookie.Value != username)
-						{
-							throw new Exception("Invalid login");
-						}
+						response = await _httpClient.PostAsync(LoginUrl, content);
 					}
-					finally
+					catch (HttpRequestException)
 					{
-						if (response != null)
+						if (response?.StatusCode != HttpStatusCode.Redirect && response?.StatusCode != HttpStatusCode.MovedPermanently)
 						{
-							response.Dispose();
+							throw;
 						}
 					}
+
+					var usernameCookie = _cookies.GetCookies(new Uri("https://boardgamegeek.com"))["bggusername"];
+					if (usernameCookie == null || usernameCookie.Value == null || usernameCookie.Value != username)
+					{
+						throw new Exception("Invalid login");
+					}
+				}
+				finally
+				{
+					response?.Dispose();
 				}
 			}
 			finally
@@ -485,6 +466,11 @@ namespace GamesCacheUpdater
 
 
 		#endregion
+
+		public void Dispose()
+		{
+			_httpClient?.Dispose();
+		}
 	}
 
 

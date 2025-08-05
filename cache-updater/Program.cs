@@ -94,7 +94,7 @@ namespace GamesCacheUpdater
                         throw new Exception("CACHE_STORAGE environment variable is not set");
                     }
 
-                    var updater = new CacheUpdater(logger);
+                    using var updater = new CacheUpdater(logger);
                     await updater.InitializeAsync(storage, username, password);
                     await updater.DownloadPlaysAsync();
                     await updater.DownloadTopTenAsync();
