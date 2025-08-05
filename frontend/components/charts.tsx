@@ -72,6 +72,12 @@ interface PieProps<T extends PieDatum> {
 }
 
 export function PieChart<T extends PieDatum>({ data, colors, showLabels = false }: PieProps<T>) {
+  console.log('PieChart render:', { data: data?.length, colors, showLabels });
+  
+  if (!data || data.length === 0) {
+    return <div className="flex items-center justify-center h-full text-gray-500">No data available</div>;
+  }
+
   return (
     <ResponsivePie
       data={data}
