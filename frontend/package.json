@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@headlessui/react": "2.2.7",
-    "@mantine/hooks": "8.2.2",
+    "@mantine/hooks": "8.2.4",
     "@nivo/bar": "0.99.0",
     "@nivo/core": "0.99.0",
     "@nivo/pie": "0.99.0",
@@ -22,7 +22,7 @@
     "d3-scale-chromatic": "3.1.0",
     "dayjs": "1.11.13",
     "lodash-es": "4.17.21",
-    "next": "15.4.5",
+    "next": "15.4.6",
     "next-plausible": "3.12.4",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "0.6.14",
@@ -36,7 +36,7 @@
     "undici": "7.13.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "15.4.5",
+    "@next/eslint-plugin-next": "15.4.6",
     "@tailwindcss/postcss": "4.1.11",
     "@types/d3-scale-chromatic": "3.1.0",
     "@types/lodash": "4.17.20",
@@ -46,7 +46,7 @@
     "@types/react-dom": "19.1.7",
     "@typescript-eslint/eslint-plugin": "8.39.0",
     "eslint": "9.32.0",
-    "eslint-config-next": "15.4.5",
+    "eslint-config-next": "15.4.6",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
     "globals": "16.3.0",
