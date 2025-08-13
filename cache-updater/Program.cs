@@ -74,7 +74,15 @@ namespace GamesCacheUpdater
                 .AddEnvironmentVariables()
                 .Build();
 
-            while (true)
+#if DEBUG
+            // In debug builds, run once and exit
+            var runOnce = true;
+#else
+            // In release builds, run continuously
+            var runOnce = false;
+#endif
+            
+            do
             {
                 try
                 {
@@ -83,19 +91,25 @@ namespace GamesCacheUpdater
                     
                     var username = config["BGG_USERNAME"];
                     var password = config["BGG_PASSWORD"];
-                    var storage = config["CACHE_STORAGE"];
+                    var supabaseUrl = config["SUPABASE_URL"];
+                    var supabaseServiceKey = config["SUPABASE_SERVICE_KEY"];
+                    var bucketName = config["SUPABASE_BUCKET_NAME"] ?? "games";
                     
                     if (string.IsNullOrEmpty(username))
                     {
                         throw new Exception("BGG_USERNAME environment variable is not set");
                     }
-                    if (string.IsNullOrEmpty(storage))
+                    if (string.IsNullOrEmpty(supabaseUrl))
                     {
-                        throw new Exception("CACHE_STORAGE environment variable is not set");
+                        throw new Exception("SUPABASE_URL environment variable is not set");
+                    }
+                    if (string.IsNullOrEmpty(supabaseServiceKey))
+                    {
+                        throw new Exception("SUPABASE_SERVICE_KEY environment variable is not set");
                     }
 
                     using var updater = new CacheUpdater(logger);
-                    await updater.InitializeAsync(storage, username, password);
+                    await updater.InitializeAsync(supabaseUrl, supabaseServiceKey, bucketName, username, password);
                     await updater.DownloadPlaysAsync();
                     await updater.DownloadTopTenAsync();
                     
@@ -121,6 +135,12 @@ namespace GamesCacheUpdater
                     await Task.Delay(70000); // 70 seconds
                     await updater.TriggerFrontendRefresh();
 
+                    if (runOnce)
+                    {
+                        logger.LogInformation("Debug mode: Exiting after single iteration");
+                        return;
+                    }
+
                     // Get delay from environment variable or use default (15 minutes)
                     var delayMinutes = int.TryParse(config["UPDATE_INTERVAL_MINUTES"], out var mins) ? mins : 15;
                     logger.LogInformation($"Waiting {delayMinutes} minutes before next update...");
@@ -129,10 +149,17 @@ namespace GamesCacheUpdater
                 catch (Exception ex)
                 {
                     logger.LogError(ex.ToString());
+                    
+                    if (runOnce)
+                    {
+                        logger.LogError("Debug mode: Exiting due to error");
+                        return;
+                    }
+                    
                     // Wait 5 minutes before retrying after an error
                     await Task.Delay(TimeSpan.FromMinutes(5));
                 }
-            }
+            } while (!runOnce);
         }
     }
 }

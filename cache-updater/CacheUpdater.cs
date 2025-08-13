@@ -1,6 +1,6 @@
 using MoreLinq;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
+using Supabase;
+using Supabase.Storage;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -33,8 +33,8 @@ namespace GamesCacheUpdater
 		private string _username;
 		private string _password;
 		private BggClient _client;
-		BlobServiceClient _blobServiceClient;
-		BlobContainerClient _container;
+		Supabase.Client _supabaseClient;
+		string _bucketName;
 
 		List<GameDetails> _games;
 		Dictionary<string, GameDetails> _gamesById;
@@ -58,12 +58,18 @@ namespace GamesCacheUpdater
 			_log = log;
 		}
 
-		public async Task InitializeAsync(string storageConnectionString, string username, string password)
+		public async Task InitializeAsync(string supabaseUrl, string supabaseServiceKey, string bucketName, string username, string password)
 		{
-			_blobServiceClient = new BlobServiceClient(storageConnectionString);
-			_log.LogInformation("Connecting to Azure Storage using {0}", _blobServiceClient.AccountName);
-			_container = _blobServiceClient.GetBlobContainerClient("gamescache");
-			await _container.CreateIfNotExistsAsync();
+			var options = new SupabaseOptions
+			{
+				AutoConnectRealtime = false // We don't need realtime for this app
+			};
+			
+			_supabaseClient = new Supabase.Client(supabaseUrl, supabaseServiceKey, options);
+			await _supabaseClient.InitializeAsync();
+			
+			_bucketName = bucketName;
+			_log.LogInformation("Connected to Supabase Storage using service role for bucket '{0}'", _bucketName);
 
 			_username = username;
 			_password = password;
@@ -107,13 +113,17 @@ namespace GamesCacheUpdater
 
 		private async Task<string> GetBlobString(string filename)
 		{
-			var blobClient = _container.GetBlobClient(filename);
-			if (await blobClient.ExistsAsync())
+			try
 			{
-				var response = await blobClient.DownloadContentAsync();
-				return response.Value.Content.ToString();
+				var bytes = await _supabaseClient.Storage
+					.From(_bucketName)
+					.Download(filename, (TransformOptions?)null, null);
+				return Encoding.UTF8.GetString(bytes);
 			}
-			return null;
+			catch
+			{
+				return null; // File doesn't exist
+			}
 		}
 
 		private async Task<T> GetExistingBlob<T>(string filename, bool createIfMissingOrInvalid) where T : new()
@@ -618,9 +628,14 @@ namespace GamesCacheUpdater
 
 		private async Task UploadJsonBlob(string filename, string json)
 		{
-			var blobClient = _container.GetBlobClient(filename);
-			var blobHttpHeaders = new BlobHttpHeaders { ContentType = "application/json" };
-			await blobClient.UploadAsync(BinaryData.FromString(json), new BlobUploadOptions { HttpHeaders = blobHttpHeaders });
+			var bytes = Encoding.UTF8.GetBytes(json);
+			await _supabaseClient.Storage
+				.From(_bucketName)
+				.Upload(bytes, filename, new Supabase.Storage.FileOptions
+				{
+					ContentType = "application/json",
+					Upsert = true // Overwrite if exists
+				});
 		}
 
 		private async Task<bool> UploadDataIfChanged<T>(string filename, T data)
@@ -717,6 +732,7 @@ namespace GamesCacheUpdater
 		public void Dispose()
 		{
 			_client?.Dispose();
+			// Supabase client doesn't need explicit disposal
 		}
 	}
 }

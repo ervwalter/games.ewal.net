@@ -16,6 +16,7 @@ ENV UPDATE_INTERVAL_MINUTES="15"
 # Document required environment variables
 # BGG_USERNAME - Your BGG username (required)
 # BGG_PASSWORD - Your BGG password (optional)
-# CACHE_STORAGE - Azure Storage connection string (required)
+# SUPABASE_URL - Your Supabase project URL (required)
+# SUPABASE_SERVICE_KEY - Your Supabase service role key (required, keep secret!)
 
 ENTRYPOINT ["dotnet", "GamesCacheUpdater.dll"]

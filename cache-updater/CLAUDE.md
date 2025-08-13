@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Application Overview
 
-This is a **BoardGameGeek (BGG) Cache Updater** - a long-running containerized service that synchronizes data between BoardGameGeek's XML API and a Next.js frontend at games.ewal.net. It acts as a data pipeline: **BGG XML API → Cache Updater → Azure Blob Storage → Next.js Frontend**.
+This is a **BoardGameGeek (BGG) Cache Updater** - a long-running containerized service that synchronizes data between BoardGameGeek's XML API and a Next.js frontend at games.ewal.net. It acts as a data pipeline: **BGG XML API → Cache Updater → S3-Compatible Storage → Next.js Frontend**.
 
-The service runs in an infinite loop (default 15-minute intervals), downloading board game data, processing it, storing it as JSON in Azure Blob Storage, and triggering frontend cache refreshes.
+The service runs in an infinite loop (default 15-minute intervals), downloading board game data, processing it, storing it as JSON in S3-compatible storage, and triggering frontend cache refreshes.
 
 ## Build and Development Commands
 
@@ -36,7 +36,7 @@ sudo rm -rf obj bin  # Use sudo if permission denied
 ### Data Pipeline Process
 1. **Collection Phase**: Download plays, collection, top-10, and game details from BGG API
 2. **Processing Phase**: Enrich data with mechanics, ratings, expansion relationships, statistics
-3. **Storage Phase**: Serialize to JSON and upload to Azure Blob Storage (only if changed)
+3. **Storage Phase**: Serialize to JSON and upload to S3-compatible storage (only if changed)
 4. **Integration Phase**: Trigger Next.js ISR cache refresh by hitting specific frontend URLs
 
 ### Key Data Files Generated
@@ -53,10 +53,14 @@ The application uses **environment variables only** (no config files):
 
 **Required:**
 - `BGG_USERNAME` - BoardGameGeek username
-- `CACHE_STORAGE` - Azure Storage connection string
+- `S3_ENDPOINT` - S3-compatible storage endpoint URL
+- `S3_BUCKET_NAME` - S3 bucket name
+- `S3_ACCESS_KEY` - S3 access key
+- `S3_SECRET_KEY` - S3 secret key
 
 **Optional:**
 - `BGG_PASSWORD` - For accessing private BGG data
+- `S3_REGION` - S3 region (default: us-east-1)
 - `UPDATE_INTERVAL_MINUTES` - Update frequency (default: 15)
 
 ## BGG API Integration Patterns
@@ -80,7 +84,7 @@ The application uses **environment variables only** (no config files):
 ## Integration with Frontend
 
 The service maintains tight integration with the Next.js frontend:
-- **Change Detection**: Only uploads modified data to minimize Azure costs
+- **Change Detection**: Only uploads modified data to minimize storage costs
 - **ISR Triggering**: Hits specific frontend URLs to invalidate Next.js ISR cache
 - **60-Second Delay**: Waits for frontend ISR cache expiration before triggering refresh
 - **JSON Contract**: Produces camelCase JSON matching frontend TypeScript interfaces
@@ -88,7 +92,7 @@ The service maintains tight integration with the Next.js frontend:
 ## Development Notes
 
 ### Resource Management
-- Implements IDisposable pattern for HttpClient and Azure clients
+- Implements IDisposable pattern for HttpClient and S3 clients
 - Uses `using` statements in Program.cs for proper cleanup in the infinite loop
 
 ### Error Handling

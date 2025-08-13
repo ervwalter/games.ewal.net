@@ -15,7 +15,22 @@ const CACHE_TAGS = {
   insights: 'insights',
 } as const;
 
-const BASE_URL = 'https://ewalgamescache.blob.core.windows.net/gamescache';
+// Get environment variables
+const supabaseUrl = process.env.SUPABASE_URL;
+const bucketName = process.env.SUPABASE_BUCKET_NAME;
+const username = process.env.BGG_USERNAME;
+
+if (!supabaseUrl) {
+  throw new Error('SUPABASE_URL environment variable is required');
+}
+if (!bucketName) {
+  throw new Error('SUPABASE_BUCKET_NAME environment variable is required');
+}
+if (!username) {
+  throw new Error('BGG_USERNAME environment variable is required');
+}
+
+const BASE_URL = `${supabaseUrl}/storage/v1/object/public/${bucketName}`;
 
 async function fetchFromCache<T>(
   endpoint: string,
@@ -49,7 +64,7 @@ async function fetchFromCache<T>(
 
 export const getPlays = cache(
   async () => {
-    const plays = await fetchFromCache<Play[]>('plays-ervwalter.json', [CACHE_TAGS.plays]);
+    const plays = await fetchFromCache<Play[]>(`plays-${username}.json`, [CACHE_TAGS.plays]);
     return plays.sort((a, b) => {
       const dateCompare = b.playDate.localeCompare(a.playDate);
       if (dateCompare !== 0) return dateCompare;
@@ -71,7 +86,7 @@ export const getRecentPlays = cache(
 
 export const getCollection = cache(
   async () => {
-    const collection = await fetchFromCache<Game[]>('collection-ervwalter.json', [CACHE_TAGS.collection]);
+    const collection = await fetchFromCache<Game[]>(`collection-${username}.json`, [CACHE_TAGS.collection]);
     return collection.sort((a, b) => a.sortableName.localeCompare(b.sortableName));
   },
   ['collection'],
@@ -80,7 +95,7 @@ export const getCollection = cache(
 
 export const getTopTen = cache(
   async () => {
-    const topten = await fetchFromCache<TopTenItem[]>('top10-ervwalter.json', [CACHE_TAGS.topTen]);
+    const topten = await fetchFromCache<TopTenItem[]>(`top10-${username}.json`, [CACHE_TAGS.topTen]);
     return topten;
   },
   ['top-ten'],
@@ -89,7 +104,7 @@ export const getTopTen = cache(
 
 export const getStats = cache(
   async () => {
-    return fetchFromCache<Stats>('stats-ervwalter.json', [CACHE_TAGS.stats]);
+    return fetchFromCache<Stats>(`stats-${username}.json`, [CACHE_TAGS.stats]);
   },
   ['stats'],
   { revalidate: 60, tags: [CACHE_TAGS.stats] }
