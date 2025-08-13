@@ -12,11 +12,14 @@ COPY --from=build /app/publish .
 
 # Only define non-sensitive environment variables with defaults
 ENV UPDATE_INTERVAL_MINUTES="15"
+ENV DO_SPACES_REGION="nyc3"
 
 # Document required environment variables
 # BGG_USERNAME - Your BGG username (required)
 # BGG_PASSWORD - Your BGG password (optional)
-# SUPABASE_URL - Your Supabase project URL (required)
-# SUPABASE_SERVICE_KEY - Your Supabase service role key (required, keep secret!)
+# DO_SPACES_KEY - Your Digital Ocean Spaces access key (required, keep secret!)
+# DO_SPACES_SECRET - Your Digital Ocean Spaces secret key (required, keep secret!)
+# DO_SPACES_BUCKET - Your Digital Ocean Spaces bucket name (required)
+# DO_SPACES_REGION - Your Digital Ocean Spaces region (optional, defaults to nyc3)
 
 ENTRYPOINT ["dotnet", "GamesCacheUpdater.dll"]

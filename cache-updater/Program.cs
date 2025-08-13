@@ -91,25 +91,30 @@ namespace GamesCacheUpdater
                     
                     var username = config["BGG_USERNAME"];
                     var password = config["BGG_PASSWORD"];
-                    var supabaseUrl = config["SUPABASE_URL"];
-                    var supabaseServiceKey = config["SUPABASE_SERVICE_KEY"];
-                    var bucketName = config["SUPABASE_BUCKET_NAME"] ?? "games";
+                    var doSpacesKey = config["DO_SPACES_KEY"];
+                    var doSpacesSecret = config["DO_SPACES_SECRET"];
+                    var doSpacesRegion = config["DO_SPACES_REGION"] ?? "nyc3";
+                    var bucketName = config["DO_SPACES_BUCKET"] ?? "games";
                     
                     if (string.IsNullOrEmpty(username))
                     {
                         throw new Exception("BGG_USERNAME environment variable is not set");
                     }
-                    if (string.IsNullOrEmpty(supabaseUrl))
+                    if (string.IsNullOrEmpty(doSpacesKey))
                     {
-                        throw new Exception("SUPABASE_URL environment variable is not set");
+                        throw new Exception("DO_SPACES_KEY environment variable is not set");
                     }
-                    if (string.IsNullOrEmpty(supabaseServiceKey))
+                    if (string.IsNullOrEmpty(doSpacesSecret))
                     {
-                        throw new Exception("SUPABASE_SERVICE_KEY environment variable is not set");
+                        throw new Exception("DO_SPACES_SECRET environment variable is not set");
+                    }
+                    if (string.IsNullOrEmpty(bucketName))
+                    {
+                        throw new Exception("DO_SPACES_BUCKET environment variable is not set");
                     }
 
                     using var updater = new CacheUpdater(logger);
-                    await updater.InitializeAsync(supabaseUrl, supabaseServiceKey, bucketName, username, password);
+                    await updater.InitializeAsync(doSpacesKey, doSpacesSecret, doSpacesRegion, bucketName, username, password);
                     await updater.DownloadPlaysAsync();
                     await updater.DownloadTopTenAsync();
                     

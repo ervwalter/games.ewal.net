@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Application Overview
 
-This is a **BoardGameGeek (BGG) Cache Updater** - a long-running containerized service that synchronizes data between BoardGameGeek's XML API and a Next.js frontend at games.ewal.net. It acts as a data pipeline: **BGG XML API → Cache Updater → S3-Compatible Storage → Next.js Frontend**.
+This is a **BoardGameGeek (BGG) Cache Updater** - a long-running containerized service that synchronizes data between BoardGameGeek's XML API and a Next.js frontend at games.ewal.net. It acts as a data pipeline: **BGG XML API → Cache Updater → Digital Ocean Spaces → Next.js Frontend**.
 
-The service runs in an infinite loop (default 15-minute intervals), downloading board game data, processing it, storing it as JSON in S3-compatible storage, and triggering frontend cache refreshes.
+The service runs in an infinite loop (default 15-minute intervals), downloading board game data, processing it, storing it as JSON in Digital Ocean Spaces, and triggering frontend cache refreshes. It features intelligent caching that uses ETags to minimize bandwidth usage - only downloading files when they've actually changed.
 
 ## Build and Development Commands
 
@@ -19,7 +19,7 @@ dotnet run
 
 # Docker build and run
 docker build -t bgg-cache-updater .
-docker run -d -e BGG_USERNAME=your_username -e CACHE_STORAGE=your_connection_string bgg-cache-updater
+docker run -d -e BGG_USERNAME=your_username -e DO_SPACES_KEY=your_key -e DO_SPACES_SECRET=your_secret -e DO_SPACES_BUCKET=your_bucket bgg-cache-updater
 
 # Clean build artifacts
 sudo rm -rf obj bin  # Use sudo if permission denied
@@ -53,14 +53,13 @@ The application uses **environment variables only** (no config files):
 
 **Required:**
 - `BGG_USERNAME` - BoardGameGeek username
-- `S3_ENDPOINT` - S3-compatible storage endpoint URL
-- `S3_BUCKET_NAME` - S3 bucket name
-- `S3_ACCESS_KEY` - S3 access key
-- `S3_SECRET_KEY` - S3 secret key
+- `DO_SPACES_KEY` - Digital Ocean Spaces access key
+- `DO_SPACES_SECRET` - Digital Ocean Spaces secret key
+- `DO_SPACES_BUCKET` - Digital Ocean Spaces bucket name
 
 **Optional:**
 - `BGG_PASSWORD` - For accessing private BGG data
-- `S3_REGION` - S3 region (default: us-east-1)
+- `DO_SPACES_REGION` - Digital Ocean Spaces region (default: nyc3)
 - `UPDATE_INTERVAL_MINUTES` - Update frequency (default: 15)
 
 ## BGG API Integration Patterns

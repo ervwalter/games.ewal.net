@@ -1,6 +1,6 @@
 using MoreLinq;
-using Supabase;
-using Supabase.Storage;
+using Amazon.S3;
+using Amazon.S3.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -33,8 +34,18 @@ namespace GamesCacheUpdater
 		private string _username;
 		private string _password;
 		private BggClient _client;
-		Supabase.Client _supabaseClient;
-		string _bucketName;
+		private AmazonS3Client _s3Client;
+		private string _bucketName;
+		
+		// In-memory cache for reducing bandwidth usage
+		private Dictionary<string, CachedContent> _contentCache = new();
+
+		private class CachedContent
+		{
+			public string Content { get; set; }
+			public string ETag { get; set; }
+			public DateTime CachedAt { get; set; }
+		}
 
 		List<GameDetails> _games;
 		Dictionary<string, GameDetails> _gamesById;
@@ -58,18 +69,17 @@ namespace GamesCacheUpdater
 			_log = log;
 		}
 
-		public async Task InitializeAsync(string supabaseUrl, string supabaseServiceKey, string bucketName, string username, string password)
+		public async Task InitializeAsync(string doSpacesKey, string doSpacesSecret, string doSpacesRegion, string bucketName, string username, string password)
 		{
-			var options = new SupabaseOptions
+			var s3Config = new AmazonS3Config
 			{
-				AutoConnectRealtime = false // We don't need realtime for this app
+				ServiceURL = $"https://{doSpacesRegion}.digitaloceanspaces.com",
+				ForcePathStyle = false
 			};
 			
-			_supabaseClient = new Supabase.Client(supabaseUrl, supabaseServiceKey, options);
-			await _supabaseClient.InitializeAsync();
-			
+			_s3Client = new AmazonS3Client(doSpacesKey, doSpacesSecret, s3Config);
 			_bucketName = bucketName;
-			_log.LogInformation("Connected to Supabase Storage using service role for bucket '{0}'", _bucketName);
+			_log.LogInformation("Connected to Digital Ocean Spaces using region '{0}' for bucket '{1}'", doSpacesRegion, _bucketName);
 
 			_username = username;
 			_password = password;
@@ -113,14 +123,54 @@ namespace GamesCacheUpdater
 
 		private async Task<string> GetBlobString(string filename)
 		{
+			return await GetFileWithCaching(filename);
+		}
+
+		private async Task<string> GetFileWithCaching(string key)
+		{
 			try
 			{
-				var bytes = await _supabaseClient.Storage
-					.From(_bucketName)
-					.Download(filename, (TransformOptions?)null, null);
-				return Encoding.UTF8.GetString(bytes);
+				// Check ETag first (minimal bandwidth)
+				var headRequest = new GetObjectMetadataRequest
+				{
+					BucketName = _bucketName,
+					Key = key
+				};
+				
+				var metadata = await _s3Client.GetObjectMetadataAsync(headRequest);
+				var currentETag = metadata.ETag;
+				
+				// Check if we have cached content with matching ETag
+				if (_contentCache.TryGetValue(key, out var cached) && 
+					cached.ETag == currentETag)
+				{
+					_log.LogInformation("Using cached {0} (ETag match)", key);
+					return cached.Content;
+				}
+				
+				// ETag changed or not cached - download
+				_log.LogInformation("Downloading {0} (ETag changed or not cached)", key);
+				var getRequest = new GetObjectRequest
+				{
+					BucketName = _bucketName,
+					Key = key
+				};
+				
+				using var response = await _s3Client.GetObjectAsync(getRequest);
+				using var reader = new StreamReader(response.ResponseStream);
+				var content = await reader.ReadToEndAsync();
+				
+				// Update cache
+				_contentCache[key] = new CachedContent
+				{
+					Content = content,
+					ETag = currentETag,
+					CachedAt = DateTime.UtcNow
+				};
+				
+				return content;
 			}
-			catch
+			catch (AmazonS3Exception ex) when (ex.StatusCode == HttpStatusCode.NotFound)
 			{
 				return null; // File doesn't exist
 			}
@@ -628,14 +678,24 @@ namespace GamesCacheUpdater
 
 		private async Task UploadJsonBlob(string filename, string json)
 		{
-			var bytes = Encoding.UTF8.GetBytes(json);
-			await _supabaseClient.Storage
-				.From(_bucketName)
-				.Upload(bytes, filename, new Supabase.Storage.FileOptions
-				{
-					ContentType = "application/json",
-					Upsert = true // Overwrite if exists
-				});
+			var putRequest = new PutObjectRequest
+			{
+				BucketName = _bucketName,
+				Key = filename,
+				ContentBody = json,
+				ContentType = "application/json",
+				CannedACL = S3CannedACL.PublicRead
+			};
+			
+			var response = await _s3Client.PutObjectAsync(putRequest);
+			
+			// Update cache with new ETag
+			_contentCache[filename] = new CachedContent
+			{
+				Content = json,
+				ETag = response.ETag,
+				CachedAt = DateTime.UtcNow
+			};
 		}
 
 		private async Task<bool> UploadDataIfChanged<T>(string filename, T data)
@@ -732,7 +792,7 @@ namespace GamesCacheUpdater
 		public void Dispose()
 		{
 			_client?.Dispose();
-			// Supabase client doesn't need explicit disposal
+			_s3Client?.Dispose();
 		}
 	}
 }

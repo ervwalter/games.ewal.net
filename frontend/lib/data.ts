@@ -17,25 +17,20 @@ const CACHE_TAGS = {
 
 // Helper function to get and validate environment variables at runtime
 function getConfig() {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const bucketName = process.env.SUPABASE_BUCKET_NAME;
+  const doSpacesUrl = process.env.DO_SPACES_URL;
   const username = process.env.BGG_USERNAME;
 
-  if (!supabaseUrl) {
-    throw new Error('SUPABASE_URL environment variable is required');
-  }
-  if (!bucketName) {
-    throw new Error('SUPABASE_BUCKET_NAME environment variable is required');
+  if (!doSpacesUrl) {
+    throw new Error('DO_SPACES_URL environment variable is required');
   }
   if (!username) {
     throw new Error('BGG_USERNAME environment variable is required');
   }
 
   return {
-    supabaseUrl,
-    bucketName,
+    doSpacesUrl,
     username,
-    baseUrl: `${supabaseUrl}/storage/v1/object/public/${bucketName}`
+    baseUrl: doSpacesUrl
   };
 }
 

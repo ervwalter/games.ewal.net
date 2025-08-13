@@ -6,10 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is **games.ewal.net** - a two-component system for displaying BoardGameGeek collection and play statistics:
 
-1. **Cache Updater** (C#/.NET 9) - Downloads data from BoardGameGeek API and stores in Supabase Storage
+1. **Cache Updater** (C#/.NET 9) - Downloads data from BoardGameGeek API and stores in Digital Ocean Spaces
 2. **Frontend** (Next.js 15/TypeScript) - Web application displaying the cached data
 
-**Architecture**: BGG XML API → Cache Updater → Supabase Storage → Next.js Frontend
+**Architecture**: BGG XML API → Cache Updater → Digital Ocean Spaces → Next.js Frontend
 
 ## Development Commands
 
@@ -34,7 +34,7 @@ dotnet run
 
 # Docker
 docker build -t bgg-cache-updater .
-docker run -d -e BGG_USERNAME=username -e SUPABASE_URL=https://your-project.supabase.co -e SUPABASE_SERVICE_KEY=your-service-key bgg-cache-updater
+docker run -d -e BGG_USERNAME=username -e DO_SPACES_KEY=your-key -e DO_SPACES_SECRET=your-secret -e DO_SPACES_BUCKET=your-bucket bgg-cache-updater
 
 # Clean artifacts
 sudo rm -rf obj bin
@@ -45,14 +45,14 @@ sudo rm -rf obj bin
 ### Data Flow
 - Cache Updater runs continuously (15-min intervals) fetching BGG data
 - Processes and enriches data (expansions, statistics, cooperative detection)
-- Uploads JSON to Supabase Storage only when changed
+- Uploads JSON to Digital Ocean Spaces only when changed
 - Triggers Next.js ISR cache invalidation via API calls
 
 ### Frontend Data Architecture
 - Server-side data fetching with `unstable_cache` (60s revalidation)
 - Cache tags for selective invalidation via `/api/revalidate` endpoint
 - Hardcoded username: `ervwalter` in data fetching functions
-- Base URL: Supabase Storage public URL (configured via environment variable)
+- Base URL: Digital Ocean Spaces public URL (configured via environment variable)
 
 ### BGG API Integration
 - Rate-limited: 5.1s between requests with semaphore throttling
@@ -80,16 +80,18 @@ sudo rm -rf obj bin
 ### Cache Updater
 **Required:**
 - `BGG_USERNAME` - BoardGameGeek username
-- `SUPABASE_URL` - Supabase project URL
-- `SUPABASE_SERVICE_KEY` - Supabase service role key (keep secret!)
+- `DO_SPACES_KEY` - Digital Ocean Spaces access key (keep secret!)
+- `DO_SPACES_SECRET` - Digital Ocean Spaces secret key (keep secret!)
+- `DO_SPACES_BUCKET` - Digital Ocean Spaces bucket name
 
 **Optional:**
 - `BGG_PASSWORD` - For private BGG data access
+- `DO_SPACES_REGION` - Digital Ocean Spaces region (default: nyc3)
 - `UPDATE_INTERVAL_MINUTES` - Update frequency (default: 15)
 
 ### Frontend
 **Required:**
-- `STORAGE_BASE_URL` - Supabase Storage public URL for data files
+- `DO_SPACES_URL` - Digital Ocean Spaces public URL (e.g., https://bucket.region.digitaloceanspaces.com)
 
 **Optional:**
 - Plausible analytics variables for production
