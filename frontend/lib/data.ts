@@ -15,30 +15,39 @@ const CACHE_TAGS = {
   insights: 'insights',
 } as const;
 
-// Get environment variables
-const supabaseUrl = process.env.SUPABASE_URL;
-const bucketName = process.env.SUPABASE_BUCKET_NAME;
-const username = process.env.BGG_USERNAME;
+// Helper function to get and validate environment variables at runtime
+function getConfig() {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const bucketName = process.env.SUPABASE_BUCKET_NAME;
+  const username = process.env.BGG_USERNAME;
 
-if (!supabaseUrl) {
-  throw new Error('SUPABASE_URL environment variable is required');
-}
-if (!bucketName) {
-  throw new Error('SUPABASE_BUCKET_NAME environment variable is required');
-}
-if (!username) {
-  throw new Error('BGG_USERNAME environment variable is required');
-}
+  if (!supabaseUrl) {
+    throw new Error('SUPABASE_URL environment variable is required');
+  }
+  if (!bucketName) {
+    throw new Error('SUPABASE_BUCKET_NAME environment variable is required');
+  }
+  if (!username) {
+    throw new Error('BGG_USERNAME environment variable is required');
+  }
 
-const BASE_URL = `${supabaseUrl}/storage/v1/object/public/${bucketName}`;
+  return {
+    supabaseUrl,
+    bucketName,
+    username,
+    baseUrl: `${supabaseUrl}/storage/v1/object/public/${bucketName}`
+  };
+}
 
 async function fetchFromCache<T>(
   endpoint: string,
   tags: string[],
   revalidate: number = 60
 ): Promise<T> {
+  const { baseUrl } = getConfig();
+  
   try {
-    const response = await fetch(`${BASE_URL}/${endpoint}`, {
+    const response = await fetch(`${baseUrl}/${endpoint}`, {
       next: { 
         revalidate,
         tags
@@ -64,6 +73,7 @@ async function fetchFromCache<T>(
 
 export const getPlays = cache(
   async () => {
+    const { username } = getConfig();
     const plays = await fetchFromCache<Play[]>(`plays-${username}.json`, [CACHE_TAGS.plays]);
     return plays.sort((a, b) => {
       const dateCompare = b.playDate.localeCompare(a.playDate);
@@ -86,6 +96,7 @@ export const getRecentPlays = cache(
 
 export const getCollection = cache(
   async () => {
+    const { username } = getConfig();
     const collection = await fetchFromCache<Game[]>(`collection-${username}.json`, [CACHE_TAGS.collection]);
     return collection.sort((a, b) => a.sortableName.localeCompare(b.sortableName));
   },
@@ -95,6 +106,7 @@ export const getCollection = cache(
 
 export const getTopTen = cache(
   async () => {
+    const { username } = getConfig();
     const topten = await fetchFromCache<TopTenItem[]>(`top10-${username}.json`, [CACHE_TAGS.topTen]);
     return topten;
   },
@@ -104,6 +116,7 @@ export const getTopTen = cache(
 
 export const getStats = cache(
   async () => {
+    const { username } = getConfig();
     return fetchFromCache<Stats>(`stats-${username}.json`, [CACHE_TAGS.stats]);
   },
   ['stats'],
