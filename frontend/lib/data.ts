@@ -18,18 +18,13 @@ const CACHE_TAGS = {
 // Helper function to get and validate environment variables at runtime
 function getConfig() {
   const doSpacesUrl = process.env.DO_SPACES_URL;
-  const username = process.env.BGG_USERNAME;
 
   if (!doSpacesUrl) {
     throw new Error('DO_SPACES_URL environment variable is required');
   }
-  if (!username) {
-    throw new Error('BGG_USERNAME environment variable is required');
-  }
 
   return {
     doSpacesUrl,
-    username,
     baseUrl: doSpacesUrl
   };
 }
@@ -68,8 +63,7 @@ async function fetchFromCache<T>(
 
 export const getPlays = cache(
   async () => {
-    const { username } = getConfig();
-    const plays = await fetchFromCache<Play[]>(`plays-${username}.json`, [CACHE_TAGS.plays]);
+    const plays = await fetchFromCache<Play[]>(`plays.json`, [CACHE_TAGS.plays]);
     return plays.sort((a, b) => {
       const dateCompare = b.playDate.localeCompare(a.playDate);
       if (dateCompare !== 0) return dateCompare;
@@ -91,8 +85,7 @@ export const getRecentPlays = cache(
 
 export const getCollection = cache(
   async () => {
-    const { username } = getConfig();
-    const collection = await fetchFromCache<Game[]>(`collection-${username}.json`, [CACHE_TAGS.collection]);
+    const collection = await fetchFromCache<Game[]>(`collection.json`, [CACHE_TAGS.collection]);
     return collection.sort((a, b) => a.sortableName.localeCompare(b.sortableName));
   },
   ['collection'],
@@ -101,8 +94,7 @@ export const getCollection = cache(
 
 export const getTopTen = cache(
   async () => {
-    const { username } = getConfig();
-    const topten = await fetchFromCache<TopTenItem[]>(`top10-${username}.json`, [CACHE_TAGS.topTen]);
+    const topten = await fetchFromCache<TopTenItem[]>(`top10.json`, [CACHE_TAGS.topTen]);
     return topten;
   },
   ['top-ten'],
@@ -111,8 +103,7 @@ export const getTopTen = cache(
 
 export const getStats = cache(
   async () => {
-    const { username } = getConfig();
-    return fetchFromCache<Stats>(`stats-${username}.json`, [CACHE_TAGS.stats]);
+    return fetchFromCache<Stats>(`stats.json`, [CACHE_TAGS.stats]);
   },
   ['stats'],
   { revalidate: 60, tags: [CACHE_TAGS.stats] }

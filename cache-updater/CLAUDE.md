@@ -41,11 +41,11 @@ sudo rm -rf obj bin  # Use sudo if permission denied
 
 ### Key Data Files Generated
 - `game-details.json` - Shared BGG game metadata cache
-- `plays-{username}.json` - Complete play history
-- `recent-plays-{username}.json` - Last 100 plays
-- `collection-{username}.json` - Owned games with expansions
-- `stats-{username}.json` - Aggregated statistics
-- `top10-{username}.json` - Personal rankings
+- `plays.json` - Complete play history
+- `recent-plays.json` - Last 100 plays
+- `collection.json` - Owned games with expansions
+- `stats.json` - Aggregated statistics
+- `top10.json` - Personal rankings
 
 ## Configuration
 

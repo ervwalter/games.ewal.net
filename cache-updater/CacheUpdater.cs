@@ -21,11 +21,11 @@ namespace GamesCacheUpdater
 	public class CacheUpdater : IDisposable
 	{
 		private const string GameDetailsFilename = "game-details.json";
-		private const string PlaysFilename = "plays-{0}.json";
-		private const string RecentPlaysFilename = "recent-plays-{0}.json";
-		private const string TopTenFilename = "top10-{0}.json";
-		private const string CollectionFilename = "collection-{0}.json";
-		private const string StatsFilename = "stats-{0}.json";
+		private const string PlaysFilename = "plays.json";
+		private const string RecentPlaysFilename = "recent-plays.json";
+		private const string TopTenFilename = "top10.json";
+		private const string CollectionFilename = "collection.json";
+		private const string StatsFilename = "stats.json";
 
 		private static readonly string[] Articles = "the,a,an,het,een,de,das,ein,der,le,la,il,el".Split(',');
 		private static readonly Regex RemoveArticles = new Regex("^(" + string.Join("|", Articles.Select(a => a + @"\ ")) + ")");
@@ -701,29 +701,43 @@ namespace GamesCacheUpdater
 		private async Task<bool> UploadDataIfChanged<T>(string filename, T data)
 		{
 			var json = JsonConvert.SerializeObject(data);
-			var previousJson = await GetBlobString(filename);
-			if (json != previousJson)
+			
+			// Check if we have cached content first
+			if (_contentCache.TryGetValue(filename, out var cached))
 			{
-				_log.LogInformation("Uploading {0}", filename);
-				await UploadJsonBlob(filename, json);
-				return true;
+				if (json == cached.Content)
+				{
+					_log.LogInformation("Skipping upload for {0} as it is unchanged (cached comparison)", filename);
+					return false;
+				}
+			}
+			else
+			{
+				// No cached content, need to download to compare
+				var previousJson = await GetBlobString(filename);
+				if (json == previousJson)
+				{
+					_log.LogInformation("Skipping upload for {0} as it is unchanged", filename);
+					return false;
+				}
 			}
 
-			_log.LogInformation("Skipping upload for {0} as it is unchanged", filename);
-			return false;
+			_log.LogInformation("Uploading {0}", filename);
+			await UploadJsonBlob(filename, json);
+			return true;
 		}
 
 		public async Task SaveEverythingAsync()
 		{
 			_log.LogInformation("Saving results to blob storage");
 			await UploadDataIfChanged(GameDetailsFilename, _games);
-			_playsChanged = await UploadDataIfChanged(string.Format(PlaysFilename, _username), _plays);
-			_recentPlaysChanged = await UploadDataIfChanged(string.Format(RecentPlaysFilename, _username), _plays.Take(100));
-			_topTenChanged = await UploadDataIfChanged(string.Format(TopTenFilename, _username), _topTen);
-			_statsChanged = await UploadDataIfChanged(string.Format(StatsFilename, _username), _stats);
+			_playsChanged = await UploadDataIfChanged(PlaysFilename, _plays);
+			_recentPlaysChanged = await UploadDataIfChanged(RecentPlaysFilename, _plays.Take(100));
+			_topTenChanged = await UploadDataIfChanged(TopTenFilename, _topTen);
+			_statsChanged = await UploadDataIfChanged(StatsFilename, _stats);
 			if (!_collectionFromCache)
 			{
-				_collectionChanged = await UploadDataIfChanged(string.Format(CollectionFilename, _username), _collection);
+				_collectionChanged = await UploadDataIfChanged(CollectionFilename, _collection);
 			}
 		}
 

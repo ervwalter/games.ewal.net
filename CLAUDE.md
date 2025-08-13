@@ -63,10 +63,10 @@ sudo rm -rf obj bin
 ## Data Contracts
 
 ### Key JSON Files
-- `plays-ervwalter.json` - Complete play history
-- `collection-ervwalter.json` - Board game collection with expansions
-- `stats-ervwalter.json` - Aggregated statistics
-- `top10-ervwalter.json` - Personal top 10 rankings
+- `plays.json` - Complete play history
+- `collection.json` - Board game collection with expansions
+- `stats.json` - Aggregated statistics
+- `top10.json` - Personal top 10 rankings
 - `game-details.json` - Shared BGG metadata cache
 
 ### Core TypeScript Interfaces
