@@ -60,19 +60,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="max-w-6xl min-h-screen bg-gray-50 px-4 pt-6 pb-4 md:border-gray-200 md:border-r md:px-6 flex flex-col">
                 <main className="flex-1">{children}</main>
                 <footer className="pt-8 md:pt-6">
-                  <div className="flex items-center">
-                    <div className="flex justify-center pr-4">
+                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                    <div className="flex items-center">
+                      <div className="flex justify-center pr-4">
+                        <a
+                          href="https://github.com/ervwalter"
+                          className="text-gray-400 hover:text-gray-500"
+                          target="_blank"
+                          rel="noopener noreferrer">
+                          <span className="sr-only">GitHub</span>
+                          <ImGithub className="h-6 w-6" aria-hidden="true" />
+                        </a>
+                      </div>
+                      <div className="mt-0">
+                        <p className="text-center text-base text-gray-400">&copy; {new Date().getFullYear()} Erv Walter</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-center md:justify-end">
                       <a
-                        href="https://github.com/ervwalter"
-                        className="text-gray-400 hover:text-gray-500"
+                        href="https://boardgamegeek.com"
                         target="_blank"
                         rel="noopener noreferrer">
-                        <span className="sr-only">GitHub</span>
-                        <ImGithub className="h-6 w-6" aria-hidden="true" />
+                        <img
+                          src="/powered-by-bgg-rgb.svg"
+                          alt="Powered by BoardGameGeek"
+                          className="h-8"
+                        />
                       </a>
-                    </div>
-                    <div className="mt-0">
-                      <p className="text-center text-base text-gray-400">&copy; {new Date().getFullYear()} Erv Walter</p>
                     </div>
                   </div>
                 </footer>
