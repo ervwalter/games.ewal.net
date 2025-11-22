@@ -40,7 +40,7 @@ namespace GamesCacheUpdater
             textWriter.Write(GetLogLevelString(logEntry.LogLevel));
             textWriter.Write(" | ");
             textWriter.Write(message);
-            
+
             if (logEntry.Exception != null)
             {
                 textWriter.WriteLine();
@@ -62,7 +62,7 @@ namespace GamesCacheUpdater
                     .AddFilter("System", LogLevel.Warning)
                     .AddFilter("GamesCacheUpdater", LogLevel.Information)
                     .AddConsoleFormatter<CustomConsoleFormatter, ConsoleFormatterOptions>()
-                    .AddConsole(options => 
+                    .AddConsole(options =>
                     {
                         options.FormatterName = "CustomFormatter";
                     });
@@ -81,21 +81,21 @@ namespace GamesCacheUpdater
             // In release builds, run continuously
             var runOnce = false;
 #endif
-            
+
             do
             {
                 try
                 {
                     var buildDate = System.Reflection.Assembly.GetExecutingAssembly().GetBuildDate();
                     logger.LogInformation($"Starting cache update at {DateTime.Now} with build from {buildDate}");
-                    
+
                     var username = config["BGG_USERNAME"];
                     var password = config["BGG_PASSWORD"];
                     var doSpacesKey = config["DO_SPACES_KEY"];
                     var doSpacesSecret = config["DO_SPACES_SECRET"];
                     var doSpacesRegion = config["DO_SPACES_REGION"] ?? "nyc3";
                     var bucketName = config["DO_SPACES_BUCKET"] ?? "games";
-                    
+
                     if (string.IsNullOrEmpty(username))
                     {
                         throw new Exception("BGG_USERNAME environment variable is not set");
@@ -117,7 +117,7 @@ namespace GamesCacheUpdater
                     await updater.InitializeAsync(doSpacesKey, doSpacesSecret, doSpacesRegion, bucketName, username, password);
                     await updater.DownloadPlaysAsync();
                     await updater.DownloadTopTenAsync();
-                    
+
                     try
                     {
                         await updater.DownloadCollectionAsync();
@@ -126,7 +126,7 @@ namespace GamesCacheUpdater
                     {
                         await updater.LoadExistingCollection();
                     }
-                    
+
                     await updater.LoadCachedGameDetailsAsync();
                     await updater.DownloadUpdatedGameDetailsAsync();
                     updater.ProcessCollection();
@@ -134,7 +134,7 @@ namespace GamesCacheUpdater
                     updater.ProcessTopTen();
                     updater.GenerateStats();
                     await updater.SaveEverythingAsync();
-                    
+
                     // Wait for frontend ISR cache to expire
                     logger.LogInformation("Waiting to make sure frontend ISR cache is completely expired...");
                     await Task.Delay(70000); // 70 seconds
@@ -154,13 +154,13 @@ namespace GamesCacheUpdater
                 catch (Exception ex)
                 {
                     logger.LogError(ex.ToString());
-                    
+
                     if (runOnce)
                     {
                         logger.LogError("Debug mode: Exiting due to error");
                         return;
                     }
-                    
+
                     // Wait 5 minutes before retrying after an error
                     await Task.Delay(TimeSpan.FromMinutes(5));
                 }
