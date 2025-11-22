@@ -45,7 +45,6 @@ namespace GamesCacheUpdater
 
             // Add headers to match browser requests (required by BGG API)
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36");
-            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json, text/plain, */*");
         }
 
         private static void ResetMinimumTimeTracker()
@@ -72,6 +71,16 @@ namespace GamesCacheUpdater
             {
                 await WaitForMinimumTimeToPassAsync();
                 Debug.WriteLine("Downloading " + url);
+
+                // Debug: Log cookies being sent
+                var cookiesForRequest = _cookies.GetCookies(new Uri(url));
+                _log.LogInformation("Sending {Count} cookies for {Url}", cookiesForRequest.Count, url);
+                foreach (Cookie cookie in cookiesForRequest)
+                {
+                    var value = cookie.Name == "bggpassword" ? "***" : cookie.Value;
+                    _log.LogInformation("  Cookie: {Name}={Value}", cookie.Name, value);
+                }
+
                 XDocument data = null;
                 var retries = 0;
                 try
@@ -166,6 +175,7 @@ namespace GamesCacheUpdater
                         {
                             Content = content
                         };
+                        request.Headers.Add("Accept", "application/json, text/plain, */*");
                         request.Headers.Add("Origin", "https://boardgamegeek.com");
                         request.Headers.Add("Referer", "https://boardgamegeek.com/");
 
@@ -206,7 +216,8 @@ namespace GamesCacheUpdater
                     _log.LogInformation("Received {Count} cookies from BGG", allCookies.Count);
                     foreach (Cookie cookie in allCookies)
                     {
-                        _log.LogInformation("Cookie: {Name}={Value}, Domain={Domain}, Path={Path}", cookie.Name, cookie.Value, cookie.Domain, cookie.Path);
+                        var value = cookie.Name == "bggpassword" ? "***" : cookie.Value;
+                        _log.LogInformation("Cookie: {Name}={Value}, Domain={Domain}, Path={Path}", cookie.Name, value, cookie.Domain, cookie.Path);
                     }
 
                     // BGG requires bggusername and bggpassword cookies for API authentication

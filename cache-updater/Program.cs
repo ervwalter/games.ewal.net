@@ -146,8 +146,8 @@ namespace GamesCacheUpdater
                         return;
                     }
 
-                    // Get delay from environment variable or use default (15 minutes)
-                    var delayMinutes = int.TryParse(config["UPDATE_INTERVAL_MINUTES"], out var mins) ? mins : 15;
+                    // Get delay from environment variable or use default (60 minutes)
+                    var delayMinutes = int.TryParse(config["UPDATE_INTERVAL_MINUTES"], out var mins) ? mins : 60;
                     logger.LogInformation($"Waiting {delayMinutes} minutes before next update...");
                     await Task.Delay(TimeSpan.FromMinutes(delayMinutes));
                 }
@@ -161,8 +161,9 @@ namespace GamesCacheUpdater
                         return;
                     }
 
-                    // Wait 5 minutes before retrying after an error
-                    await Task.Delay(TimeSpan.FromMinutes(5));
+                    // Wait 1 hour before retrying after an error
+                    logger.LogInformation("Waiting 60 minutes before retrying after error...");
+                    await Task.Delay(TimeSpan.FromMinutes(60));
                 }
             } while (!runOnce);
         }

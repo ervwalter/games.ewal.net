@@ -11,7 +11,7 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 # Only define non-sensitive environment variables with defaults
-ENV UPDATE_INTERVAL_MINUTES="15"
+ENV UPDATE_INTERVAL_MINUTES="60"
 ENV DO_SPACES_REGION="nyc3"
 
 # Document required environment variables
