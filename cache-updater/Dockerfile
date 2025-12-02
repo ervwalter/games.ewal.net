@@ -17,6 +17,7 @@ ENV DO_SPACES_REGION="nyc3"
 # Document required environment variables
 # BGG_USERNAME - Your BGG username (required)
 # BGG_PASSWORD - Your BGG password (optional)
+# BGG_API_TOKEN - Your BGG API Bearer token (optional, but recommended for API authentication)
 # DO_SPACES_KEY - Your Digital Ocean Spaces access key (required, keep secret!)
 # DO_SPACES_SECRET - Your Digital Ocean Spaces secret key (required, keep secret!)
 # DO_SPACES_BUCKET - Your Digital Ocean Spaces bucket name (required)

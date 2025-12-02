@@ -69,7 +69,7 @@ namespace GamesCacheUpdater
             _log = log;
         }
 
-        public async Task InitializeAsync(string doSpacesKey, string doSpacesSecret, string doSpacesRegion, string bucketName, string username, string password)
+        public async Task InitializeAsync(string doSpacesKey, string doSpacesSecret, string doSpacesRegion, string bucketName, string username, string password, string apiToken = null)
         {
             var s3Config = new AmazonS3Config
             {
@@ -83,7 +83,7 @@ namespace GamesCacheUpdater
 
             _username = username;
             _password = password;
-            _client = new BggClient(_log);
+            _client = new BggClient(_log, apiToken);
             if (string.IsNullOrWhiteSpace(_password))
             {
                 _log.LogInformation("Using BGG Anonymously");

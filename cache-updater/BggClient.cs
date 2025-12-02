@@ -29,10 +29,12 @@ namespace GamesCacheUpdater
         private CookieContainer _cookies = new CookieContainer();
         private HttpClient _httpClient;
         private ILogger _log;
+        private string _apiToken;
 
-        public BggClient(ILogger log)
+        public BggClient(ILogger log, string apiToken = null)
         {
             _log = log;
+            _apiToken = apiToken;
             var handler = new HttpClientHandler()
             {
                 CookieContainer = _cookies,
@@ -45,6 +47,13 @@ namespace GamesCacheUpdater
 
             // Add headers to match browser requests (required by BGG API)
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36");
+
+            // Add Bearer token if provided
+            if (!string.IsNullOrEmpty(_apiToken))
+            {
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiToken}");
+                _log.LogInformation("BGG API token configured");
+            }
         }
 
         private static void ResetMinimumTimeTracker()
@@ -74,11 +83,11 @@ namespace GamesCacheUpdater
 
                 // Debug: Log cookies being sent
                 var cookiesForRequest = _cookies.GetCookies(new Uri(url));
-                _log.LogInformation("Sending {Count} cookies for {Url}", cookiesForRequest.Count, url);
+                _log.LogDebug("Sending {Count} cookies for {Url}", cookiesForRequest.Count, url);
                 foreach (Cookie cookie in cookiesForRequest)
                 {
                     var value = cookie.Name == "bggpassword" ? "***" : cookie.Value;
-                    _log.LogInformation("  Cookie: {Name}={Value}", cookie.Name, value);
+                    _log.LogDebug("  Cookie: {Name}={Value}", cookie.Name, value);
                 }
 
                 XDocument data = null;
@@ -213,11 +222,11 @@ namespace GamesCacheUpdater
 
                     // Validate login by checking for authentication cookie
                     var allCookies = _cookies.GetCookies(new Uri("https://boardgamegeek.com"));
-                    _log.LogInformation("Received {Count} cookies from BGG", allCookies.Count);
+                    _log.LogDebug("Received {Count} cookies from BGG", allCookies.Count);
                     foreach (Cookie cookie in allCookies)
                     {
                         var value = cookie.Name == "bggpassword" ? "***" : cookie.Value;
-                        _log.LogInformation("Cookie: {Name}={Value}, Domain={Domain}, Path={Path}", cookie.Name, value, cookie.Domain, cookie.Path);
+                        _log.LogDebug("Cookie: {Name}={Value}, Domain={Domain}, Path={Path}", cookie.Name, value, cookie.Domain, cookie.Path);
                     }
 
                     // BGG requires bggusername and bggpassword cookies for API authentication

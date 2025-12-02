@@ -91,6 +91,7 @@ namespace GamesCacheUpdater
 
                     var username = config["BGG_USERNAME"];
                     var password = config["BGG_PASSWORD"];
+                    var apiToken = config["BGG_API_TOKEN"];
                     var doSpacesKey = config["DO_SPACES_KEY"];
                     var doSpacesSecret = config["DO_SPACES_SECRET"];
                     var doSpacesRegion = config["DO_SPACES_REGION"] ?? "nyc3";
@@ -114,7 +115,7 @@ namespace GamesCacheUpdater
                     }
 
                     using var updater = new CacheUpdater(logger);
-                    await updater.InitializeAsync(doSpacesKey, doSpacesSecret, doSpacesRegion, bucketName, username, password);
+                    await updater.InitializeAsync(doSpacesKey, doSpacesSecret, doSpacesRegion, bucketName, username, password, apiToken);
                     await updater.DownloadPlaysAsync();
                     await updater.DownloadTopTenAsync();
 
