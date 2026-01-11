@@ -1,4 +1,4 @@
-FROM node:24.10.0-slim AS base
+FROM node:24.12.0-slim AS base
 WORKDIR /app
 
 FROM base AS dependencies
