@@ -81,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         href="https://boardgamegeek.com"
                         target="_blank"
                         rel="noopener noreferrer">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src="/powered-by-bgg-rgb.svg"
                           alt="Powered by BoardGameGeek"

@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
     // Revalidate both paths and tags
     await Promise.all([
       ...Array.from(paths).map(path => revalidatePath(path)),
-      ...Array.from(tags).map(tag => revalidateTag(tag))
+      ...Array.from(tags).map(tag => revalidateTag(tag, { expire: 0 }))
     ]);
 
     return NextResponse.json({ 
