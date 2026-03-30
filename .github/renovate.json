@@ -25,10 +25,6 @@
       "matchPackageNames": ["*"]
     },
     {
-      "matchPackageNames": ["next", "@next{/,}**"],
-      "ignoreUnstable": false
-    },
-    {
       "matchManagers": ["npm"],
       "rangeStrategy": "pin"
     }
