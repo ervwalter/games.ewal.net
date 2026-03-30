@@ -15,7 +15,7 @@ export default function InsightsError({ error, resetErrorBoundary }: FallbackPro
           Unable to load insights data
         </h2>
         <p className="text-sm text-red-600">
-          {error.message || 'An unexpected error occurred'}
+          {error instanceof Error ? error.message : 'An unexpected error occurred'}
         </p>
         <button
           onClick={resetErrorBoundary}
