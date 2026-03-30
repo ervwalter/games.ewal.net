@@ -7,6 +7,8 @@ import { MostPlaysTable } from "./most-plays-table";
 import { Title } from "./title";
 import MostPlayedLoading from "./loading";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Most Played",
 };

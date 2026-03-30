@@ -5,6 +5,8 @@ import { Suspense, use } from "react";
 import CollectionTable from "./collection-table";
 import CollectionLoading from "./loading";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Collection",
   description: "My board game collection",

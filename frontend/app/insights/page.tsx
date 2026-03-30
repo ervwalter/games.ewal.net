@@ -6,6 +6,8 @@ import InsightsCharts from "./charts";
 import PlayersTable from "./players-table";
 import InsightsLoading from "./loading";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Insights",
 };

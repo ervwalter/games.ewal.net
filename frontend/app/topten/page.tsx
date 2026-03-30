@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import { TopTenList } from "./topten-list";
 import TopTenLoading from "./loading";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Top Ten",
 };

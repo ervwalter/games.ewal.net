@@ -6,6 +6,8 @@ import OverviewTableSkeleton from "./overview-table-skeleton";
 import RecentPlaysSection from "./recent-plays-section";
 import RecentPlaysLoading from "./recent-plays-loading";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Overview",
 };

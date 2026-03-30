@@ -1,4 +1,4 @@
-import { cacheLife, cacheTag } from 'next/cache';
+import { unstable_cache as cache } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { Game, Play, Stats, TopTenItem } from './games-interfaces';
 import { getInsights as getInsightsOriginal } from "./insights";
@@ -16,93 +16,85 @@ const CACHE_TAGS = {
 } as const;
 
 // Helper function to get and validate environment variables at runtime
-function getConfig() {
+function getBaseUrl(): string {
   const doSpacesUrl = process.env.DO_SPACES_URL;
 
   if (!doSpacesUrl) {
     throw new Error('DO_SPACES_URL environment variable is required');
   }
 
-  return {
-    doSpacesUrl,
-    baseUrl: doSpacesUrl
-  };
+  return doSpacesUrl;
 }
 
-async function fetchFromCache<T>(endpoint: string): Promise<T> {
-  const { baseUrl } = getConfig();
+async function fetchData<T>(endpoint: string): Promise<T> {
+  const baseUrl = getBaseUrl();
 
-  try {
-    const response = await fetch(`${baseUrl}/${endpoint}`);
+  const response = await fetch(`${baseUrl}/${endpoint}`);
 
-    if (!response.ok) {
-      if (response.status === 404) {
-        notFound();
-      }
-      throw new Error(`Failed to fetch ${endpoint}: ${response.status} ${response.statusText}`);
+  if (!response.ok) {
+    if (response.status === 404) {
+      notFound();
     }
-
-    return response.json();
-  } catch (error) {
-    console.error(`Error fetching ${endpoint}:`, error);
-    throw error;
+    throw new Error(`Failed to fetch ${endpoint}: ${response.status} ${response.statusText}`);
   }
+
+  return response.json();
 }
 
-export async function getPlays() {
-  "use cache";
-  cacheLife({ revalidate: 60 });
-  cacheTag(CACHE_TAGS.plays);
+export const getPlays = cache(
+  async () => {
+    const plays = await fetchData<Play[]>('plays.json');
+    return plays.sort((a, b) => {
+      const dateCompare = b.playDate.localeCompare(a.playDate);
+      if (dateCompare !== 0) return dateCompare;
+      return b.playId.localeCompare(a.playId);
+    });
+  },
+  ['plays'],
+  { revalidate: 60, tags: [CACHE_TAGS.plays] }
+);
 
-  const plays = await fetchFromCache<Play[]>('plays.json');
-  return plays.sort((a, b) => {
-    const dateCompare = b.playDate.localeCompare(a.playDate);
-    if (dateCompare !== 0) return dateCompare;
-    return b.playId.localeCompare(a.playId);
-  });
-}
+export const getRecentPlays = cache(
+  async () => {
+    const plays = await getPlays();
+    return plays.slice(0, 100);
+  },
+  ['recent-plays'],
+  { revalidate: 60, tags: [CACHE_TAGS.plays] }
+);
 
-export async function getRecentPlays() {
-  "use cache";
-  cacheLife({ revalidate: 60 });
-  cacheTag(CACHE_TAGS.plays);
+export const getCollection = cache(
+  async () => {
+    const collection = await fetchData<Game[]>('collection.json');
+    return collection.sort((a, b) => a.sortableName.localeCompare(b.sortableName));
+  },
+  ['collection'],
+  { revalidate: 60, tags: [CACHE_TAGS.collection] }
+);
 
-  const plays = await getPlays();
-  return plays.slice(0, 100);
-}
+export const getTopTen = cache(
+  async () => {
+    return fetchData<TopTenItem[]>('top10.json');
+  },
+  ['top-ten'],
+  { revalidate: 60, tags: [CACHE_TAGS.topTen] }
+);
 
-export async function getCollection() {
-  "use cache";
-  cacheLife({ revalidate: 60 });
-  cacheTag(CACHE_TAGS.collection);
+export const getStats = cache(
+  async () => {
+    return fetchData<Stats>('stats.json');
+  },
+  ['stats'],
+  { revalidate: 60, tags: [CACHE_TAGS.stats] }
+);
 
-  const collection = await fetchFromCache<Game[]>('collection.json');
-  return collection.sort((a, b) => a.sortableName.localeCompare(b.sortableName));
-}
-
-export async function getTopTen() {
-  "use cache";
-  cacheLife({ revalidate: 60 });
-  cacheTag(CACHE_TAGS.topTen);
-
-  return fetchFromCache<TopTenItem[]>('top10.json');
-}
-
-export async function getStats() {
-  "use cache";
-  cacheLife({ revalidate: 60 });
-  cacheTag(CACHE_TAGS.stats);
-
-  return fetchFromCache<Stats>('stats.json');
-}
-
-export async function getInsights() {
-  "use cache";
-  cacheLife({ revalidate: 60 });
-  cacheTag(CACHE_TAGS.insights);
-
-  return await getInsightsOriginal();
-}
+export const getInsights = cache(
+  async () => {
+    return await getInsightsOriginal();
+  },
+  ['insights'],
+  { revalidate: 60, tags: [CACHE_TAGS.insights] }
+);
 
 export function durationForPlay(play: Play): number {
   if (play.duration && play.duration > 0) {
