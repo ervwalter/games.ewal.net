@@ -21,7 +21,7 @@
     "d3-scale-chromatic": "3.1.0",
     "dayjs": "1.11.20",
     "lodash-es": "4.17.23",
-    "next": "15.5.14",
+    "next": "16.2.1",
     "next-plausible": "3.12.5",
     "prettier": "3.8.1",
     "prettier-plugin-tailwindcss": "0.7.2",
@@ -43,7 +43,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "9.39.4",
-    "eslint-config-next": "15.5.14",
+    "eslint-config-next": "16.2.1",
     "postcss": "8.5.8",
     "tailwindcss": "4.2.2",
     "turbo": "2.8.21"
