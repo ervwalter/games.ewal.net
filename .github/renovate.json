@@ -21,7 +21,6 @@
       "minimumReleaseAge": "1 day",
       "automerge": true,
       "automergeType": "pr",
-      "extends": ["schedule:weekends"],
       "matchPackageNames": ["*"]
     },
     {
