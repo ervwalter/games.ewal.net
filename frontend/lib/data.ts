@@ -1,4 +1,4 @@
-import { unstable_cache as cache } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { Game, Play, Stats, TopTenItem } from './games-interfaces';
 import { getInsights as getInsightsOriginal } from "./insights";
@@ -29,23 +29,11 @@ function getConfig() {
   };
 }
 
-async function fetchFromCache<T>(
-  endpoint: string,
-  tags: string[],
-  revalidate: number = 60
-): Promise<T> {
+async function fetchFromCache<T>(endpoint: string): Promise<T> {
   const { baseUrl } = getConfig();
-  
+
   try {
-    const response = await fetch(`${baseUrl}/${endpoint}`, {
-      next: { 
-        revalidate,
-        tags
-      },
-      headers: {
-        'Cache-Control': 's-maxage=60, stale-while-revalidate'
-      }
-    });
+    const response = await fetch(`${baseUrl}/${endpoint}`);
 
     if (!response.ok) {
       if (response.status === 404) {
@@ -61,61 +49,60 @@ async function fetchFromCache<T>(
   }
 }
 
-export const getPlays = cache(
-  async () => {
-    const plays = await fetchFromCache<Play[]>(`plays.json`, [CACHE_TAGS.plays]);
-    return plays.sort((a, b) => {
-      const dateCompare = b.playDate.localeCompare(a.playDate);
-      if (dateCompare !== 0) return dateCompare;
-      return b.playId.localeCompare(a.playId);
-    });
-  },
-  ['plays'],
-  { revalidate: 60, tags: [CACHE_TAGS.plays] }
-);
+export async function getPlays() {
+  "use cache";
+  cacheLife({ revalidate: 60 });
+  cacheTag(CACHE_TAGS.plays);
 
-export const getRecentPlays = cache(
-  async () => {
-    const plays = await getPlays();
-    return plays.slice(0, 100);
-  },
-  ['recent-plays'],
-  { revalidate: 60, tags: [CACHE_TAGS.plays] }
-);
+  const plays = await fetchFromCache<Play[]>('plays.json');
+  return plays.sort((a, b) => {
+    const dateCompare = b.playDate.localeCompare(a.playDate);
+    if (dateCompare !== 0) return dateCompare;
+    return b.playId.localeCompare(a.playId);
+  });
+}
 
-export const getCollection = cache(
-  async () => {
-    const collection = await fetchFromCache<Game[]>(`collection.json`, [CACHE_TAGS.collection]);
-    return collection.sort((a, b) => a.sortableName.localeCompare(b.sortableName));
-  },
-  ['collection'],
-  { revalidate: 60, tags: [CACHE_TAGS.collection] }
-);
+export async function getRecentPlays() {
+  "use cache";
+  cacheLife({ revalidate: 60 });
+  cacheTag(CACHE_TAGS.plays);
 
-export const getTopTen = cache(
-  async () => {
-    const topten = await fetchFromCache<TopTenItem[]>(`top10.json`, [CACHE_TAGS.topTen]);
-    return topten;
-  },
-  ['top-ten'],
-  { revalidate: 60, tags: [CACHE_TAGS.topTen] }
-);
+  const plays = await getPlays();
+  return plays.slice(0, 100);
+}
 
-export const getStats = cache(
-  async () => {
-    return fetchFromCache<Stats>(`stats.json`, [CACHE_TAGS.stats]);
-  },
-  ['stats'],
-  { revalidate: 60, tags: [CACHE_TAGS.stats] }
-);
+export async function getCollection() {
+  "use cache";
+  cacheLife({ revalidate: 60 });
+  cacheTag(CACHE_TAGS.collection);
 
-export const getInsights = cache(
-  async () => {
-    return await getInsightsOriginal();
-  },
-  ['insights'],
-  { revalidate: 60, tags: [CACHE_TAGS.insights] }
-);
+  const collection = await fetchFromCache<Game[]>('collection.json');
+  return collection.sort((a, b) => a.sortableName.localeCompare(b.sortableName));
+}
+
+export async function getTopTen() {
+  "use cache";
+  cacheLife({ revalidate: 60 });
+  cacheTag(CACHE_TAGS.topTen);
+
+  return fetchFromCache<TopTenItem[]>('top10.json');
+}
+
+export async function getStats() {
+  "use cache";
+  cacheLife({ revalidate: 60 });
+  cacheTag(CACHE_TAGS.stats);
+
+  return fetchFromCache<Stats>('stats.json');
+}
+
+export async function getInsights() {
+  "use cache";
+  cacheLife({ revalidate: 60 });
+  cacheTag(CACHE_TAGS.insights);
+
+  return await getInsightsOriginal();
+}
 
 export function durationForPlay(play: Play): number {
   if (play.duration && play.duration > 0) {

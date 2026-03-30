@@ -15,6 +15,7 @@ const nextConfig = {
     formats: ['image/webp'], // Prefer WebP format for better compression
   },
   typedRoutes: true,
+  cacheComponents: true,
   output: 'standalone',
 }
 

@@ -41,6 +41,8 @@ export const viewport: Viewport = {
   userScalable: false
 };
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <PlausibleProvider 
@@ -73,7 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         </a>
                       </div>
                       <div className="mt-0">
-                        <p className="text-center text-base text-gray-400">&copy; {new Date().getFullYear()} Erv Walter</p>
+                        <p className="text-center text-base text-gray-400">&copy; {CURRENT_YEAR} Erv Walter</p>
                       </div>
                     </div>
                     <div className="flex justify-center md:justify-end">

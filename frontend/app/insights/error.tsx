@@ -1,9 +1,14 @@
 'use client';
 
-import { FallbackProps } from 'react-error-boundary';
 import { useEffect } from 'react';
 
-export default function InsightsError({ error, resetErrorBoundary }: FallbackProps) {
+export default function InsightsError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   useEffect(() => {
     console.error('Insights Error:', error);
   }, [error]);
@@ -15,10 +20,10 @@ export default function InsightsError({ error, resetErrorBoundary }: FallbackPro
           Unable to load insights data
         </h2>
         <p className="text-sm text-red-600">
-          {error instanceof Error ? error.message : 'An unexpected error occurred'}
+          {error.message || 'An unexpected error occurred'}
         </p>
         <button
-          onClick={resetErrorBoundary}
+          onClick={reset}
           className="rounded bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500">
           Try again
         </button>

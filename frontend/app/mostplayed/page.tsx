@@ -3,13 +3,9 @@ import { durationForPlay, getPlays } from "lib/data";
 import { groupBy, orderBy, sumBy } from "lodash-es";
 import { Metadata } from "next";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { MostPlaysTable } from "./most-plays-table";
 import { Title } from "./title";
-import MostPlayedError from "./error";
 import MostPlayedLoading from "./loading";
-
-export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Most Played",
@@ -47,11 +43,9 @@ export default async function MostPlayed() {
     <div className="flex flex-1 flex-col space-y-4">
       <Blurb />
       <Title nickels={nickels} dimes={dimes} quarters={quarters} />
-      <ErrorBoundary FallbackComponent={MostPlayedError}>
-        <Suspense fallback={<MostPlayedLoading />}>
-          <MostPlaysTable games={games} />
-        </Suspense>
-      </ErrorBoundary>
+      <Suspense fallback={<MostPlayedLoading />}>
+        <MostPlaysTable games={games} />
+      </Suspense>
     </div>
   );
 }
