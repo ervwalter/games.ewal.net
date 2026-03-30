@@ -15,7 +15,7 @@ export default function RecentPlaysError({ error, resetErrorBoundary }: Fallback
           Unable to load recent plays
         </h3>
         <p className="text-sm text-yellow-700">
-          {error.message || 'An unexpected error occurred'}
+          {error instanceof Error ? error.message : 'An unexpected error occurred'}
         </p>
         <button
           onClick={resetErrorBoundary}

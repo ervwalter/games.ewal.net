@@ -15,7 +15,7 @@ export default function CollectionError({ error, resetErrorBoundary }: FallbackP
           Unable to load game collection
         </h2>
         <p className="text-sm text-red-600">
-          {error.message || 'An unexpected error occurred'}
+          {error instanceof Error ? error.message : 'An unexpected error occurred'}
         </p>
         <button
           onClick={resetErrorBoundary}
