@@ -17,7 +17,6 @@
     "@nivo/pie": "0.99.0",
     "@nivo/tooltip": "0.99.0",
     "@tailwindcss/aspect-ratio": "0.4.2",
-    "@typescript-eslint/parser": "8.57.2",
     "clsx": "2.1.1",
     "d3-scale-chromatic": "3.1.0",
     "dayjs": "1.11.20",
@@ -36,7 +35,6 @@
     "undici": "7.24.6"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "15.5.14",
     "@tailwindcss/postcss": "4.2.2",
     "@types/d3-scale-chromatic": "3.1.0",
     "@types/lodash": "4.17.24",
@@ -44,12 +42,8 @@
     "@types/node": "22.19.15",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "@typescript-eslint/eslint-plugin": "8.57.2",
     "eslint": "9.39.4",
     "eslint-config-next": "15.5.14",
-    "eslint-plugin-jsx-a11y": "6.10.2",
-    "eslint-plugin-react": "7.37.5",
-    "globals": "17.4.0",
     "postcss": "8.5.8",
     "tailwindcss": "4.2.2",
     "turbo": "2.8.21"
