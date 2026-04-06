@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@headlessui/react": "2.2.9",
-    "@mantine/hooks": "8.3.18",
+    "@mantine/hooks": "9.0.1",
     "@nivo/bar": "0.99.0",
     "@nivo/core": "0.99.0",
     "@nivo/pie": "0.99.0",
