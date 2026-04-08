@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@headlessui/react": "2.2.9",
+    "@headlessui/react": "2.2.10",
     "@mantine/hooks": "8.3.18",
     "@nivo/bar": "0.99.0",
     "@nivo/core": "0.99.0",
@@ -43,9 +43,9 @@
     "@types/react-dom": "19.2.3",
     "eslint": "10.2.0",
     "eslint-config-next": "16.2.2",
-    "postcss": "8.5.8",
+    "postcss": "8.5.9",
     "tailwindcss": "4.2.2",
-    "turbo": "2.9.4"
+    "turbo": "2.9.5"
   },
   "prettier": {
     "tabWidth": 2,
