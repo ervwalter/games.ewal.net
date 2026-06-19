@@ -1,0 +1,57 @@
+name: PR Gate
+
+# Always-on gate for pull requests so branch protection has a single required
+# check that ALWAYS reports (avoids PRs getting stuck on path-filtered builds).
+# It builds only the area(s) that changed; PRs touching neither pass trivially.
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect changed areas
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+            cache_updater:
+              - 'cache-updater/**'
+
+      # --- Frontend (Next.js / npm) ---
+      - name: Set up Node
+        if: steps.changes.outputs.frontend == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build frontend
+        if: steps.changes.outputs.frontend == 'true'
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      # --- Cache updater (.NET) ---
+      - name: Set up .NET
+        if: steps.changes.outputs.cache_updater == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build cache-updater
+        if: steps.changes.outputs.cache_updater == 'true'
+        working-directory: cache-updater
+        run: dotnet build --configuration Release
+
+      - name: Gate summary
+        run: |
+          echo "PR gate complete (frontend=${{ steps.changes.outputs.frontend }}, cache_updater=${{ steps.changes.outputs.cache_updater }})"
