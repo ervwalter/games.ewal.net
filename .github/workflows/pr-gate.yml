@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.3
 
       - name: Detect changed areas
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         id: changes
         with:
           filters: |
@@ -27,7 +27,7 @@ jobs:
       # --- Frontend (Next.js / npm) ---
       - name: Set up Node
         if: steps.changes.outputs.frontend == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: npm
@@ -43,7 +43,7 @@ jobs:
       # --- Cache updater (.NET) ---
       - name: Set up .NET
         if: steps.changes.outputs.cache_updater == 'true'
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '10.0.x'
 
