@@ -44,12 +44,14 @@ export const viewport: Viewport = {
 const CURRENT_YEAR = new Date().getFullYear();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // next-plausible v4 dropped the `domain`/`trackOutboundLinks` props in favor of a
+  // site-specific `src`. We keep the existing classic Plausible script (outbound-links
+  // variant + data-domain) so tracking behavior is unchanged.
   return (
-    <PlausibleProvider 
-      domain="games.ewal.net"
+    <PlausibleProvider
+      src="https://plausible.io/js/script.outbound-links.js"
+      scriptProps={{ 'data-domain': 'games.ewal.net' } as unknown as React.ScriptHTMLAttributes<HTMLScriptElement>}
       enabled={process.env.NODE_ENV === 'production'}
-      trackOutboundLinks
-      trackLocalhost={false}
     >
       <html lang="en" className={clsx(inter.variable, glyphicons.variable, "h-full")}>
         <head>
