@@ -1,0 +1,10 @@
+name: automerge
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, labeled]
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  call:
+    uses: ervwalter/renovate-config/.github/workflows/automerge.yml@main
