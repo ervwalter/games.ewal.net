@@ -1,4 +1,4 @@
-FROM node:26.3.1-slim AS base
+FROM node:26.3.1-slim@sha256:f9b8bd6c62fcd007c08ce2bb2907485b624b968fd76094445822e0ec14002cf0 AS base
 WORKDIR /app
 
 FROM base AS dependencies
