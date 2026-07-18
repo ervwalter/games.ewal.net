@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: send custom message
-      uses: appleboy/telegram-action@4cd2253b24c9682a5be99eb6f7ab3484586978fa # master
+      uses: appleboy/telegram-action@78c9ef35ffccfe74d3b32e26efcd34c2e283238a # master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
