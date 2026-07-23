@@ -1,4 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>ervwalter/renovate-config:auto-merge"]
+  "extends": ["github>ervwalter/renovate-config:auto-merge"],
+  "packageRules": [
+    {
+      "description": "Block TypeScript v7 until Next.js's built-in type-check worker and @typescript-eslint ship stable support for the TS7 native compiler API. Remove this rule once the toolchain is ready.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
+    }
+  ]
 }
