@@ -7,4 +7,4 @@ permissions:
   pull-requests: write
 jobs:
   call:
-    uses: ervwalter/renovate-config/.github/workflows/automerge.yml@381f5af1e0b3a4bd8a1e9e9d1fd2b29b8ebb2deb # main
+    uses: ervwalter/renovate-config/.github/workflows/automerge.yml@67dc7078de9973e13f59d6ed5fa3304c361590de # main
