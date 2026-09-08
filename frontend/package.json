@@ -40,10 +40,10 @@
     "@types/lodash-es": "4.17.12",
     "@types/node": "26.4.1",
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.6",
+    "@types/react-dom": "19.2.7",
     "eslint": "10.9.1",
     "eslint-config-next": "16.3.4",
-    "postcss": "8.5.27",
+    "postcss": "8.5.28",
     "tailwindcss": "4.3.3",
     "turbo": "2.10.12"
   },
