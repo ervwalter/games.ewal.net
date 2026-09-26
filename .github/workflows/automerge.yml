@@ -7,7 +7,7 @@ permissions:
   pull-requests: write
 jobs:
   call:
-    uses: ervwalter/renovate-config/.github/workflows/automerge.yml@5b0b2f2397d9c1ce221a7a36aa62c64ec35ab9f7 # main
+    uses: twistymaze/renovate-config/.github/workflows/automerge.yml@5b0b2f2397d9c1ce221a7a36aa62c64ec35ab9f7 # main
     with:
       app-client-id: ${{ vars.AUTOMERGE_APP_CLIENT_ID }}
     secrets:
